@@ -1,0 +1,39 @@
+{
+  "name": "silverconnect-app",
+  "version": "1.0.0",
+  "description": "SilverConnect - Healthcare Management App for Seniors",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "jest"
+  },
+  "_comment": "NOTE: The 'dev' script uses nodemon for automatic restarting during development",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChaseChoo/BED-assignment-.git"
+  },
+  "keywords": ["healthcare", "seniors", "medication", "family"],
+  "author": "Team 1 - BED Assignment",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChaseChoo/BED-assignment-/issues"
+  },
+  "homepage": "https://github.com/ChaseChoo/BED-assignment-#readme",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.0.1",
+    "express": "^5.1.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mssql": "^11.0.1",
+    "normalize.css": "^8.0.1",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^30.0.5",
+    "nodemon": "^3.1.10"
+  }
+}

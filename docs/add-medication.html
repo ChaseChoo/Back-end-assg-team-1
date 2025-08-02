@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Medication - MerderkaLife</title>
+    <!-- Normalize.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <!-- Bootstrap 5.3.7 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Bootstrap Icons 1.11.3 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Lottie Animation Player Script -->
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <!-- css/style.css CSS linking-->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5P55V59G');</script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P55V59G"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Lottie Animation Loading -->
+    <div id="loader-overlay" class="loader-overlay">
+        <dotlottie-player
+            src="https://lottie.host/d03f2255-5a0e-4ba0-a43d-79895e8620e0/urZVzLRRGL.lottie"
+            background="transparent"
+            speed="1"
+            style="width: 300px; height: 300px"
+            loop
+            autoplay>
+        </dotlottie-player>
+    </div>
+
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/MerderkaLife.png" alt="MerderkaLife Logo" class="logo me-2">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#">Lifestyle Tracking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="medication.html">Medication Tracker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#">Medical Records</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-colour ms-3">Manage Appointment</a>
+            </div>
+        </div>
+    </nav>
+    <!-- End of Sticky Navigation Bar -->
+
+    <!-- Add Medication Form -->
+    <main class="container my-5">
+        <!-- Back to Medication Tracker -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="medication.html" class="btn btn-colour d-flex align-items-center">
+                <i class="bi bi-arrow-left me-2"></i> Back To Tracker
+            </a>
+            <span class="text-muted small fw-semibold">1 of 2</span>
+        </div>
+        <!-- End of Back to Medication Tracker -->
+
+        <!-- Form Header Text -->
+        <header class="text-center mb-4">
+            <h2 class="fw-bold">Add medication</h2>
+        </header>
+
+        <!-- Medication Form -->
+        <form id="medicationForm" class="form-centered row justify-content-center g-4">
+            <!-- Medication Icon Selection -->
+            <section class="col-12 text-center">
+                <p class="mb-2 fw-semibold">Choose an Icon:</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <label>
+                    <input type="radio" name="iconType" value="capsule" class="d-none" required>
+                        <div class="icon-select-wrapper">
+                            <img src="assets/capsule.png" alt="Capsule">
+                        </div>
+                    </label>
+                    <label>
+                    <input type="radio" name="iconType" value="tablet" class="d-none">
+                        <div class="icon-select-wrapper">
+                            <img src="assets/tablet.png" alt="Tablet">
+                        </div>
+                    </label>
+                    <label>
+                    <input type="radio" name="iconType" value="syringe" class="d-none">
+                        <div class="icon-select-wrapper">
+                            <img src="assets/syringe.png" alt="Syringe">
+                        </div>
+                    </label>
+                    <label>
+                    <input type="radio" name="iconType" value="inhaler" class="d-none">
+                        <div class="icon-select-wrapper">
+                            <img src="assets/inhaler.png" alt="Inhaler">
+                        </div>
+                    </label>
+                </div>
+            </section>
+            <!-- End of Medication Icon Selection -->
+
+            <!-- Medication Name -->
+            <section class="col-12" style="position: relative;">
+                <label for="medicationName" class="form-label visually-hidden">Medication Name</label>
+                <input type="text" id="medicationName" name="medicationName"
+                        class="form-control input-outline" placeholder="Medication Name" required>
+                <div id="medSuggestions" class="list-group autocomplete-medication position-absolute mt-1"></div>
+            </section>
+            <!-- End of Medication Name -->
+
+            <!-- Dosage -->
+            <section class="col-12">
+                <label for="dosage" class="form-label visually-hidden">Dosage</label>
+                <input type="text" id="dosage" name="dosage" class="form-control input-outline" placeholder="Single Dose, e.g. 1 tablet" required>
+            </section>
+            <!-- End of Dosage -->
+
+            <!-- Medication Frequency -->
+            <section class="col-12 text-center">
+                <fieldset class="btn-group" role="group" aria-label="Medication Frequency">
+                <input type="radio" class="btn-check" name="frequency" id="anytime" value="Anytime" autocomplete="off" required>
+                <label class="btn btn-outline-dark" for="anytime">Anytime</label>
+
+                <input type="radio" class="btn-check" name="frequency" id="beforeMeals" value="Before meals" autocomplete="off">
+                <label class="btn btn-outline-dark" for="beforeMeals">Before meals</label>
+
+                <input type="radio" class="btn-check" name="frequency" id="afterMeals" value="After meals" autocomplete="off">
+                <label class="btn btn-outline-dark" for="afterMeals">After meals</label>
+                </fieldset>
+            </section>
+            <!-- End of Medication Frequency -->
+
+            <!-- Start Date -->
+            <section class="col-12">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="date" id="startDate" name="startDate" class="form-control input-outline" required>
+            </section>
+            <!-- End of Start Date -->
+
+            <!-- End Date -->
+            <section class="col-12">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="date" id="endDate" name="endDate" class="form-control input-outline" required>
+            </section>
+            <!-- End of End Date -->
+
+            <!-- Hidden userId hardcoded to id of 1 until reg and login is created-->
+            <input type="hidden" name="userId" value="1">
+
+            <!-- Submit Button -->
+            <section class="col-12 text-center">
+                <button type="submit" class="btn btn-next">Next</button>
+                <div id="formFeedback" class="mt-2"></div>
+            </section>
+            <!-- End of Submit Button -->
+        </form>
+
+        <!-- Success Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content text-center">
+                <div class="modal-body p-4">
+                    <i class="bi bi-check-circle-fill text-success fs-1"></i>
+                    <h5 class="mt-3 mb-2">Medication Added!</h5>
+                    <p class="mb-4">Your medication has been successfully recorded.</p>
+                    <button type="button" class="btn btn-colour" id="goToSchedule">Next: Schedule</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medication Chatbot -->
+        <aside id="chat-container" class="chat-container position-fixed start-0 bottom-0 p-3">
+            <!-- Chat Toggle Button -->
+            <button id="chat-button" class="btn btn-primary rounded-circle shadow chat-toggle" aria-label="Open Medication Chat">
+                <i class="bi bi-chat-dots-fill fs-5"></i>
+            </button>
+
+            <!-- Chat Window -->
+            <section id="chat-box" class="card d-none chat-box">
+                    <header class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">Medication Assistant</h6>
+                        <button class="btn-close btn-close-white" id="close-chat" aria-label="Close Chat"></button>
+                    </header>
+                    <div class="card-body messages" id="messages" aria-live="polite">
+                        <div class="text-muted small">Ask me about medication side effects<br>e.g. ibuprofen, alprazolam</div>
+                    </div>
+                    <div class="p-2 border-top">
+                        <form id="chat-form" class="d-flex gap-2">
+                            <input type="text" id="chat-input" class="form-control" placeholder="Enter medication name" required>
+                            <!-- Send message button -->
+                            <button class="btn btn-primary" type="submit">Send</button>
+                        </form>
+                    </div>
+            </section>
+        </aside>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer text-white mt-5">
+        <div class="container pt-5 pb-3">
+        <div class="row text-start">
+            <section class="col-12 col-sm-6 col-md-3 mb-4">
+            <h2 class="h6 fw-bold text-uppercase">MerderkaLife</h2>
+            <address>
+                535 Clementi Road,<br>
+                Singapore 599489
+            </address>
+            <p class="mb-0">Mon-Fri: 10am-8pm,<br>Sat-Sun: 11am-6pm</p>
+            </section>
+
+            <section class="col-12 col-sm-6 col-md-3 mb-4">
+            <h2 class="h6 fw-bold text-uppercase">About</h2>
+            <ul class="list-unstyled">
+                <li><a href="about.html" class="text-white text-decoration-none">About Us</a></li>
+                <li><a href="#" class="text-white text-decoration-none">Health Blogs</a></li>
+                <li><a href="#" class="text-white text-decoration-none">Manage Appointments</a></li>
+            </ul>
+            </section>
+
+            <section class="col-12 col-sm-6 col-md-3 mb-4">
+            <h2 class="h6 fw-bold text-uppercase">Contact</h2>
+            <ul class="list-unstyled">
+                <li><a href="contact.html" class="text-white text-decoration-none">Contact Us</a></li>
+                <li><a href="mailto:support@merderkalife.com" class="text-white text-decoration-none">support@merderkalife.com</a></li>
+                <li><a href="tel:+6564606999" class="text-white text-decoration-none">+65 6460 6999</a></li>
+            </ul>
+            </section>
+
+            <section class="col-12 col-sm-6 col-md-3 mb-4">
+            <h2 class="h6 fw-bold text-uppercase">Others</h2>
+            <ul class="list-unstyled">
+                <li><a href="faq.html" class="text-white text-decoration-none">FAQ</a></li>
+                <li><a href="credits.html" class="text-white text-decoration-none">Credits</a></li>
+                <li><a href="privacy.html" class="text-white text-decoration-none">Privacy Policy</a></li>
+            </ul>
+            </section>
+        </div>
+
+        <div class="text-center pt-3">
+            <small>© 2025 MerderkaLife. All rights reserved.</small>
+        </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+     <!-- Bootstrap 5.3.7 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <!-- External APIs and connecting to JS files -->
+    <script src="js/index.js"></script>
+    <script src="js/add-medication.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>

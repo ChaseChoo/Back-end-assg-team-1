@@ -1,0 +1,577 @@
+/* Global CSS */
+.footer {
+  background-color: #022873;
+}
+
+/* Navigation Bar Logo*/
+.logo {
+  height: 100px;
+  width: auto;
+}
+
+/* Blue Coloured Rounded Buttons */
+.btn-colour {
+  background-color: #034cbc;
+  color: white;
+  border: none;
+  border-radius: 999px; /* makes the button fully rounded */
+  padding: 0.5rem 1.5rem;
+}
+
+.btn-colour:hover,
+.btn-colour:focus {
+  background-color: #023a9e; /* slightly darker shade for hover effect */
+  color: white;
+}
+
+/* Hero section CSS*/
+.hero-section-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Hero section image */
+.hero-section-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Responsive Tablet View */
+@media (max-width: 768px) {
+  .hero-section-img {
+    height: auto;
+  }
+}
+
+/* Responsive Mobile View*/
+@media (max-width: 576px) {
+  .hero-section-img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/*Lottie Animation CSS*/
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease;
+}
+
+/* Floating Add Medication Button (medication.html) */
+.add-medication-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* set to highest layer so it doesn't dissapear */
+}
+
+/* (add-mediation.html)*/
+/* Medication Icon Selection Styles */
+.icon-select-wrapper {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border 0.3s ease;
+  border: 3px solid transparent;
+}
+
+.icon-select-wrapper img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+/* Show blue ring when selected */
+input[type="radio"]:checked + .icon-select-wrapper {
+  border: 3px solid #0047AB;
+}
+
+
+/* Slightly darker input outlines */
+.input-outline {
+  border: 1.5px solid #6c757d;
+}
+
+/* Custom flatter 'Next' button */
+.btn-next {
+  background-color: #0047AB;
+  color: white;
+  padding: 0.6rem 2.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-next:hover,
+.btn-next:focus {
+  background-color: #003a91;
+  color: white;
+}
+
+/* Form layout container to restrict width */
+.form-centered {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Uniform width for form inputs inside centered form */
+.form-centered .form-control {
+  width: 100%;
+}
+
+/* Match button group styling to themed buttons */
+.btn-outline-dark {
+  color: #0047AB;
+  border-color: #0047AB;
+}
+
+.btn-outline-dark:hover,
+.btn-outline-dark:focus,
+.btn-check:checked + .btn-outline-dark {
+  background-color: #0047AB;
+  color: white;
+  border-color: #0047AB;
+}
+
+/* (schedule-medication.html) */
+.medication-icon {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+
+/* Username Greeting (medication.html)*/
+.username-colour {
+  color: #007b8a;
+}
+
+/* RXNAV Autocomplete Dropdown form CSS (add-medication.html)*/
+.autocomplete-medication {
+  z-index: 1050;
+  width: 95.5%;
+  background-color: #fff;
+  border-radius: 0.375rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+/*Thuta's CSS*/
+
+/* Time Slot Button Styles */
+.time-btn {
+  background: #f8f9fa;
+  border: 2px solid #e0e0e0;
+  color: #333;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  cursor: pointer;
+}
+.time-btn:hover {
+  background: #e3f2fd;
+  border-color: #90caf9;
+  color: #1976d2;
+}
+.time-btn.selected, .time-btn:active {
+  background: #1976d2;
+  color: #fff;
+  border-color: #1976d2;
+  box-shadow: 0 4px 16px rgba(25,118,210,0.08);
+}
+#timeButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+/* Appointment Booking Form Styles */
+.appointment-form {
+  max-width: 650px;
+  background: transparent !important;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 2.5rem 2rem;
+}
+
+/* book-appointment.html */
+/* Clinic & Doctor Cards */
+#clinicCards .clinic-card {
+  border: 2px solid #e3e6f0;
+  border-radius: 1rem;
+  background: #f8fafc;
+  box-shadow: 0 2px 8px rgba(2, 40, 115, 0.06);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  min-height: 180px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#doctorCards .doctor-card {
+  border: 2px solid #e3e6f0;
+  border-radius: 1rem;
+  background: #f8fafc;
+  box-shadow: 0 2px 8px rgba(2, 40, 115, 0.06);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  padding: 0.5rem 0.25rem;
+  text-align: center;
+  min-height: 100px;
+  max-width: 220px;
+  margin: auto;
+}
+#clinicCards .clinic-card.selected, #doctorCards .doctor-card.selected {
+  border-color: #034cbc;
+  box-shadow: 0 4px 16px rgba(3, 76, 188, 0.18);
+  background: #eaf1fb;
+}
+#clinicCards .clinic-card img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+#doctorCards .doctor-card img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+/* Time Buttons */
+#timeButtons .time-btn {
+  background: #034cbc;
+  color: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#timeButtons .time-btn.selected,
+#timeButtons .time-btn:hover,
+#timeButtons .time-btn:focus {
+  background: #022873;
+  color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .appointment-form {
+    padding: 1.5rem 0.5rem;
+  }
+  #clinicCards .clinic-card, #doctorCards .doctor-card {
+    min-height: 140px;
+    padding: 0.75rem 0.25rem;
+  }
+}
+@media (max-width: 576px) {
+  .appointment-form {
+    padding: 1rem 0.25rem;
+  }
+  #clinicCards .clinic-card, #doctorCards .doctor-card {
+    min-height: 110px;
+    padding: 0.5rem 0.1rem;
+  }
+}
+
+/* Calendar UI */
+.fc-toolbar-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #034cbc;
+}
+
+.fc-button {
+  border-radius: 999px !important;
+  background: #034cbc !important;
+  color: #fff !important;
+  border: none !important;
+  font-weight: 500;
+}
+
+.fc-button-primary:not(:disabled):hover,
+.fc-button-primary:not(:disabled):focus {
+  background: #034cbc !important;
+}
+
+.fc-daygrid-event {
+  border-radius: 8px;
+  background: #e3f0ff !important;
+  color: #034cbc !important;
+  border: none;
+  padding: 2px 8px;
+  font-size: 0.95rem;
+}
+
+.fc .fc-col-header-cell-cushion {
+  font-weight: 500;
+  color: #022873;
+}
+
+.fc .fc-daygrid-day-number {
+  font-weight: 600;
+  color: #022873;
+}
+
+/* Spacing between the previous and next arrow */
+.fc .fc-prev-button {
+  margin-right: 0.5rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.fc .fc-next-button {
+  margin-left: 0.5rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for both arrows */
+.fc .fc-prev-button:hover,
+.fc .fc-next-button:hover {
+  background-color: #022873 !important;
+  color: #fff !important;
+}
+
+/* Spacing between Month, Week, Day buttons */
+.fc .fc-button-group .fc-button {
+  margin-right: 0.75rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.fc .fc-button-group .fc-button:last-child {
+  margin-right: 0;
+}
+
+.fc .fc-button-group .fc-button:hover {
+  background-color: #022873 !important;
+  color: #fff !important;
+}
+
+/* Create Appointment */ 
+.btn-create-new {
+  background-color: #034cbc;
+  color: white;
+  border: none;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+  padding: 0.6rem 2.5rem;
+}
+
+.btn-create-new:hover,
+.btn-create-new:focus {
+  background-color: #022873;
+  color: white;
+}
+
+/* Doctor Card Styles */
+.professional-card {
+  border: 2px solid #e3e6f0;
+  border-radius: 1rem;
+  background: #f8fafc;
+  box-shadow: 0 2px 8px rgba(2, 40, 115, 0.08);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+.professional-card:hover, .professional-card.selected {
+  border-color: #034cbc;
+  box-shadow: 0 4px 16px rgba(3, 76, 188, 0.18);
+  background: #eaf1fb;
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* All appointments text (appointments.html) */
+.text-primary {
+  color: #022873 !important; /* or any color you prefer */
+}
+
+/* Appointment List Date & Time Badges (appointments.html) */
+.appointment-date-badge {
+  background: #0047AB !important;
+  color: #fff !important;
+}
+.appointment-time-badge {
+  background: #D72660 !important; /* vibrant magenta for contrast */
+  color: #fff !important;
+}
+
+/* OPENFDA Chatbot CSS (medication.html) */
+.chat-container {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column-reverse; /* icon below chat box */
+  align-items: flex-start;
+}
+
+/* Floating icon button */
+.chat-toggle {
+  width: 55px;
+  height: 55px;
+  background-color: #0047AB;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+.chat-toggle:hover {
+  background-color: #003a91;
+}
+.chat-toggle.hidden {
+  display: none;
+}
+
+/* Chatbox container */
+.chat-box {
+  width: 320px;
+  max-height: 440px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: none !important;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 0.75rem;
+}
+
+/* Header bar */
+.chat-box .card-header {
+  background-color: #0047AB !important;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+/* Close button */
+.chat-box .btn-close {
+  filter: invert(1);
+}
+
+/* Chat message area */
+#messages {
+  overflow-y: auto;
+  flex-grow: 1;
+  max-height: 280px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+}
+.message-user {
+  text-align: right;
+  color: #0047AB;
+  margin-bottom: 6px;
+}
+.message-bot {
+  text-align: left;
+  color: #6c757d;
+  margin-bottom: 6px;
+}
+
+/* Input form */
+.chat-box form {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.chat-box input[type="text"] {
+  flex-grow: 1;
+  padding: 0.45rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 0.9rem;
+}
+.chat-box input[type="text"]:focus {
+  border-color: #0047AB;
+  box-shadow: 0 0 0 0.15rem rgba(0, 71, 171, 0.25);
+}
+.chat-box button[type="submit"] {
+  background-color: #0047AB;
+  color: white;
+  font-weight: 500;
+  border: none;
+  padding: 0.45rem 1rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s ease-in-out;
+}
+.chat-box button[type="submit"]:hover {
+  background-color: #003a91;
+}
+
+/* (index.html) Core features static cards design */
+.feature-card {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.feature-card-blue {
+  background-color: #024C8B;
+  color: white;
+}
+
+.feature-card-light {
+  background-color: #007b8a;
+  color: white;
+}
+
+.feature-card h5 {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+.feature-card p {
+  font-size: 0.9rem;
+  text-align: left;
+  margin-bottom: 0;
+}

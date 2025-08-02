@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication - MerderkaLife</title>
+    <!-- Normalize.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <!-- Bootstrap 5.3.7 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Bootstrap Icons 1.11.3 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Lottie Animation Player Script -->
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <!-- css/style.css CSS linking-->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5P55V59G');</script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P55V59G"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Lottie Animation Loading -->
+    <div id="loader-overlay" class="loader-overlay">
+        <dotlottie-player
+            src="https://lottie.host/d03f2255-5a0e-4ba0-a43d-79895e8620e0/urZVzLRRGL.lottie"
+            background="transparent"
+            speed="1"
+            style="width: 300px; height: 300px"
+            loop
+            autoplay>
+        </dotlottie-player>
+    </div>
+
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/MerderkaLife.png" alt="MerderkaLife Logo" class="logo me-2">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#">Lifestyle Tracking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="medication.html">Medication Tracker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#">Medical Records</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-colour ms-3">Manage Appointment</a>
+            </div>
+        </div>
+    </nav>
+    <!-- End of Sticky Navigation Bar -->
+
+    <main>
+        <!--Username Greeting -->
+        <div class="container mt-4">
+            <div class="row">
+                <h2 class="fw-bold mb-0">Good day</h2>
+                <h2 id="usernameText" class="username-colour fw-bold">User!</h2>
+            </div>
+        </div>
+
+        <!-- Medication Chatbot -->
+        <aside id="chat-container" class="chat-container position-fixed start-0 bottom-0 p-3">
+            <!-- Chat Toggle Button -->
+            <button id="chat-button" class="btn btn-primary rounded-circle shadow chat-toggle" aria-label="Open Medication Chat">
+                <i class="bi bi-chat-dots-fill fs-5"></i>
+            </button>
+
+            <!-- Chat Window -->
+            <section id="chat-box" class="card d-none chat-box">
+                    <header class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">Medication Assistant</h6>
+                        <button class="btn-close btn-close-white" id="close-chat" aria-label="Close Chat"></button>
+                    </header>
+                    <div class="card-body messages" id="messages" aria-live="polite">
+                        <div class="text-muted small">Ask me about medication side effects<br>e.g. ibuprofen, alprazolam</div>
+                    </div>
+                    <div class="p-2 border-top">
+                        <form id="chat-form" class="d-flex gap-2">
+                            <input type="text" id="chat-input" class="form-control" placeholder="Enter medication name" required>
+                            <!-- Send message button -->
+                            <button class="btn btn-primary" type="submit">Send</button>
+                        </form>
+                    </div>
+            </section>
+        </aside>
+
+        <!-- Dynamic medication record fetching from DB -->
+         <div class="container mt-4">
+            <div id="medication-list" class="row g-3"></div>
+        </div>
+
+        <!-- Edit Medication Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1">
+            <div class="modal-dialog">
+                <form class="modal-content p-4" id="editForm">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Edit Medication</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Hidden Input Fields -->
+                    <input type="hidden" id="editMedicationId">
+                    <input type="hidden" id="editScheduleId">
+
+                    <!-- Icon Selection -->
+                    <section class="text-center mb-3">
+                    <p class="mb-2 fw-semibold">Choose an Icon:</p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <label>
+                        <input type="radio" name="editIconType" value="capsule" class="d-none" required>
+                            <div class="icon-select-wrapper">
+                                <img src="assets/capsule.png" alt="Capsule">
+                            </div>
+                        </label>
+                        <label>
+                        <input type="radio" name="editIconType" value="tablet" class="d-none">
+                            <div class="icon-select-wrapper">
+                                <img src="assets/tablet.png" alt="Tablet">
+                            </div>
+                        </label>
+                        <label>
+                        <input type="radio" name="editIconType" value="syringe" class="d-none">
+                            <div class="icon-select-wrapper">
+                                <img src="assets/syringe.png" alt="Syringe">
+                            </div>
+                        </label>
+                        <label>
+                        <input type="radio" name="editIconType" value="inhaler" class="d-none">
+                            <div class="icon-select-wrapper">
+                                <img src="assets/inhaler.png" alt="Inhaler">
+                            </div>
+                        </label>
+                    </div>
+                    </section>
+
+                    <!-- Medication Name -->
+                    <section class="mb-3">
+                        <label for="editMedicationName" class="visually-hidden">Medication Name</label>
+                        <input type="text" id="editMedicationName" class="form-control input-outline" placeholder="Medication Name" required>
+                    </section>
+
+                    <!-- Dosage -->
+                    <section class="mb-3">
+                        <label for="editDosage" class="visually-hidden">Dosage</label>
+                        <input type="text" id="editDosage" class="form-control input-outline" placeholder="Single Dose, e.g. 1 tablet" required>
+                    </section>
+
+                    <!-- Frequency Buttons -->
+                    <section class="mb-3 text-center">
+                        <fieldset class="btn-group" role="group" aria-label="Medication Frequency">
+                            <input type="radio" class="btn-check" name="editFrequency" id="editAnytime" value="Anytime" required>
+                            <label class="btn btn-outline-dark" for="editAnytime">Anytime</label>
+
+                            <input type="radio" class="btn-check" name="editFrequency" id="editBeforeMeals" value="Before meals">
+                            <label class="btn btn-outline-dark" for="editBeforeMeals">Before meals</label>
+
+                            <input type="radio" class="btn-check" name="editFrequency" id="editAfterMeals" value="After meals">
+                            <label class="btn btn-outline-dark" for="editAfterMeals">After meals</label>
+                        </fieldset>
+                    </section>
+
+                    <!-- Start Date -->
+                    <section class="mb-3">
+                        <label for="editStartDate" class="form-label">Start Date</label>
+                        <input type="date" id="editStartDate" class="form-control input-outline" required>
+                    </section>
+
+                    <!-- End Date -->
+                    <section class="mb-3">
+                        <label for="editEndDate" class="form-label">End Date</label>
+                        <input type="date" id="editEndDate" class="form-control input-outline" required>
+                    </section>
+
+                    <!-- Dose Time -->
+                    <section class="mb-3">
+                        <label for="editDoseTime" class="form-label">Dose Time</label>
+                        <input type="time" id="editDoseTime" class="form-control input-outline" required>
+                    </section>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <button type="submit" class="btn btn-next">Update</button>
+                </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this medication?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="confirmDeleteBtn" class="btn btn-danger">Yes, Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content text-center">
+                    <div class="modal-body">
+                        <p id="successMessage" class="fw-bold text-success fs-5"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mark As Taken Modal -->
+        <div class="modal fade" id="takenModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content p-4">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold">Mark As Taken</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                        <div class="modal-body">
+                            <p><strong>Medication:</strong> <span id="takenMedName"></span></p>
+                            <p><strong>Dosage:</strong> <span id="takenDosage"></span></p>
+                            <p><strong>Frequency:</strong> <span id="takenFrequency"></span></p>
+                            <p><strong>Time:</strong> <span id="takenDoseTime"></span></p>
+                            <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="markTakenCheckbox">
+                            <label class="form-check-label" for="markTakenCheckbox">
+                                Mark this dose as taken
+                            </label>
+                            <div class="modal-footer border-0 justify-content-center">
+                                <button id="confirmTakenBtn" class="btn btn-success" disabled>Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Add Medication Button -->
+        <a href="add-medication.html" class="btn btn-colour rounded-circle shadow-lg add-medication-btn">
+            <i class="bi bi-plus-lg fs-4"></i>
+        </a>
+    </main>
+
+     <!-- Bootstrap 5.3.7 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <!-- External APIs and connecting to JS files -->
+    <script src="js/index.js"></script>
+    <script src="js/medication.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>

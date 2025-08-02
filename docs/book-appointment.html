@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="css/style.css">
+<div class="container py-4">
+  <h2 class="mb-4 text-center fw-bold text-primary">Book a Medical Appointment</h2>
+  <form id="appointmentForm" class="appointment-form mx-auto">
+    <!-- Step 1: Choose Clinic -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold">Choose a Clinic</label>
+      <div class="row g-3" id="clinicCards">
+            <!-- JS will render clinic cards here -->
+          </div>
+        </div>
+
+        <!-- Step 2: Appointment Type -->
+        <div class="mb-4">
+          <label for="type" class="form-label fw-semibold">Type of Appointment</label>
+          <select id="type" class="form-select" required>
+            <option value="">-- Select Type --</option>
+            <!-- JS will populate -->
+          </select>
+        </div>
+
+        <!-- Step 3: Choose Doctor -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold">Choose Doctor</label>
+          <div class="row g-3" id="doctorCards">
+            <!-- JS will render doctor cards here -->
+          </div>
+        </div>
+
+        <!-- Step 4: Date & Time -->
+        <div class="row mb-4">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <label for="date" class="form-label fw-semibold">Date</label>
+            <input type="date" id="date" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label for="time" class="form-label fw-semibold">Time</label>
+            <select id="time" class="form-select" required>
+              <option value="">-- Select Time --</option>
+              <!-- JS will populate time slots here -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Step 5: Notes -->
+        <div class="mb-4">
+          <label for="notes" class="form-label fw-semibold">Optional Notes</label>
+          <textarea id="notes" class="form-control" rows="3" placeholder="Add a message for the doctor..."></textarea>
+        </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary btn-lg px-5">Confirm Appointment</button>
+    </div>
+    <p id="response" class="mt-3 text-center"></p>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/book-appointment.js"></script>
