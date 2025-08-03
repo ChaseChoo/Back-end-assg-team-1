@@ -590,7 +590,7 @@ class SimpleTranslator {
         if (!token) return;
 
         try {
-            await fetch('/api/users/language-preference', {
+            await fetch('/api/users/language', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -77,6 +77,8 @@ app.get("/api/test", (req, res) => {
 // Routes for Medications
 app.get("/api/medication-records", authenticateToken, medicationController.getAllScheduledMedications); // medication.html list of medication records
 app.post("/api/medication", authenticateToken, validateMedication, medicationController.createMedication); // add-medication.html
+// Temporary backward compatibility route (will be removed later)
+app.post("/api/add-medication", authenticateToken, validateMedication, medicationController.createMedication); // backward compatibility
 app.post("/api/medication-schedule", authenticateToken, validateSchedule, medicationController.createSchedule); // schedule-medication.html
 app.put("/api/medication-schedule/:scheduleId/mark-taken", authenticateToken, validateMarkAsTaken, medicationController.updateMarkAsTaken); // Setting the markAsTaken as (1) or (0)
 app.put("/api/medication/:id", authenticateToken, validateMedicationId, validateMedicationUpdate, medicationController.updateMedication);

@@ -63,27 +63,35 @@ h5 { font-size: 1.4rem; }
 h6 { font-size: 1.2rem; }
 
 .text-gradient {
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  color: #667eea; /* Choose your preferred solid color */
 }
+
 
 /* Modern Glassmorphism Card */
-.glass-card {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-md);
-  transition: var(--transition-smooth);
+/* Enlarged Glass Card Icon */
+.glass-card i.fs-1 {
+  font-size: 3rem !important; /* Override Bootstrap's fs-1 */
 }
 
-.glass-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
+/* Larger Heading Inside Glass Card */
+.glass-card h6 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
+
+/* Bigger Small Text Inside Glass Card */
+.glass-card small.text-muted {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #667eea !important; /* Optional: match your theme blue */
+}
+
 
 /* Modern Navigation */
 .navbar {
@@ -142,14 +150,20 @@ h6 { font-size: 1.2rem; }
   background: var(--primary-gradient);
   border: none;
   color: white;
-  padding: 12px 32px;
+  padding: 14px 36px;
   border-radius: var(--border-radius);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.05rem;
   transition: var(--transition-bounce);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
   position: relative;
   overflow: hidden;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
 }
 
 .btn-modern-primary::before {
@@ -169,9 +183,14 @@ h6 { font-size: 1.2rem; }
 }
 
 .btn-modern-primary:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
   color: white;
+}
+
+.btn-modern-primary:active {
+  transform: translateY(-2px) scale(1.01);
+  transition: var(--transition-smooth);
 }
 
 .btn-modern-primary span {
@@ -183,32 +202,44 @@ h6 { font-size: 1.2rem; }
   background: var(--secondary-gradient);
   border: none;
   color: white;
-  padding: 12px 32px;
+  padding: 14px 36px;
   border-radius: var(--border-radius);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.05rem;
   transition: var(--transition-bounce);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(240, 147, 251, 0.3);
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
 }
 
 .btn-modern-secondary:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 30px rgba(240, 147, 251, 0.4);
   color: white;
 }
 
 .btn-modern-outline {
-  background: transparent;
-  border: 2px solid;
-  border-image: var(--primary-gradient) 1;
-  color: var(--text-primary);
-  padding: 10px 30px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  color: #667eea;
+  padding: 12px 34px;
   border-radius: var(--border-radius);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.05rem;
   transition: var(--transition-smooth);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
 }
 
 .btn-modern-outline::before {
@@ -230,17 +261,68 @@ h6 { font-size: 1.2rem; }
 .btn-modern-outline:hover {
   color: white;
   border-color: transparent;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-modern-outline:active {
+  transform: translateY(-1px) scale(1.01);
+  transition: var(--transition-smooth);
+}
+
+/* Button Groups & Spacing */
+.d-flex.gap-3 .btn-modern-primary,
+.d-flex.gap-3 .btn-modern-outline {
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  flex-shrink: 0;
+}
+
+/* Button Focus States */
+.btn-modern-primary:focus,
+.btn-modern-outline:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+}
+
+/* Button Text Enhancement */
+.btn-modern-primary i,
+.btn-modern-outline i {
+  font-size: 1.1em;
+  vertical-align: middle;
+}
+
+/* Hero Section Button Specific Styling */
+.hero-content .btn-modern-primary {
+  background: var(--primary-gradient);
+  color: white;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+.hero-content .btn-modern-outline {
+  background: rgba(255, 255, 255, 0.95);
+  color: #667eea;
+  font-weight: 700;
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  text-shadow: none;
+}
+
+.hero-content .btn-modern-outline:hover {
+  background: var(--primary-gradient);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Hero Section */
 .hero-section {
   min-height: 100vh;
   background: linear-gradient(135deg, 
-    rgba(102, 126, 234, 0.1) 0%, 
-    rgba(118, 75, 162, 0.1) 25%,
-    rgba(240, 147, 251, 0.1) 50%,
-    rgba(245, 87, 108, 0.1) 75%,
-    rgba(79, 172, 254, 0.1) 100%);
+    rgba(102, 126, 234, 0.08) 0%, 
+    rgba(118, 75, 162, 0.08) 25%,
+    rgba(240, 147, 251, 0.08) 50%,
+    rgba(245, 87, 108, 0.08) 75%,
+    rgba(79, 172, 254, 0.08) 100%);
   display: flex;
   align-items: center;
   position: relative;
@@ -254,9 +336,9 @@ h6 { font-size: 1.2rem; }
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(102,126,234,0.1)"/><stop offset="100%" style="stop-color:rgba(0,0,0,0)"/></radialGradient></defs><circle cx="200" cy="200" r="150" fill="url(%23a)"/><circle cx="800" cy="300" r="100" fill="url(%23a)"/><circle cx="600" cy="700" r="120" fill="url(%23a)"/></svg>') no-repeat;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(102,126,234,0.12)"/><stop offset="100%" style="stop-color:rgba(0,0,0,0)"/></radialGradient><radialGradient id="b" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(240,147,251,0.08)"/><stop offset="100%" style="stop-color:rgba(0,0,0,0)"/></radialGradient></defs><circle cx="200" cy="200" r="150" fill="url(%23a)"/><circle cx="800" cy="300" r="100" fill="url(%23b)"/><circle cx="600" cy="700" r="120" fill="url(%23a)"/></svg>') no-repeat;
   background-size: cover;
-  opacity: 0.3;
+  opacity: 0.4;
   z-index: 0;
 }
 
@@ -270,13 +352,17 @@ h6 { font-size: 1.2rem; }
   font-weight: 800;
   margin-bottom: 1.5rem;
   line-height: 1.1;
+  color: var(--text-primary);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero-subtitle {
   font-size: 1.4rem;
-  color: var(--text-secondary);
+  color: #5a6c7d;
   margin-bottom: 2rem;
   line-height: 1.5;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .hero-image {
@@ -472,6 +558,27 @@ h6 { font-size: 1.2rem; }
   h1 { font-size: 2.5rem; }
   h2 { font-size: 2rem; }
   h3 { font-size: 1.8rem; }
+  
+  /* Responsive Button Styling */
+  .btn-modern-primary,
+  .btn-modern-outline {
+    padding: 12px 28px;
+    font-size: 1rem;
+    min-width: 140px;
+  }
+  
+  .d-flex.gap-3 {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem !important;
+  }
+  
+  .d-flex.gap-3 .btn-modern-primary,
+  .d-flex.gap-3 .btn-modern-outline {
+    width: 100%;
+    max-width: 280px;
+    margin: 0.25rem 0;
+  }
 }
 /* Modern Card Variants */
 .modern-feature-card {
@@ -1174,3 +1281,34 @@ input[type="radio"]:checked + .icon-select-modern {
         transform: scale(0.95);
     }
 }
+
+.nav-link {
+  color: #000 !important;
+}
+#fromDate, 
+#toDate {
+  color: #ffffff !important;
+}
+
+.text-muted {
+  color: #667eea !important;
+}
+.mt-2 {
+  color: #667eea !important;
+}
+
+.lead, .mb-4 {
+  color: #667eea !important;
+}
+.form-label.form-label-modern {
+  color: #667eea !important;
+}
+.form-control.form-control-modern {
+  color: #667eea !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.btn.btn-next{
+  color: #667eea !important;
+}
+/* Optional: Adjust placeholder and calendar icon colors for consistenc*

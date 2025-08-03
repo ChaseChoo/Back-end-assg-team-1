@@ -1,13 +1,8 @@
 const Joi = require("joi"); // Import Joi for validation
 
 // Validation schema for Medication (used for POST)
+// Note: userId is extracted from JWT token by authenticateToken middleware, not from request body
 const medicationSchema = Joi.object({
-  userId: Joi.number().integer().positive().required().messages({
-    "number.base": "User ID must be a number",
-    "number.integer": "User ID must be an integer",
-    "number.positive": "User ID must be a positive number",
-    "any.required": "User ID is required",
-  }),
   medicationName: Joi.string().max(100).required().messages({
     "string.base": "Medication name must be a string",
     "string.empty": "Medication name cannot be empty",
@@ -133,13 +128,9 @@ function validateMedicationId(req, res, next) {
 }
 
 // Validation schema for to validate medication schedules (POST/PUT) requests
+// Note: userId is extracted from JWT token by authenticateToken middleware, not from request body
 function validateSchedule(req, res, next) {
   const schema = Joi.object({
-    userId: Joi.number().integer().positive().required().messages({
-      "any.required": "User ID is required",
-      "number.base": "User ID must be a number",
-      "number.positive": "User ID must be a positive number"
-    }),
     medicationId: Joi.number().integer().positive().required().messages({
       "any.required": "Medication ID is required",
       "number.base": "Medication ID must be a number",

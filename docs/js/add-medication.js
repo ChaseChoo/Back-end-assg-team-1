@@ -77,7 +77,9 @@ function setupFormValidation() {
       try {
         showLoadingState();
         
-        const response = await fetch("/api/add-medication", {
+        console.log('Submitting medication data:', data); // Debug log
+        
+        const response = await fetch("/api/medication", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -86,12 +88,26 @@ function setupFormValidation() {
           body: JSON.stringify(data)
         });
 
+        console.log('Response status:', response.status); // Debug log
+        console.log('Response ok:', response.ok); // Debug log
+
         if (response.ok) {
           const result = await response.json();
+          console.log('Success result:', result); // Debug log
           showSuccessModal(result);
         } else {
-          const error = await response.json();
-          showErrorMessage(error.error || "Failed to add medication");
+          // Log the full response for debugging
+          const responseText = await response.text();
+          console.log('Error response text:', responseText); // Debug log
+          
+          try {
+            const error = JSON.parse(responseText);
+            console.log('Parsed error:', error); // Debug log
+            showErrorMessage(error.error || "Failed to add medication");
+          } catch (parseError) {
+            console.log('Error parsing response:', parseError); // Debug log
+            showErrorMessage("Failed to add medication");
+          }
         }
       } catch (error) {
         showErrorMessage("Network error. Please try again.");
@@ -252,12 +268,28 @@ function hideLoadingState() {
 
 // Show success modal
 function showSuccessModal(result) {
+  console.log('showSuccessModal called with result:', result); // Debug log
+  
   const modal = new bootstrap.Modal(document.getElementById('successModal'));
   modal.show();
   
-  // Set up redirect to schedule page
-  document.getElementById('goToSchedule').addEventListener('click', () => {
-    window.location.href = `schedule-medication.html?medicationId=${result.medicationId}`;
+  // Remove any existing event listeners to prevent duplicates
+  const goToScheduleBtn = document.getElementById('goToSchedule');
+  const newBtn = goToScheduleBtn.cloneNode(true);
+  goToScheduleBtn.parentNode.replaceChild(newBtn, goToScheduleBtn);
+  
+  // Add new event listener for redirect
+  newBtn.addEventListener('click', () => {
+    console.log('Redirect button clicked, result:', result); // Debug log
+    
+    if (result && result.medicationId) {
+      console.log('Redirecting to schedule page with ID:', result.medicationId); // Debug log
+      window.location.href = `schedule-medication.html?medicationId=${result.medicationId}`;
+    } else {
+      console.log('No medicationId found, redirecting to medication list'); // Debug log
+      // Fallback to medication list if no ID available
+      window.location.href = 'medication.html';
+    }
   });
 }
 

@@ -41,39 +41,66 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <!-- Loading Animation -->
-    <div id="loader-overlay" class="loader-overlay">
-        <img src="assets/modern-loading.svg" alt="Loading..." style="width: 200px; height: 200px;">
-    </div>
-
     <!-- Sticky Navigation Bar -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container animate-fade-up">
+     <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
-                    <i class="bi bi-heart-pulse"></i>
-                </div>
+                <img src="https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-fad8-61f7-a183-79614682dfc0/raw?se=2025-08-03T09%3A59%3A42Z&sp=r&sv=2024-08-04&sr=b&scid=c73924e0-4a00-5c7d-9d2d-0abd9e6afc60&skoid=f28c0102-4d9d-4950-baf0-4a8e5f6cf9d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-02T19%3A16%3A31Z&ske=2025-08-03T19%3A16%3A31Z&sks=b&skv=2024-08-04&sig=8KGMUkxZphariwbOP6vq3HtEGgTsEcXfsdu1/LdnTjQ%3D" alt="SilverConnect Logo" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
                 <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <i class="bi bi-list fs-3"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="index.html">Home</a>
+                        <a class="nav-link" href="meal-logging.html">
+                            <i class="bi bi-journal-medical me-1"></i>Meal Logging
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="medication.html">Medication</a>
+                        <a class="nav-link active" href="medication.html">
+                            <i class="bi bi-capsule me-1"></i>Medication Tracker
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="book-appointment.html">Appointments</a>
+                        <a class="nav-link" href="medication-inventory.html">
+                            <i class="bi bi-archive me-1"></i>Medicine Inventory
+                        </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="family-management.html">
+                            <i class="bi bi-people me-1"></i>Family & Support
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="healthcare-appointments.html">
+                            <i class="bi bi-calendar-check me-1"></i>Appointments
+                        </a>
+                    </li>
+                    <!-- Modern Language Switcher -->
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-modern-outline btn-sm dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-globe me-1"></i>
+                                <span id="currentLanguageText">English</span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                                <li><a class="dropdown-item" href="#" onclick="switchToEnglish()">
+                                    <i class="bi bi-check me-2" id="englishCheck"></i>English
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="switchToChinese()">
+                                    <i class="bi bi-check invisible me-2" id="chineseCheck"></i>中文 (Chinese)
+                                </a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Account Area -->
+                    <li class="nav-item" id="navbarAuthArea"></li>
                 </ul>
-                <a href="user-login.html" class="btn-modern btn-outline-primary ms-3">Sign In</a>
             </div>
         </div>
     </nav>
@@ -177,49 +204,88 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer text-white">
-        <div class="container pt-5 pb-3">
-        <div class="row text-start">
-            <section class="col-12 col-sm-6 col-md-3 mb-4">
-            <h2 class="h6 fw-bold text-uppercase">MerderkaLife</h2>
-            <address>
-                535 Clementi Road,<br>
-                Singapore 599489
-            </address>
-            <p class="mb-0">Mon-Fri: 10am-8pm,<br>Sat-Sun: 11am-6pm</p>
-            </section>
-
-            <section class="col-12 col-sm-6 col-md-3 mb-4">
-            <h2 class="h6 fw-bold text-uppercase">About</h2>
-            <ul class="list-unstyled">
-                <li><a href="about.html" class="text-white text-decoration-none">About Us</a></li>
-                <li><a href="#" class="text-white text-decoration-none">Health Blogs</a></li>
-                <li><a href="#" class="text-white text-decoration-none">Manage Appointments</a></li>
-            </ul>
-            </section>
-
-            <section class="col-12 col-sm-6 col-md-3 mb-4">
-            <h2 class="h6 fw-bold text-uppercase">Contact</h2>
-            <ul class="list-unstyled">
-                <li><a href="contact.html" class="text-white text-decoration-none">Contact Us</a></li>
-                <li><a href="mailto:support@merderkalife.com" class="text-white text-decoration-none">support@merderkalife.com</a></li>
-                <li><a href="tel:+6564606999" class="text-white text-decoration-none">+65 6460 6999</a></li>
-            </ul>
-            </section>
-
-            <section class="col-12 col-sm-6 col-md-3 mb-4">
-            <h2 class="h6 fw-bold text-uppercase">Others</h2>
-            <ul class="list-unstyled">
-                <li><a href="faq.html" class="text-white text-decoration-none">FAQ</a></li>
-                <li><a href="credits.html" class="text-white text-decoration-none">Credits</a></li>
-                <li><a href="privacy.html" class="text-white text-decoration-none">Privacy Policy</a></li>
-            </ul>
-            </section>
-        </div>
-
-        <div class="text-center pt-3">
-            <small>Â© 2025 MerderkaLife. All rights reserved.</small>
-        </div>
+    <footer class="footer">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-fad8-61f7-a183-79614682dfc0/raw?se=2025-08-03T09%3A59%3A42Z&sp=r&sv=2024-08-04&sr=b&scid=c73924e0-4a00-5c7d-9d2d-0abd9e6afc60&skoid=f28c0102-4d9d-4950-baf0-4a8e5f6cf9d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-02T19%3A16%3A31Z&ske=2025-08-03T19%3A16%3A31Z&sks=b&skv=2024-08-04&sig=8KGMUkxZphariwbOP6vq3HtEGgTsEcXfsdu1/LdnTjQ%3D" alt="SilverConnect Logo" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
+                        <h5 class="text-light mb-0">SilverConnect</h5>
+                    </div>
+                    <p class="text-light mb-4">Empowering seniors with intelligent healthcare management solutions for a healthier, more connected life.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-light mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="medication.html" class="text-light text-decoration-none">Medication Tracker</a></li>
+                        <li class="mb-2"><a href="healthcare-appointments.html" class="text-light text-decoration-none">Appointments</a></li>
+                        <li class="mb-2"><a href="family-management.html" class="text-light text-decoration-none">Family Hub</a></li>
+                        <li class="mb-2"><a href="meal-logging.html" class="text-light text-decoration-none">Nutrition</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-light mb-3">Support</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Help Center</a></li>
+                        <li class="mb-2"><a href="credits.html" class="text-light text-decoration-none">Credits</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4">
+                    <h6 class="text-light mb-3">Contact Information</h6>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-geo-alt text-light me-3"></i>
+                        <div>
+                            <p class="text-light mb-0">Hougang 27 Road</p>
+                            <p class="text-light mb-0">Singapore 599489</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-telephone text-light me-3"></i>
+                        <a href="tel:+6564606999" class="text-light text-decoration-none">+65 6999 6999</a>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-envelope text-light me-3"></i>
+                        <a href="mailto:support@silverconnect.sg" class="text-light text-decoration-none">support@silverconnect.sg</a>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-clock text-light me-3"></i>
+                        <div>
+                            <p class="text-light mb-0">Mon-Fri: 9am-6pm</p>
+                            <p class="text-light mb-0">Sat-Sun: 10am-4pm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="border-light my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-light mb-0">&copy; 2025 SilverConnect. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-light mb-0">Designed with ❤️ for Seniors</p>
+                </div>
+            </div>
         </div>
     </footer>
     <!-- End of Footer -->

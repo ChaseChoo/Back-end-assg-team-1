@@ -83,7 +83,7 @@ async function fetchUserProfile() {
     if (!token) return;
     
     try {
-        const response = await fetch('/api/user-profile', {
+        const response = await fetch('/api/users/profile', {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'

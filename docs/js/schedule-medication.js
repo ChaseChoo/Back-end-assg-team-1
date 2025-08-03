@@ -9,11 +9,28 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Retrieve medication data values from sessionStorage (add-medication.html page)
-  const medicationId = sessionStorage.getItem("latestMedicationId");
+  // Get medicationId from URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const medicationId = urlParams.get('medicationId');
+  
+  console.log('URL medicationId:', medicationId); // Debug log
+  
+  // Fallback to sessionStorage if no URL parameter (for backward compatibility)
+  const medicationIdFromStorage = sessionStorage.getItem("latestMedicationId");
+  const finalMedicationId = medicationId || medicationIdFromStorage;
+  
+  console.log('Final medicationId:', finalMedicationId); // Debug log
+  
+  // If no medicationId found, redirect back to add medication page
+  if (!finalMedicationId) {
+    alert("No medication selected. Redirecting to add medication page.");
+    window.location.href = "add-medication.html";
+    return;
+  }
+  
+  // Retrieve other medication data from sessionStorage
   const medicationName = sessionStorage.getItem("latestMedicationName");
   const iconType = sessionStorage.getItem("latestIconType");
-  const userId = sessionStorage.getItem("latestUserId");
 
   // Populate UI with medication information
   // Dynamically display medication name from (add-medication.html page)
@@ -66,11 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // Gather all doseTime inputs in HH:MM:SS format for SQL
       const doseTimeInputs = document.querySelectorAll(".doseTimeInput");
       const schedules = [...doseTimeInputs].map(input => ({
-        userId: parseInt(userId),                // Convert string to integer for database
-        medicationId: parseInt(medicationId),    // Convert string to integer for database
-        doseTime: input.value + ":00",           // set as HH:MM:SS format for SQL
+        medicationId: parseInt(finalMedicationId),    // Convert string to integer for database
+        doseTime: input.value + ":00",                // set as HH:MM:SS format for SQL
         reminderEnabled
       }));
+
+      console.log('Submitting schedules:', schedules); // Debug log
 
       try {
         // Send multiple POST requests to create all medication schedules

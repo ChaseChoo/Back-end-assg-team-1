@@ -22,45 +22,66 @@
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </head>
 <body>
-    <!-- Loading Animation -->
-    <div id="loader-overlay" class="loader-overlay">
-        <dotlottie-player
-            src="https://lottie.host/d03f2255-5a0e-4ba0-a43d-79895e8620e0/urZVzLRRGL.lottie"
-            background="transparent"
-            speed="1"
-            style="width: 300px; height: 300px"
-            loop
-            autoplay>
-        </dotlottie-player>
-    </div>
-
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
-                    <i class="bi bi-heart-pulse"></i>
-                </div>
+                <img src="https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-fad8-61f7-a183-79614682dfc0/raw?se=2025-08-03T09%3A59%3A42Z&sp=r&sv=2024-08-04&sr=b&scid=c73924e0-4a00-5c7d-9d2d-0abd9e6afc60&skoid=f28c0102-4d9d-4950-baf0-4a8e5f6cf9d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-02T19%3A16%3A31Z&ske=2025-08-03T19%3A16%3A31Z&sks=b&skv=2024-08-04&sig=8KGMUkxZphariwbOP6vq3HtEGgTsEcXfsdu1/LdnTjQ%3D" alt="SilverConnect Logo" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
                 <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-3"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="index.html">Home</a>
+                        <a class="nav-link" href="meal-logging.html">
+                            <i class="bi bi-journal-medical me-1"></i>Meal Logging
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="medication.html">Medication Tracker</a>
+                        <a class="nav-link active" href="medication.html">
+                            <i class="bi bi-capsule me-1"></i>Medication Tracker
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="book-appointment.html">Appointments</a>
+                        <a class="nav-link" href="medication-inventory.html">
+                            <i class="bi bi-archive me-1"></i>Medicine Inventory
+                        </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="family-management.html">
+                            <i class="bi bi-people me-1"></i>Family & Support
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="healthcare-appointments.html">
+                            <i class="bi bi-calendar-check me-1"></i>Appointments
+                        </a>
+                    </li>
+                    <!-- Modern Language Switcher -->
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-modern-outline btn-sm dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-globe me-1"></i>
+                                <span id="currentLanguageText">English</span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                                <li><a class="dropdown-item" href="#" onclick="switchToEnglish()">
+                                    <i class="bi bi-check me-2" id="englishCheck"></i>English
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="switchToChinese()">
+                                    <i class="bi bi-check invisible me-2" id="chineseCheck"></i>中文 (Chinese)
+                                </a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Account Area -->
+                    <li class="nav-item" id="navbarAuthArea"></li>
                 </ul>
-                <div id="navbarAuthArea"></div>
             </div>
         </div>
     </nav>
@@ -110,7 +131,7 @@
                                     <div class="icon-selection-grid">
                                         <!-- Custom SVG Icons -->
                                         <label class="icon-option">
-                                            <input type="radio" name="iconType" value="pills" required>
+                                            <input type="radio" name="iconType" value="tablet" required>
                                             <div class="icon-wrapper">
                                                 <svg viewBox="0 0 64 64" class="medication-icon">
                                                     <defs>
@@ -123,12 +144,12 @@
                                                     <ellipse cx="32" cy="32" rx="18" ry="10" fill="white" opacity="0.3"/>
                                                     <rect x="31" y="20" width="2" height="24" fill="white" opacity="0.5"/>
                                                 </svg>
-                                                <span>Pills</span>
+                                                <span>Tablet</span>
                                             </div>
                                         </label>
 
                                         <label class="icon-option">
-                                            <input type="radio" name="iconType" value="capsules">
+                                            <input type="radio" name="iconType" value="capsule">
                                             <div class="icon-wrapper">
                                                 <svg viewBox="0 0 64 64" class="medication-icon">
                                                     <defs>
@@ -143,12 +164,12 @@
                                                     <circle cx="32" cy="24" r="1.5" fill="white" opacity="0.6"/>
                                                     <circle cx="38" cy="30" r="1.8" fill="white" opacity="0.6"/>
                                                 </svg>
-                                                <span>Capsules</span>
+                                                <span>Capsule</span>
                                             </div>
                                         </label>
 
                                         <label class="icon-option">
-                                            <input type="radio" name="iconType" value="liquid">
+                                            <input type="radio" name="iconType" value="inhaler">
                                             <div class="icon-wrapper">
                                                 <svg viewBox="0 0 64 64" class="medication-icon">
                                                     <defs>
@@ -164,12 +185,12 @@
                                                     <circle cx="34" cy="26" r="0.8" fill="white" opacity="0.8"/>
                                                     <circle cx="32" cy="36" r="1.2" fill="white" opacity="0.8"/>
                                                 </svg>
-                                                <span>Liquid</span>
+                                                <span>Inhaler</span>
                                             </div>
                                         </label>
 
                                         <label class="icon-option">
-                                            <input type="radio" name="iconType" value="injection">
+                                            <input type="radio" name="iconType" value="syringe">
                                             <div class="icon-wrapper">
                                                 <svg viewBox="0 0 64 64" class="medication-icon">
                                                     <defs>
@@ -184,7 +205,7 @@
                                                     <circle cx="32" cy="48" r="2" fill="white" opacity="0.4"/>
                                                     <rect x="31" y="20" width="2" height="15" fill="white" opacity="0.3"/>
                                                 </svg>
-                                                <span>Injection</span>
+                                                <span>Syringe</span>
                                             </div>
                                         </label>
                                     </div>
@@ -256,9 +277,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Hidden Fields -->
-                                <input type="hidden" name="userId" value="1">
-
                                 <!-- Submit Button -->
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-modern-primary btn-lg px-5">
@@ -283,9 +301,9 @@
                         <i class="bi bi-check-circle-fill text-gradient"></i>
                     </div>
                     <h4 class="text-gradient mb-3">Medication Added Successfully!</h4>
-                    <p class="text-muted mb-4">Your medication information has been saved. Let's set up your dosing schedule.</p>
+                    <p class="text-muted mb-4">Your medication has been saved. Now let's set up your dosing schedule.</p>
                     <button type="button" class="btn btn-modern-primary" id="goToSchedule">
-                        <i class="bi bi-calendar-plus me-2"></i>Set Schedule
+                        <i class="bi bi-clock me-2"></i>Set Up Schedule
                     </button>
                 </div>
             </div>
@@ -323,7 +341,7 @@
     <!-- Custom Scripts -->
     <script src="js/add-medication.js"></script>
     <script src="js/index.js"></script>
-
+    
     <style>
         /* Additional Modern Styles for Add Medication Page */
         .hero-section-compact {
@@ -542,286 +560,100 @@
             }
         }
     </style>
-</body>
-</html>
-                <label for="dosage" class="form-label visually-hidden">Dosage</label>
-                <input type="text" id="dosage" name="dosage" class="form-control input-outline" placeholder="Single Dose, e.g. 1 tablet" required>
-            </section>
-            <!-- End of Dosage -->
 
-            <!-- Medication Frequency -->
-            <section class="col-12 text-center">
-                <fieldset class="btn-group" role="group" aria-label="Medication Frequency">
-                <input type="radio" class="btn-check" name="frequency" id="anytime" value="Anytime" autocomplete="off" required>
-                <label class="btn btn-outline-dark" for="anytime">Anytime</label>
-
-                <input type="radio" class="btn-check" name="frequency" id="beforeMeals" value="Before meals" autocomplete="off">
-                <label class="btn btn-outline-dark" for="beforeMeals">Before meals</label>
-
-                <input type="radio" class="btn-check" name="frequency" id="afterMeals" value="After meals" autocomplete="off">
-                <label class="btn btn-outline-dark" for="afterMeals">After meals</label>
-                </fieldset>
-            </section>
-            <!-- End of Medication Frequency -->
-
-            <!-- Start Date -->
-            <section class="col-12">
-                <label for="startDate" class="form-label form-label-modern">Start Date</label>
-                <input type="date" id="startDate" name="startDate" class="form-control input-outline" required>
-            </section>
-            <!-- End of Start Date -->
-
-            <!-- End Date -->
-            <section class="col-12">
-                <label for="endDate" class="form-label form-label-modern">End Date</label>
-                <input type="date" id="endDate" name="endDate" class="form-control input-outline" required>
-            </section>
-            <!-- End of End Date -->
-
-            <!-- Hidden userId hardcoded to id of 1 until reg and login is created-->
-            <input type="hidden" name="userId" value="1">
-
-            <!-- Submit Button -->
-            <section class="col-12 text-center">
-                <button type="submit" class="btn btn-next">Next</button>
-                <div id="formFeedback" class="mt-2"></div>
-            </section>
-            <!-- End of Submit Button -->
-        </form>
-
-        <!-- Success Modal -->
-        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content text-center">
-                <div class="modal-body p-4">
-                    <i class="bi bi-check-circle-fill text-success fs-1"></i>
-                    <h5 class="mt-3 mb-2">Medication Added!</h5>
-                    <p class="mb-4">Your medication has been successfully recorded.</p>
-                    <button type="button" class="btn btn-modern-primary" id="goToSchedule">Next: Schedule</button>
+    <!-- Modern Footer -->
+    <footer class="footer">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-fad8-61f7-a183-79614682dfc0/raw?se=2025-08-03T09%3A59%3A42Z&sp=r&sv=2024-08-04&sr=b&scid=c73924e0-4a00-5c7d-9d2d-0abd9e6afc60&skoid=f28c0102-4d9d-4950-baf0-4a8e5f6cf9d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-02T19%3A16%3A31Z&ske=2025-08-03T19%3A16%3A31Z&sks=b&skv=2024-08-04&sig=8KGMUkxZphariwbOP6vq3HtEGgTsEcXfsdu1/LdnTjQ%3D" alt="SilverConnect Logo" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
+                        <h5 class="text-light mb-0">SilverConnect</h5>
+                    </div>
+                    <p class="text-light mb-4">Empowering seniors with intelligent healthcare management solutions for a healthier, more connected life.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
                 </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-light mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="medication.html" class="text-light text-decoration-none">Medication Tracker</a></li>
+                        <li class="mb-2"><a href="healthcare-appointments.html" class="text-light text-decoration-none">Appointments</a></li>
+                        <li class="mb-2"><a href="family-management.html" class="text-light text-decoration-none">Family Hub</a></li>
+                        <li class="mb-2"><a href="meal-logging.html" class="text-light text-decoration-none">Nutrition</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-light mb-3">Support</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Help Center</a></li>
+                        <li class="mb-2"><a href="credits.html" class="text-light text-decoration-none">Credits</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4">
+                    <h6 class="text-light mb-3">Contact Information</h6>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-geo-alt text-light me-3"></i>
+                        <div>
+                            <p class="text-light mb-0">Hougang 27 Road</p>
+                            <p class="text-light mb-0">Singapore 599489</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-telephone text-light me-3"></i>
+                        <a href="tel:+6564606999" class="text-light text-decoration-none">+65 6999 6999</a>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-envelope text-light me-3"></i>
+                        <a href="mailto:support@silverconnect.sg" class="text-light text-decoration-none">support@silverconnect.sg</a>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-clock text-light me-3"></i>
+                        <div>
+                            <p class="text-light mb-0">Mon-Fri: 9am-6pm</p>
+                            <p class="text-light mb-0">Sat-Sun: 10am-4pm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="border-light my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-light mb-0">&copy; 2025 SilverConnect. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-light mb-0">Designed with ❤️ for Seniors</p>
                 </div>
             </div>
         </div>
-
-        <!-- Ask Us Support System -->
-        <aside id="support-container" class="chat-container position-fixed start-0 bottom-0 p-3">
-            <!-- Support Toggle Button -->
-            <button id="support-button" class="btn btn-success rounded-circle shadow chat-toggle" aria-label="Get Help & Support">
-                <i class="bi bi-question-circle-fill fs-5"></i>
-            </button>
-
-            <!-- Support Window -->
-            <section id="support-box" class="card d-none chat-box" style="width: 350px;">
-                <!-- Support Options (Main Menu) -->
-                <div id="support-options">
-                    <header class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                        <h6 class="mb-0"><i class="bi bi-headset me-2"></i>How Can We Help?</h6>
-                        <button class="btn-close btn-close-white" id="close-support" aria-label="Close Support"></button>
-                    </header>
-                    <div class="card-body text-center">
-                        <p class="text-muted small mb-4">Choose how you'd like to get assistance:</p>
-                        
-                        <!-- Help Hotline Option -->
-                        <div class="d-grid gap-2 mb-3">
-                            <button id="hotline-btn" class="btn btn-modern-outline">
-                                <i class="bi bi-telephone-fill me-2"></i>
-                                <strong>Call Help Hotline</strong>
-                                <small class="d-block text-muted">Speak with a real person</small>
-                            </button>
-                        </div>
-                        
-                        <!-- Ask Us Form Option -->
-                        <div class="d-grid gap-2">
-                            <button id="form-btn" class="btn btn-outline-success">
-                                <i class="bi bi-chat-square-text me-2"></i>
-                                <strong>Submit Ask Us Form</strong>
-                                <small class="d-block text-muted">Describe your issue in detail</small>
-                            </button>
-                        </div>
-                        
-                        <div class="mt-3">
-                            <small class="text-muted">
-                                <i class="bi bi-clock me-1"></i>Support Hours: Mon-Fri 8AM-6PM
-                            </small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hotline Information -->
-                <div id="hotline-info" class="d-none">
-                    <header class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                        <h6 class="mb-0"><i class="bi bi-telephone me-2"></i>Help Hotline</h6>
-                        <button class="btn-close btn-close-white" id="close-support" aria-label="Close Support"></button>
-                    </header>
-                    <div class="card-body">
-                        <div class="text-center mb-3">
-                            <i class="bi bi-telephone-fill text-primary" style="font-size: 2.5rem;"></i>
-                            <h5 class="mt-2 mb-1">Call Us Now</h5>
-                            <h4 class="text-primary fw-bold">1-800-HELP-SRC</h4>
-                            <p class="text-muted small">(1-800-435-7772)</p>
-                        </div>
-                        
-                        <div class="bg-light p-3 rounded mb-3">
-                            <h6 class="mb-2"><i class="bi bi-clock me-2"></i>Support Hours</h6>
-                            <ul class="list-unstyled small mb-0">
-                                <li><strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM</li>
-                                <li><strong>Saturday:</strong> 9:00 AM - 2:00 PM</li>
-                                <li><strong>Sunday:</strong> Closed</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="alert alert-info">
-                            <small>
-                                <i class="bi bi-info-circle me-1"></i>
-                                <strong>Our specialists can help with:</strong><br>
-                                â€¢ Navigation and technical issues<br>
-                                â€¢ Account and medication questions<br>
-                                â€¢ General guidance and support
-                            </small>
-                        </div>
-                        
-                        <button id="back-to-options" class="btn btn-outline-secondary w-100">
-                            <i class="bi bi-arrow-left me-2"></i>Back to Options
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Ask Us Form -->
-                <div id="ask-us-form" class="d-none">
-                    <header class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                        <h6 class="mb-0"><i class="bi bi-chat-square-text me-2"></i>Ask Us Form</h6>
-                        <button class="btn-close btn-close-white" id="close-support" aria-label="Close Support"></button>
-                    </header>
-                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                        <form id="support-form">
-                            <div class="mb-3">
-                                <label for="user-name" class="form-label small">Your Name</label>
-                                <input type="text" id="user-name" class="form-control form-control-sm" required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="user-email" class="form-label small">Email Address</label>
-                                <input type="email" id="user-email" class="form-control form-control-sm" required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="help-category" class="form-label small">What do you need help with?</label>
-                                <select id="help-category" class="form-select form-select-sm" required>
-                                    <option value="">Choose a category...</option>
-                                    <option value="Technical Issue">Technical Issue</option>
-                                    <option value="Navigation Help">Navigation Help</option>
-                                    <option value="Medication Questions">Medication Questions</option>
-                                    <option value="Account Issues">Account Issues</option>
-                                    <option value="General Inquiry">General Inquiry</option>
-                                    <option value="Feature Request">Feature Request</option>
-                                </select>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="priority-level" class="form-label small">Priority Level</label>
-                                <select id="priority-level" class="form-select form-select-sm" required>
-                                    <option value="Normal">Normal (24-48 hours)</option>
-                                    <option value="Urgent">Urgent (Within 2 hours)</option>
-                                    <option value="Low">Low Priority (2-3 business days)</option>
-                                </select>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="help-subject" class="form-label small">Subject</label>
-                                <input type="text" id="help-subject" class="form-control form-control-sm" 
-                                       placeholder="Brief description of your issue" required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="help-message" class="form-label small">Tell us more about your issue</label>
-                                <textarea id="help-message" class="form-control form-control-sm" rows="4" 
-                                          placeholder="Please describe your issue in detail. The more information you provide, the better we can help you." required></textarea>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label small">Preferred Contact Method</label>
-                                <div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="contact-method" id="contact-email" value="email" checked>
-                                        <label class="form-check-label small" for="contact-email">Email</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="contact-method" id="contact-phone" value="phone">
-                                        <label class="form-check-label small" for="contact-phone">Phone</label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    <i class="bi bi-send me-2"></i>Submit Request
-                                </button>
-                                <button type="button" id="back-to-options" class="btn btn-outline-secondary btn-sm">
-                                    <i class="bi bi-arrow-left me-2"></i>Back to Options
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
-        </aside>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer text-white mt-5">
-        <div class="container pt-5 pb-3">
-        <div class="row text-start">
-            <section class="col-12 col-sm-6 col-md-3 mb-4">
-            <h2 class="h6 fw-bold text-uppercase">MerderkaLife</h2>
-            <address>
-                535 Clementi Road,<br>
-                Singapore 599489
-            </address>
-            <p class="mb-0">Mon-Fri: 10am-8pm,<br>Sat-Sun: 11am-6pm</p>
-            </section>
-
-            <section class="col-12 col-sm-6 col-md-3 mb-4">
-            <h2 class="h6 fw-bold text-uppercase">About</h2>
-            <ul class="list-unstyled">
-                <li><a href="about.html" class="text-white text-decoration-none">About Us</a></li>
-                <li><a href="#" class="text-white text-decoration-none">Health Blogs</a></li>
-                <li><a href="#" class="text-white text-decoration-none">Manage Appointments</a></li>
-            </ul>
-            </section>
-
-            <section class="col-12 col-sm-6 col-md-3 mb-4">
-            <h2 class="h6 fw-bold text-uppercase">Contact</h2>
-            <ul class="list-unstyled">
-                <li><a href="contact.html" class="text-white text-decoration-none">Contact Us</a></li>
-                <li><a href="mailto:support@merderkalife.com" class="text-white text-decoration-none">support@merderkalife.com</a></li>
-                <li><a href="tel:+6564606999" class="text-white text-decoration-none">+65 6460 6999</a></li>
-            </ul>
-            </section>
-
-            <section class="col-12 col-sm-6 col-md-3 mb-4">
-            <h2 class="h6 fw-bold text-uppercase">Others</h2>
-            <ul class="list-unstyled">
-                <li><a href="faq.html" class="text-white text-decoration-none">FAQ</a></li>
-                <li><a href="credits.html" class="text-white text-decoration-none">Credits</a></li>
-                <li><a href="privacy.html" class="text-white text-decoration-none">Privacy Policy</a></li>
-            </ul>
-            </section>
-        </div>
-
-        <div class="text-center pt-3">
-            <small>Â© 2025 MerderkaLife. All rights reserved.</small>
-        </div>
-        </div>
     </footer>
-    <!-- End of Footer -->
 
-     <!-- Bootstrap 5.3.7 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
-    <!-- External APIs and connecting to JS files -->
+    <!-- Bootstrap 5.3.7 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- External APIs and JavaScript -->
     <script src="js/index.js"></script>
     <script src="js/add-medication.js"></script>
-    <script src="js/ask-us-support.js"></script>    
+    
     <!-- Language Switcher Functions -->
     <script>
         function switchToEnglish() {
@@ -835,7 +667,7 @@
         }
         
         function switchToChinese() {
-            document.getElementById('currentLanguageText').textContent = 'ä¸­æ–‡';
+            document.getElementById('currentLanguageText').textContent = '中文';
             const englishCheck = document.getElementById('englishCheck');
             const chineseCheck = document.getElementById('chineseCheck');
             if (englishCheck) englishCheck.classList.add('invisible');
@@ -863,7 +695,7 @@
                     const englishCheck = document.getElementById('englishCheck');
                     const chineseCheck = document.getElementById('chineseCheck');
                     
-                    if (currentLangText) currentLangText.textContent = 'ä¸­æ–‡';
+                    if (currentLangText) currentLangText.textContent = '中文';
                     if (englishCheck) englishCheck.classList.add('invisible');
                     if (chineseCheck) chineseCheck.classList.remove('invisible');
                     
@@ -874,7 +706,6 @@
             }
         });
     </script>
-
 </body>
 </html>
 
