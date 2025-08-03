@@ -1,0 +1,551 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Logging - MerderkaLife - SilverConnect</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Simple Translation System -->
+    <script src="js/simple-translator.js"></script>
+    <script src="js/simple-language-switcher.js"></script>
+
+    <!-- i18n Support -->
+
+</head>
+<body>
+    <!-- Sticky Navigation Bar -->
+   <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/silverconnect-logo.svg" alt="SilverConnect Logo" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
+                <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-3"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="meal-logging.html">
+                            <i class="bi bi-journal-medical me-1"></i>Meal Logging
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="medication.html">
+                            <i class="bi bi-capsule me-1"></i>Medication Tracker
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="medication-inventory.html">
+                            <i class="bi bi-archive me-1"></i>Medicine Inventory
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="family-management.html">
+                            <i class="bi bi-people me-1"></i>Family & Support
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="healthcare-appointments.html">
+                            <i class="bi bi-calendar-check me-1"></i>Appointments
+                        </a>
+                    </li>
+                    <!-- Modern Language Switcher -->
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-modern-outline btn-sm dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-globe me-1"></i>
+                                <span id="currentLanguageText">English</span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                                <li><a class="dropdown-item" href="#" onclick="switchToEnglish()">
+                                    <i class="bi bi-check me-2" id="englishCheck"></i>English
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="switchToChinese()">
+                                    <i class="bi bi-check invisible me-2" id="chineseCheck"></i>中文 (Chinese)
+                                </a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Account Area -->
+                    <li class="nav-item" id="navbarAuthArea"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End of Sticky Navigation Bar -->
+
+    <main class="main-content">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center mb-4">
+                        <i class="bi bi-journal-plus me-2"></i>
+                        Meal Logging
+                    </h1>
+                    <p class="text-center text-muted mb-5">Track your meals and monitor your nutrition intake</p>
+                </div>
+            </div>
+
+            <!-- Add New Meal Section -->
+            <div class="row mb-5">
+                <div class="col-lg-6 mx-auto">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-plus-circle me-2"></i>
+                                Add New Meal
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="mealForm">
+                                <div class="mb-3">
+                                    <label for="mealType" class="form-label form-label-modern">Meal Type</label>
+                                    <select class="form-select" id="mealType" required>
+                                        <option value="">Select meal type</option>
+                                        <option value="Breakfast">Breakfast</option>
+                                        <option value="Lunch">Lunch</option>
+                                        <option value="Dinner">Dinner</option>
+                                        <option value="Snack">Snack</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="foodItems" class="form-label form-label-modern">Food Items</label>
+                                    <textarea class="form-control form-control-modern" id="foodItems" rows="3" 
+                                              placeholder="List the foods you ate (e.g., 1 slice of bread, 1 cup of rice, 100g chicken)"
+                                              required></textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="calories" class="form-label form-label-modern">Estimated Calories (optional)</label>
+                                    <input type="number" class="form-control form-control-modern" id="calories" min="0" 
+                                           placeholder="Enter estimated calories">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="mealDate" class="form-label form-label-modern">Date</label>
+                                    <input type="date" class="form-control form-control-modern" id="mealDate" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="notes" class="form-label form-label-modern">Notes (optional)</label>
+                                    <textarea class="form-control form-control-modern" id="notes" rows="2" 
+                                              placeholder="Any additional notes about this meal"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-modern-primary w-100">
+                                    <i class="bi bi-plus-lg me-2"></i>
+                                    Add Meal
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meal History Section -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-clock-history me-2"></i>
+                                Your Meal History
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="mealHistory">
+                                <!-- Meal history will be populated here -->
+                                <div class="text-center text-muted py-4">
+                                    <i class="bi bi-journal display-1"></i>
+                                    <p>No meals logged yet. Add your first meal above!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Meal Modal -->
+    <div class="modal fade" id="editMealModal" tabindex="-1" aria-labelledby="editMealModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMealModalLabel">Edit Meal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editMealForm">
+                        <input type="hidden" id="editMealId">
+                        
+                        <div class="mb-3">
+                            <label for="editMealType" class="form-label form-label-modern">Meal Type</label>
+                            <select class="form-select" id="editMealType" required>
+                                <option value="">Select meal type</option>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                                <option value="Snack">Snack</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editFoodItems" class="form-label form-label-modern">Food Items</label>
+                            <textarea class="form-control form-control-modern" id="editFoodItems" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editCalories" class="form-label form-label-modern">Estimated Calories (optional)</label>
+                            <input type="number" class="form-control form-control-modern" id="editCalories" min="0">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editMealDate" class="form-label form-label-modern">Date</label>
+                            <input type="date" class="form-control form-control-modern" id="editMealDate" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editNotes" class="form-label form-label-modern">Notes (optional)</label>
+                            <textarea class="form-control form-control-modern" id="editNotes" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-modern-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-modern-primary" id="saveMealChanges">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ask Us Support System -->
+    <aside id="support-container" class="chat-container position-fixed start-0 bottom-0 p-3">
+        <!-- Support Toggle Button -->
+        <button id="support-button" class="btn btn-success rounded-circle shadow chat-toggle" aria-label="Get Help & Support">
+            <i class="bi bi-question-circle-fill fs-5"></i>
+        </button>
+
+        <!-- Support Window -->
+        <section id="support-box" class="card d-none chat-box" style="width: 350px;">
+            <!-- Support Options (Main Menu) -->
+            <div id="support-options">
+                <header class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0"><i class="bi bi-headset me-2"></i>How Can We Help?</h6>
+                    <button class="btn-close btn-close-white" id="close-support" aria-label="Close Support"></button>
+                </header>
+                <div class="card-body text-center">
+                    <p class="text-muted small mb-4">Choose how you'd like to get assistance:</p>
+                    
+                    <!-- Help Hotline Option -->
+                    <div class="d-grid gap-2 mb-3">
+                        <button id="hotline-btn" class="btn btn-modern-outline">
+                            <i class="bi bi-telephone-fill me-2"></i>
+                            <strong>Call Help Hotline</strong>
+                            <small class="d-block text-muted">Speak with a real person</small>
+                        </button>
+                    </div>
+                    
+                    <!-- Ask Us Form Option -->
+                    <div class="d-grid gap-2">
+                        <button id="form-btn" class="btn btn-outline-success">
+                            <i class="bi bi-chat-square-text me-2"></i>
+                            <strong>Submit Ask Us Form</strong>
+                            <small class="d-block text-muted">Describe your issue in detail</small>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <small class="text-muted">
+                            <i class="bi bi-clock me-1"></i>Support Hours: Mon-Fri 8AM-6PM
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hotline Information -->
+            <div id="hotline-info" class="d-none">
+                <header class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0"><i class="bi bi-telephone me-2"></i>Help Hotline</h6>
+                    <button class="btn-close btn-close-white" id="close-support" aria-label="Close Support"></button>
+                </header>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="bi bi-telephone-fill text-primary" style="font-size: 2.5rem;"></i>
+                        <h5 class="mt-2 mb-1">Call Us Now</h5>
+                        <h4 class="text-primary fw-bold">1-800-HELP-SRC</h4>
+                        <p class="text-muted small">(1-800-435-7772)</p>
+                    </div>
+                    
+                    <div class="bg-light p-3 rounded mb-3">
+                        <h6 class="mb-2"><i class="bi bi-clock me-2"></i>Support Hours</h6>
+                        <ul class="list-unstyled small mb-0">
+                            <li><strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM</li>
+                            <li><strong>Saturday:</strong> 9:00 AM - 2:00 PM</li>
+                            <li><strong>Sunday:</strong> Closed</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <small>
+                            <i class="bi bi-info-circle me-1"></i>
+                            <strong>Our specialists can help with:</strong><br>
+                            • Navigation and technical issues<br>
+                            • Meal logging questions<br>
+                            • General guidance and support
+                        </small>
+                    </div>
+                    
+                    <button id="back-to-options" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Options
+                    </button>
+                </div>
+            </div>
+
+            <!-- Ask Us Form -->
+            <div id="ask-us-form" class="d-none">
+                <header class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0"><i class="bi bi-chat-square-text me-2"></i>Ask Us Form</h6>
+                    <button class="btn-close btn-close-white" id="close-support" aria-label="Close Support"></button>
+                </header>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    <form id="support-form">
+                        <div class="mb-3">
+                            <label for="user-name" class="form-label small">Your Name</label>
+                            <input type="text" id="user-name" class="form-control form-control-sm" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="user-email" class="form-label small">Email Address</label>
+                            <input type="email" id="user-email" class="form-control form-control-sm" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="help-category" class="form-label small">What do you need help with?</label>
+                            <select id="help-category" class="form-select form-select-sm" required>
+                                <option value="">Choose a category...</option>
+                                <option value="Technical Issue">Technical Issue</option>
+                                <option value="Navigation Help">Navigation Help</option>
+                                <option value="Meal Logging Questions">Meal Logging Questions</option>
+                                <option value="Account Issues">Account Issues</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Feature Request">Feature Request</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="priority-level" class="form-label small">Priority Level</label>
+                            <select id="priority-level" class="form-select form-select-sm" required>
+                                <option value="Normal">Normal (24-48 hours)</option>
+                                <option value="Urgent">Urgent (Within 2 hours)</option>
+                                <option value="Low">Low Priority (2-3 business days)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="help-subject" class="form-label small">Subject</label>
+                            <input type="text" id="help-subject" class="form-control form-control-sm" 
+                                   placeholder="Brief description of your issue" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="help-message" class="form-label small">Tell us more about your issue</label>
+                            <textarea id="help-message" class="form-control form-control-sm" rows="4" 
+                                      placeholder="Please describe your issue in detail. The more information you provide, the better we can help you." required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small">Preferred Contact Method</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="contact-method" id="contact-email" value="email" checked>
+                                    <label class="form-check-label small" for="contact-email">Email</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="contact-method" id="contact-phone" value="phone">
+                                    <label class="form-check-label small" for="contact-phone">Phone</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="bi bi-send me-2"></i>Submit Request
+                            </button>
+                            <button type="button" id="back-to-options" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-arrow-left me-2"></i>Back to Options
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        
+        </section>
+    </aside>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/meal-logging.js"></script>
+    <script src="js/ask-us-support.js"></script>    
+    <!-- Language Switcher Functions -->
+    <script>
+        function switchToEnglish() {
+            document.getElementById('currentLanguageText').textContent = 'English';
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (englishCheck) englishCheck.classList.remove('invisible');
+            if (chineseCheck) chineseCheck.classList.add('invisible');
+            localStorage.setItem('preferredLanguage', 'en');
+            location.reload(); // Reset to English
+        }
+        
+        function switchToChinese() {
+            document.getElementById('currentLanguageText').textContent = '中文';
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (englishCheck) englishCheck.classList.add('invisible');
+            if (chineseCheck) chineseCheck.classList.remove('invisible');
+            localStorage.setItem('preferredLanguage', 'zh');
+            
+            if (window.translator) {
+                window.translator.translatePage('zh');
+            } else {
+                // Fallback if translator not loaded
+                setTimeout(() => {
+                    if (window.translator) {
+                        window.translator.translatePage('zh');
+                    }
+                }, 500);
+            }
+        }
+        
+        // Check saved language preference on load
+        window.addEventListener('load', () => {
+            const savedLanguage = localStorage.getItem('preferredLanguage');
+            if (savedLanguage === 'zh') {
+                setTimeout(() => {
+                    const currentLangText = document.getElementById('currentLanguageText');
+                    const englishCheck = document.getElementById('englishCheck');
+                    const chineseCheck = document.getElementById('chineseCheck');
+                    
+                    if (currentLangText) currentLangText.textContent = '中文';
+                    if (englishCheck) englishCheck.classList.add('invisible');
+                    if (chineseCheck) chineseCheck.classList.remove('invisible');
+                    
+                    if (window.translator) {
+                        window.translator.translatePage('zh');
+                    }
+                }, 100);
+            }
+        });
+    </script>
+    <footer class="footer">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="assets/silverconnect-logo.svg" alt="SilverConnect Logo" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
+                        <h5 class="text-light mb-0">SilverConnect</h5>
+                    </div>
+                    <p class="text-light mb-4">Empowering seniors with intelligent healthcare management solutions for a healthier, more connected life.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-light mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="medication.html" class="text-light text-decoration-none">Medication Tracker</a></li>
+                        <li class="mb-2"><a href="healthcare-appointments.html" class="text-light text-decoration-none">Appointments</a></li>
+                        <li class="mb-2"><a href="family-management.html" class="text-light text-decoration-none">Family Hub</a></li>
+                        <li class="mb-2"><a href="meal-logging.html" class="text-light text-decoration-none">Nutrition</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-light mb-3">Support</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Help Center</a></li>
+                        <li class="mb-2"><a href="credits.html" class="text-light text-decoration-none">Credits</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4">
+                    <h6 class="text-light mb-3">Contact Information</h6>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-geo-alt text-light me-3"></i>
+                        <div>
+                            <p class="text-light mb-0">Hougang 27 Road</p>
+                            <p class="text-light mb-0">Singapore 599489</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-telephone text-light me-3"></i>
+                        <a href="tel:+6564606999" class="text-light text-decoration-none">+65 6999 6999</a>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-envelope text-light me-3"></i>
+                        <a href="mailto:support@silverconnect.sg" class="text-light text-decoration-none">support@silverconnect.sg</a>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-clock text-light me-3"></i>
+                        <div>
+                            <p class="text-light mb-0">Mon-Fri: 9am-6pm</p>
+                            <p class="text-light mb-0">Sat-Sun: 10am-4pm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="border-light my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-light mb-0">&copy; 2025 SilverConnect. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-light mb-0">Designed with 中文 for Seniors</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
+
+
+

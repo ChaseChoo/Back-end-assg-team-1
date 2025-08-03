@@ -1,0 +1,594 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Appointments - SilverConnect - SilverConnect</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+        .appointment-card {
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .appointment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+        }
+        .doctor-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .appointment-time {
+            background: #f8f9ff;
+            border-radius: 8px;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        .floating-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        .floating-btn:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #5a67d8, #6b46c1);
+            color: white;
+        }
+        .clickable-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        .section-title {
+            position: relative;
+            padding-left: 1rem;
+        }
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 2rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+
+    <!-- i18n Support -->
+
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/silverconnect-logo.svg" alt="SilverConnect Logo" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
+                <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
+            </a>
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-3"></i>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="meal-logging.html">
+                            <i class="bi bi-journal-medical me-1"></i>Meal Logging
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="medication.html">
+                            <i class="bi bi-capsule me-1"></i>Medication Tracker
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="medication-inventory.html">
+                            <i class="bi bi-archive me-1"></i>Medicine Inventory
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="family-management.html">
+                            <i class="bi bi-people me-1"></i>Family & Support
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="healthcare-appointments.html">
+                            <i class="bi bi-calendar-check me-1"></i>Appointments
+                        </a>
+                    </li>
+                    <!-- Modern Language Switcher -->
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-modern-outline btn-sm dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-globe me-1"></i>
+                                <span id="currentLanguageText">English</span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                                <li><a class="dropdown-item" href="#" onclick="switchToEnglish()">
+                                    <i class="bi bi-check me-2" id="englishCheck"></i>English
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="switchToChinese()">
+                                    <i class="bi bi-check invisible me-2" id="chineseCheck"></i>中文 (Chinese)
+                                </a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Account Area -->
+                    <li class="nav-item" id="navbarAuthArea"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+                <div id="navbarAuthArea" class="ms-3">
+                    <!-- Auth buttons will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container animate-fade-up">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-5 fw-bold mb-3">
+                        <i class="bi bi-calendar-heart me-3"></i>
+                        Healthcare Appointments
+                    </h1>
+                    <p class="lead mb-4">
+                        Manage your medical appointments with ease. Schedule, reschedule, and track all your healthcare visits in one place.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Easy Scheduling</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-shield-check text-success me-2"></i>
+                            <span>Secure & Private</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clock text-success me-2"></i>
+                            <span>Real-time Updates</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="bi bi-calendar3 display-1 opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <!-- Quick Stats -->
+        <div class="row mb-5">
+            <div class="col-md-4 mb-3">
+                <div class="card text-center h-100 border-0 bg-light clickable-card" style="cursor: pointer;" onclick="showBookingModal()">
+                    <div class="card-body">
+                        <i class="bi bi-calendar-plus text-primary display-6 mb-2"></i>
+                        <h5 class="card-title">Schedule New</h5>
+                        <p class="text-muted small">Book your next appointment</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center h-100 border-0 bg-light">
+                    <div class="card-body">
+                        <i class="bi bi-clock-history text-info display-6 mb-2"></i>
+                        <h5 class="card-title">Upcoming</h5>
+                        <p class="text-muted small" id="upcomingCount">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center h-100 border-0 bg-light">
+                    <div class="card-body">
+                        <i class="bi bi-check2-all text-success display-6 mb-2"></i>
+                        <h5 class="card-title">Completed</h5>
+                        <p class="text-muted small" id="completedCount">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments Section -->
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title mb-4">Your Appointments</h2>
+                
+                <!-- Filter Controls -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label class="form-label small fw-semibold">Filter by Status</label>
+                                <select class="form-select" id="statusFilter">
+                                    <option value="">All Appointments</option>
+                                    <option value="Scheduled">Scheduled</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-semibold">From Date</label>
+                                <input type="date" class="form-control form-control-modern" id="fromDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-semibold">To Date</label>
+                                <input type="date" class="form-control form-control-modern" id="toDate">
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-modern-outline w-100" onclick="applyFilters()">
+                                    <i class="bi bi-funnel me-1"></i>Apply Filters
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointments List -->
+                <div id="appointmentsContainer">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Add Button -->
+    <button class="floating-btn" onclick="showBookingModal()" title="Schedule New Appointment">
+        <i class="bi bi-plus"></i>
+    </button>
+
+    <!-- Book Appointment Modal -->
+    <div class="modal fade" id="bookAppointmentModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-calendar-plus me-2"></i>Schedule New Appointment
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bookingForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Select Doctor</label>
+                                <select class="form-select" id="doctorSelect" required>
+                                    <option value="">Choose a doctor...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Appointment Date</label>
+                                <input type="date" class="form-control form-control-modern" id="appointmentDate" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Preferred Time</label>
+                                <select class="form-select" id="appointmentTime" required>
+                                    <option value="">Select time...</option>
+                                    <option value="09:00">9:00 AM</option>
+                                    <option value="09:30">9:30 AM</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="10:30">10:30 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="11:30">11:30 AM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="14:30">2:30 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                    <option value="15:30">3:30 PM</option>
+                                    <option value="16:00">4:00 PM</option>
+                                    <option value="16:30">4:30 PM</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Doctor Info</label>
+                                <div id="doctorInfo" class="form-control bg-light" style="min-height: 38px; display: flex; align-items: center;">
+                                    <span class="text-muted">Select a doctor to see details</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Additional Notes (Optional)</label>
+                            <textarea class="form-control form-control-modern" id="appointmentNotes" rows="3" 
+                                placeholder="Any specific concerns or information for the doctor..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-modern-primary" onclick="bookAppointment()">
+                        <i class="bi bi-check2 me-1"></i>Schedule Appointment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Appointment Modal -->
+    <div class="modal fade" id="editAppointmentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-pencil-square me-2"></i>Reschedule Appointment
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <input type="hidden" id="editAppointmentId">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Doctor</label>
+                            <input type="text" class="form-control form-control-modern" id="editDoctorName" readonly>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">New Date</label>
+                                <input type="date" class="form-control form-control-modern" id="editDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">New Time</label>
+                                <select class="form-select" id="editTime" required>
+                                    <option value="09:00">9:00 AM</option>
+                                    <option value="09:30">9:30 AM</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="10:30">10:30 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="11:30">11:30 AM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="14:30">2:30 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                    <option value="15:30">3:30 PM</option>
+                                    <option value="16:00">4:00 PM</option>
+                                    <option value="16:30">4:30 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Notes</label>
+                            <textarea class="form-control form-control-modern" id="editNotes" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-info" onclick="updateAppointment()">
+                        <i class="bi bi-check2 me-1"></i>Update Appointment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Confirmation Modal -->
+    <div class="modal fade" id="cancelModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Cancel Appointment
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-3">Are you sure you want to cancel this appointment?</p>
+                    <div class="bg-light p-3 rounded" id="cancelAppointmentDetails">
+                        <!-- Appointment details will be inserted here -->
+                    </div>
+                    <div class="alert alert-warning mt-3">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Note:</strong> Cancelled appointments cannot be restored. You'll need to schedule a new appointment if needed.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Keep Appointment</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmCancel()">
+                        <i class="bi bi-trash me-1"></i>Yes, Cancel Appointment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="assets/silverconnect-logo.svg" alt="SilverConnect Logo" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
+                        <h5 class="text-light mb-0">SilverConnect</h5>
+                    </div>
+                    <p class="text-light mb-4">Empowering seniors with intelligent healthcare management solutions for a healthier, more connected life.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-light mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="medication.html" class="text-light text-decoration-none">Medication Tracker</a></li>
+                        <li class="mb-2"><a href="healthcare-appointments.html" class="text-light text-decoration-none">Appointments</a></li>
+                        <li class="mb-2"><a href="family-management.html" class="text-light text-decoration-none">Family Hub</a></li>
+                        <li class="mb-2"><a href="meal-logging.html" class="text-light text-decoration-none">Nutrition</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-light mb-3">Support</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Help Center</a></li>
+                        <li class="mb-2"><a href="credits.html" class="text-light text-decoration-none">Credits</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4">
+                    <h6 class="text-light mb-3">Contact Information</h6>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-geo-alt text-light me-3"></i>
+                        <div>
+                            <p class="text-light mb-0">Hougang 27 Road</p>
+                            <p class="text-light mb-0">Singapore 599489</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-telephone text-light me-3"></i>
+                        <a href="tel:+6564606999" class="text-light text-decoration-none">+65 6999 6999</a>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-envelope text-light me-3"></i>
+                        <a href="mailto:support@silverconnect.sg" class="text-light text-decoration-none">support@silverconnect.sg</a>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-clock text-light me-3"></i>
+                        <div>
+                            <p class="text-light mb-0">Mon-Fri: 9am-6pm</p>
+                            <p class="text-light mb-0">Sat-Sun: 10am-4pm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="border-light my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-light mb-0">&copy; 2025 SilverConnect. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-light mb-0">Designed with 中文 for Seniors</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/healthcare-appointments.js"></script>    
+    <!-- Language Switcher Functions -->
+    <script>
+        function switchToEnglish() {
+            document.getElementById('currentLanguageText').textContent = 'English';
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (englishCheck) englishCheck.classList.remove('invisible');
+            if (chineseCheck) chineseCheck.classList.add('invisible');
+            localStorage.setItem('preferredLanguage', 'en');
+            location.reload(); // Reset to English
+        }
+        
+        function switchToChinese() {
+            document.getElementById('currentLanguageText').textContent = '中文';
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (englishCheck) englishCheck.classList.add('invisible');
+            if (chineseCheck) chineseCheck.classList.remove('invisible');
+            localStorage.setItem('preferredLanguage', 'zh');
+            
+            if (window.translator) {
+                window.translator.translatePage('zh');
+            } else {
+                // Fallback if translator not loaded
+                setTimeout(() => {
+                    if (window.translator) {
+                        window.translator.translatePage('zh');
+                    }
+                }, 500);
+            }
+        }
+        
+        // Check saved language preference on load
+        window.addEventListener('load', () => {
+            const savedLanguage = localStorage.getItem('preferredLanguage');
+            if (savedLanguage === 'zh') {
+                setTimeout(() => {
+                    const currentLangText = document.getElementById('currentLanguageText');
+                    const englishCheck = document.getElementById('englishCheck');
+                    const chineseCheck = document.getElementById('chineseCheck');
+                    
+                    if (currentLangText) currentLangText.textContent = '中文';
+                    if (englishCheck) englishCheck.classList.add('invisible');
+                    if (chineseCheck) chineseCheck.classList.remove('invisible');
+                    
+                    if (window.translator) {
+                        window.translator.translatePage('zh');
+                    }
+                }, 100);
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+

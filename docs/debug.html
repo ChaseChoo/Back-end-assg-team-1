@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Info - SilverConnect</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug-box { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .error { background: #ffebee; color: #c62828; }
+        .success { background: #e8f5e9; color: #2e7d32; }
+    </style>
+</head>
+<body>
+    <h1>SilverConnect Debug Information</h1>
+    
+    <div class="debug-box">
+        <h3>Authentication Status</h3>
+        <p id="authStatus">Checking...</p>
+    </div>
+    
+    <div class="debug-box">
+        <h3>SessionStorage Data</h3>
+        <pre id="sessionData"></pre>
+    </div>
+    
+    <div class="debug-box">
+        <h3>API Test</h3>
+        <button onclick="testAPI()">Test Medication API</button>
+        <pre id="apiResult"></pre>
+    </div>
+    
+    <div class="debug-box">
+        <h3>Actions</h3>
+        <button onclick="clearStorage()">Clear SessionStorage</button>
+        <button onclick="goToLogin()">Go to Login</button>
+        <button onclick="goToMedication()">Go to Medication Page</button>
+        <button onclick="goToAddMedication()">Add Medication</button>
+        <button onclick="createTestMedication()">Create Test Medication</button>
+    </div>
+
+    <script>
+        // Check authentication
+        function checkAuth() {
+            const token = sessionStorage.getItem('authToken');
+            const username = sessionStorage.getItem('username');
+            
+            const authElement = document.getElementById('authStatus');
+            if (token && username) {
+                authElement.innerHTML = `<span class="success">✓ Logged in as: ${username}</span>`;
+            } else {
+                authElement.innerHTML = `<span class="error">✗ Not logged in (missing token or username)</span>`;
+            }
+        }
+        
+        // Show session storage data
+        function showSessionData() {
+            const data = {};
+            for (let i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                data[key] = sessionStorage.getItem(key);
+            }
+            document.getElementById('sessionData').textContent = JSON.stringify(data, null, 2);
+        }
+        
+        // Test API
+        async function testAPI() {
+            const resultElement = document.getElementById('apiResult');
+            resultElement.textContent = 'Testing...';
+            
+            const token = sessionStorage.getItem('authToken');
+            console.log('Using token:', token); // Debug log
+            
+            try {
+                const response = await fetch("/api/medication-records", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                const resultText = `Status: ${response.status}
+Token: ${token ? 'Present' : 'Missing'}
+Response: ${JSON.stringify(data, null, 2)}`;
+                
+                resultElement.textContent = resultText;
+                
+                if (response.ok) {
+                    resultElement.className = 'success';
+                    console.log('API Response:', data);
+                    
+                    // If empty array, automatically suggest creating test medication
+                    if (Array.isArray(data) && data.length === 0) {
+                        resultElement.textContent += '\n\n✅ API working but no medications found. Click "Create Test Medication" below.';
+                    }
+                } else {
+                    resultElement.className = 'error';
+                    console.error('API Error:', data);
+                }
+            } catch (error) {
+                resultElement.textContent = `Error: ${error.message}`;
+                resultElement.className = 'error';
+                console.error('Fetch Error:', error);
+            }
+        }
+        
+        // Clear storage
+        function clearStorage() {
+            sessionStorage.clear();
+            alert('SessionStorage cleared');
+            location.reload();
+        }
+        
+        // Navigation functions
+        function goToLogin() {
+            window.location.href = 'user-login.html';
+        }
+        
+        function goToMedication() {
+            window.location.href = 'medication.html';
+        }
+        
+        function goToAddMedication() {
+            window.location.href = 'add-medication.html';
+        }
+        
+        // Create a test medication
+        async function createTestMedication() {
+            const token = sessionStorage.getItem('authToken');
+            if (!token) {
+                alert('Please log in first');
+                return;
+            }
+            
+            console.log('Creating test medication with token:', token);
+            
+            const testMedication = {
+                medicationName: "Test Aspirin",
+                dosage: "1 tablet",
+                frequency: "After meals",
+                iconType: "tablet",
+                startDate: "2025-08-03",
+                endDate: "2025-12-31",
+                doseTimes: ["08:00", "20:00"]
+            };
+            
+            try {
+                console.log('Sending medication data:', testMedication);
+                
+                const response = await fetch("/api/medication", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify(testMedication)
+                });
+                
+                const result = await response.json();
+                console.log('Create medication response:', result);
+                
+                if (response.ok) {
+                    alert('✅ Test medication created successfully!\n\nGoing to medication page...');
+                    // Test the API again to confirm
+                    await testAPI();
+                    setTimeout(() => {
+                        goToMedication();
+                    }, 2000);
+                } else {
+                    alert('❌ Failed to create medication:\nStatus: ' + response.status + '\nError: ' + JSON.stringify(result, null, 2));
+                    console.error('Create medication error:', result);
+                }
+            } catch (error) {
+                alert('❌ Network Error: ' + error.message);
+                console.error('Create medication network error:', error);
+            }
+        }
+        
+        // Initialize
+        checkAuth();
+        showSessionData();
+    </script>
+</body>
+</html>
