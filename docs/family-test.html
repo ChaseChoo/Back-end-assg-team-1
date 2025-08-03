@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Family Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .result { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Family Management Test</h1>
+    
+    <button onclick="setTestToken()">Set Test Token</button>
+    <button onclick="testFamilyAPI()">Test Family API</button>
+    <button onclick="clearToken()">Clear Token</button>
+    <button onclick="checkSession()">Check Session</button>
+    
+    <div id="results"></div>
+
+    <script>
+        function log(message) {
+            const results = document.getElementById('results');
+            results.innerHTML += '<div class="result">' + new Date().toLocaleTimeString() + ': ' + message + '</div>';
+        }
+
+        function setTestToken() {
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInVzZXJuYW1lIjoibmV3dXNlciIsImlhdCI6MTc1NDE5NzY5MCwiZXhwIjoxNzU0MjA0ODkwfQ.RNmVT-mZ-nr-6Wzbd6oTtqRfilSaF37dS6-_S_ZBoKs";
+            sessionStorage.setItem('authToken', token);
+            sessionStorage.setItem('username', 'newuser');
+            log('Test token set in sessionStorage');
+        }
+
+        function clearToken() {
+            sessionStorage.removeItem('authToken');
+            sessionStorage.removeItem('username');
+            log('Token cleared from sessionStorage');
+        }
+
+        function checkSession() {
+            const token = sessionStorage.getItem('authToken');
+            const username = sessionStorage.getItem('username');
+            log('Token exists: ' + (token ? 'YES' : 'NO'));
+            log('Username: ' + (username || 'NOT SET'));
+            if (token) {
+                log('Token starts with: ' + token.substring(0, 30) + '...');
+            }
+        }
+
+        async function testFamilyAPI() {
+            const token = sessionStorage.getItem('authToken');
+            
+            if (!token) {
+                log('No token found in sessionStorage');
+                return;
+            }
+
+            try {
+                log('Making API call to /api/family...');
+                const response = await fetch('/api/family', {
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                log('Response status: ' + response.status);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    log('Success! Data: ' + JSON.stringify(data));
+                } else {
+                    const errorText = await response.text();
+                    log('Error response: ' + errorText);
+                }
+            } catch (error) {
+                log('Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

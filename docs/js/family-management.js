@@ -1,11 +1,22 @@
 ﻿// Family Management JavaScript
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Family management page loaded');
+    console.log('SessionStorage authToken:', sessionStorage.getItem('authToken'));
+    console.log('SessionStorage username:', sessionStorage.getItem('username'));
+    console.log('SessionStorage userId:', sessionStorage.getItem('userId'));
+    console.log('SessionStorage email:', sessionStorage.getItem('email'));
+    console.log('All sessionStorage items:', Object.keys(sessionStorage));
+    
     // Initialize the page
     initializePage();
-    loadFamilyMembers();
     
     // Setup event listeners
     setupEventListeners();
+    
+    // Load family members after initialization
+    setTimeout(() => {
+        loadFamilyMembers();
+    }, 100);
 });
 
 // Global variables
@@ -30,21 +41,23 @@ function initializePage() {
 // Check authentication status
 function checkAuthStatus() {
     const token = sessionStorage.getItem('authToken');
-    const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+    const username = sessionStorage.getItem('username');
     
-    // If no token, redirect to login
+    console.log('Checking auth status - Token exists:', !!token, 'Username:', username);
+    
+    // If no token, show warning but don't redirect immediately (for debugging)
     if (!token) {
-        alert('Please sign in to access your family management.');
-        window.location.href = 'user-login.html';
-        return;
+        console.warn('No authentication token found');
+        // For now, let's not redirect and see what happens
+        return false;
     }
     
     const authArea = document.getElementById('navbarAuthArea');
-    if (token && user.username) {
+    if (authArea && token && username) {
         authArea.innerHTML = `
             <div class="dropdown">
                 <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    <i class="bi bi-person-circle me-1"></i>${user.username}
+                    <i class="bi bi-person-circle me-1"></i>${username}
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="user-settings.html">Settings</a></li>
@@ -52,15 +65,17 @@ function checkAuthStatus() {
                     <li><button class="dropdown-item" onclick="logout()">Logout</button></li>
                 </ul>
             </div>
-        `;        } else if (response.status === 401 || response.status === 403) {
-            alert('Session expired. Please sign in again.');
-            window.location.href = 'user-login.html';
-        } else {
-        authArea.innerHTML = `
-            <a href="user-login.html" class="btn btn-outline-primary me-2">Login</a>
-            <a href="user-registration.html" class="btn btn-primary">Sign Up</a>
         `;
+    } else {
+        if (authArea) {
+            authArea.innerHTML = `
+                <a href="user-login.html" class="btn btn-outline-primary me-2">Login</a>
+                <a href="user-registration.html" class="btn btn-primary">Sign Up</a>
+            `;
+        }
     }
+    
+    return !!token;
 }
 
 // Setup event listeners
@@ -207,11 +222,15 @@ function showSummary() {
 async function loadFamilyMembers() {
     try {
         const token = sessionStorage.getItem('authToken');
+        console.log('Loading family members, token:', token ? 'exists' : 'missing');
+        
         if (!token) {
+            console.log('No token found, showing empty state');
             showEmptyState();
             return;
         }
 
+        console.log('Making API call to /api/family');
         const response = await fetch('/api/family', {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -219,18 +238,20 @@ async function loadFamilyMembers() {
             }
         });
 
+        console.log('API response status:', response.status);
+        
         if (response.ok) {
             const data = await response.json();
+            console.log('Family data received:', data);
             familyMembers = data.familyMembers || [];
             displayFamilyMembers();
             updateStats();
         } else if (response.status === 401 || response.status === 403) {
-            alert('Session expired. Please sign in again.');
-            window.location.href = 'user-login.html';        } else if (response.status === 401 || response.status === 403) {
+            console.log('Authentication failed, redirecting to login');
             alert('Session expired. Please sign in again.');
             window.location.href = 'user-login.html';
         } else {
-            console.error('Failed to load family members');
+            console.error('Failed to load family members, status:', response.status);
             showEmptyState();
         }
     } catch (error) {

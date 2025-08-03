@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Test Page</h1>
+    
+    <div>
+        <h2>Login First</h2>
+        <input type="text" id="username" placeholder="Username" value="testuser">
+        <input type="password" id="password" placeholder="Password" value="testpassword">
+        <button onclick="testLogin()">Login</button>
+    </div>
+    
+    <div>
+        <h2>Test Family API</h2>
+        <button onclick="testFamilyAPI()">Test Family Endpoint</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        let authToken = null;
+
+        async function testLogin() {
+            try {
+                const response = await fetch('/api/users/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: document.getElementById('username').value,
+                        password: document.getElementById('password').value
+                    })
+                });
+
+                const data = await response.json();
+                console.log('Login response:', data);
+                
+                if (data.success && data.token) {
+                    authToken = data.token;
+                    sessionStorage.setItem('authToken', authToken);
+                    sessionStorage.setItem('username', data.username);
+                    document.getElementById('result').innerHTML = 'Login successful! Token: ' + authToken.substring(0, 20) + '...';
+                } else {
+                    document.getElementById('result').innerHTML = 'Login failed: ' + data.message;
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                document.getElementById('result').innerHTML = 'Login error: ' + error.message;
+            }
+        }
+
+        async function testFamilyAPI() {
+            const token = authToken || sessionStorage.getItem('authToken');
+            
+            if (!token) {
+                document.getElementById('result').innerHTML = 'No auth token. Please login first.';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/family', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                console.log('Family API response:', data);
+                document.getElementById('result').innerHTML = 'Family API Response: ' + JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error('Family API error:', error);
+                document.getElementById('result').innerHTML = 'Family API error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
