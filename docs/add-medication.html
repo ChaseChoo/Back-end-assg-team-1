@@ -3,45 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Medication - MerderkaLife - SilverConnect</title>
+    <title>Add Medication - SilverConnect</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Normalize.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    
     <!-- Bootstrap 5.3.7 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- Bootstrap Icons 1.11.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Lottie Animation Player Script -->
-    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
-    <!-- css/style.css CSS linking-->
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- Simple Translation System -->
-    <script src="js/simple-translator.js"></script>
-    <script src="js/simple-language-switcher.js"></script>
-
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5P55V59G');</script>
-    <!-- End Google Tag Manager -->
-
-    <!-- i18n Support -->
-
+    <!-- Lottie Animation -->
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P55V59G"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-    <!-- Lottie Animation Loading -->
+    <!-- Loading Animation -->
     <div id="loader-overlay" class="loader-overlay">
         <dotlottie-player
             src="https://lottie.host/d03f2255-5a0e-4ba0-a43d-79895e8620e0/urZVzLRRGL.lottie"
@@ -53,9 +34,9 @@
         </dotlottie-player>
     </div>
 
-    <!-- Sticky Navigation Bar -->
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container animate-fade-up">
+        <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
                     <i class="bi bi-heart-pulse"></i>
@@ -63,90 +44,506 @@
                 <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="#">Lifestyle Tracking</a>
+                        <a class="nav-link fw-semibold" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-semibold" href="medication.html">Medication Tracker</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="family-management.html">Family & Support</a>
+                        <a class="nav-link fw-semibold" href="book-appointment.html">Appointments</a>
                     </li>
                 </ul>
-                <a href="#" class="btn btn-modern-primary ms-3">Manage Appointment</a>
+                <div id="navbarAuthArea"></div>
             </div>
         </div>
     </nav>
-    <!-- End of Sticky Navigation Bar -->
 
-    <!-- Add Medication Form -->
-    <main class="container my-5">
-        <!-- Back to Medication Tracker -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <a href="medication.html" class="btn btn-modern-primary d-flex align-items-center">
-                <i class="bi bi-arrow-left me-2"></i> Back To Tracker
-            </a>
-            <span class="text-muted small fw-semibold">1 of 2</span>
-        </div>
-        <!-- End of Back to Medication Tracker -->
-
-        <!-- Form Header Text -->
-        <header class="text-center mb-4">
-            <h2 class="fw-bold">Add medication</h2>
-        </header>
-
-        <!-- Medication Form -->
-        <form id="medicationForm" class="form-centered row justify-content-center g-4">
-            <!-- Medication Icon Selection -->
-            <section class="col-12 text-center">
-                <p class="mb-2 fw-semibold">Choose an Icon:</p>
-                <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <label>
-                    <input type="radio" name="iconType" value="capsule" class="d-none" required>
-                        <div class="icon-select-wrapper">
-                            <img src="assets/capsule.png" alt="Capsule">
+    <!-- Main Content -->
+    <main class="container-fluid">
+        <!-- Hero Section -->
+        <section class="hero-section-compact py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <!-- Back Button -->
+                        <div class="d-flex justify-content-start mb-4">
+                            <a href="medication.html" class="btn btn-modern-outline">
+                                <i class="bi bi-arrow-left me-2"></i>Back to Tracker
+                            </a>
                         </div>
-                    </label>
-                    <label>
-                    <input type="radio" name="iconType" value="tablet" class="d-none">
-                        <div class="icon-select-wrapper">
-                            <img src="assets/tablet.png" alt="Tablet">
+                        
+                        <!-- Header -->
+                        <div class="hero-content mb-5">
+                            <h1 class="hero-title text-gradient">Add New Medication</h1>
+                            <p class="hero-subtitle">Let's set up your medication details with our simple step-by-step process</p>
+                            <div class="progress-indicator">
+                                <span class="step-number active">1</span>
+                                <div class="progress-line"></div>
+                                <span class="step-number">2</span>
+                                <div class="ms-3 text-muted">Step 1 of 2: Basic Information</div>
+                            </div>
                         </div>
-                    </label>
-                    <label>
-                    <input type="radio" name="iconType" value="syringe" class="d-none">
-                        <div class="icon-select-wrapper">
-                            <img src="assets/syringe.png" alt="Syringe">
-                        </div>
-                    </label>
-                    <label>
-                    <input type="radio" name="iconType" value="inhaler" class="d-none">
-                        <div class="icon-select-wrapper">
-                            <img src="assets/inhaler.png" alt="Inhaler">
-                        </div>
-                    </label>
+                    </div>
                 </div>
-            </section>
-            <!-- End of Medication Icon Selection -->
+            </div>
+        </section>
 
-            <!-- Medication Name -->
-            <section class="col-12" style="position: relative;">
-                <label for="medicationName" class="form-label visually-hidden">Medication Name</label>
-                <input type="text" id="medicationName" name="medicationName"
-                        class="form-control input-outline" placeholder="Medication Name" required>
-                <div id="medSuggestions" class="list-group autocomplete-medication position-absolute mt-1"></div>
-            </section>
-            <!-- End of Medication Name -->
+        <!-- Form Section -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="glass-card p-4 p-md-5">
+                            <form id="medicationForm" class="medication-form">
+                                <!-- Medication Type Icons -->
+                                <div class="form-group mb-4">
+                                    <label class="form-label-modern mb-3">
+                                        <i class="bi bi-palette me-2"></i>Choose Medication Type
+                                    </label>
+                                    <div class="icon-selection-grid">
+                                        <!-- Custom SVG Icons -->
+                                        <label class="icon-option">
+                                            <input type="radio" name="iconType" value="pills" required>
+                                            <div class="icon-wrapper">
+                                                <svg viewBox="0 0 64 64" class="medication-icon">
+                                                    <defs>
+                                                        <linearGradient id="pillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                            <stop offset="0%" style="stop-color:#667eea"/>
+                                                            <stop offset="100%" style="stop-color:#764ba2"/>
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <ellipse cx="32" cy="32" rx="20" ry="12" fill="url(#pillGrad)" opacity="0.8"/>
+                                                    <ellipse cx="32" cy="32" rx="18" ry="10" fill="white" opacity="0.3"/>
+                                                    <rect x="31" y="20" width="2" height="24" fill="white" opacity="0.5"/>
+                                                </svg>
+                                                <span>Pills</span>
+                                            </div>
+                                        </label>
 
-            <!-- Dosage -->
-            <section class="col-12">
+                                        <label class="icon-option">
+                                            <input type="radio" name="iconType" value="capsules">
+                                            <div class="icon-wrapper">
+                                                <svg viewBox="0 0 64 64" class="medication-icon">
+                                                    <defs>
+                                                        <linearGradient id="capGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                            <stop offset="0%" style="stop-color:#f093fb"/>
+                                                            <stop offset="100%" style="stop-color:#f5576c"/>
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <rect x="20" y="16" width="24" height="32" rx="12" fill="url(#capGrad)"/>
+                                                    <rect x="20" y="16" width="24" height="16" rx="12" fill="white" opacity="0.4"/>
+                                                    <circle cx="26" cy="28" r="2" fill="white" opacity="0.6"/>
+                                                    <circle cx="32" cy="24" r="1.5" fill="white" opacity="0.6"/>
+                                                    <circle cx="38" cy="30" r="1.8" fill="white" opacity="0.6"/>
+                                                </svg>
+                                                <span>Capsules</span>
+                                            </div>
+                                        </label>
+
+                                        <label class="icon-option">
+                                            <input type="radio" name="iconType" value="liquid">
+                                            <div class="icon-wrapper">
+                                                <svg viewBox="0 0 64 64" class="medication-icon">
+                                                    <defs>
+                                                        <linearGradient id="liquidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                            <stop offset="0%" style="stop-color:#4facfe"/>
+                                                            <stop offset="100%" style="stop-color:#00f2fe"/>
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <rect x="22" y="12" width="20" height="40" rx="3" fill="url(#liquidGrad)" stroke="#2196F3" stroke-width="2"/>
+                                                    <rect x="24" y="20" width="16" height="24" fill="white" opacity="0.3"/>
+                                                    <rect x="26" y="8" width="12" height="6" rx="2" fill="#2196F3"/>
+                                                    <circle cx="30" cy="30" r="1" fill="white" opacity="0.8"/>
+                                                    <circle cx="34" cy="26" r="0.8" fill="white" opacity="0.8"/>
+                                                    <circle cx="32" cy="36" r="1.2" fill="white" opacity="0.8"/>
+                                                </svg>
+                                                <span>Liquid</span>
+                                            </div>
+                                        </label>
+
+                                        <label class="icon-option">
+                                            <input type="radio" name="iconType" value="injection">
+                                            <div class="icon-wrapper">
+                                                <svg viewBox="0 0 64 64" class="medication-icon">
+                                                    <defs>
+                                                        <linearGradient id="injGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                            <stop offset="0%" style="stop-color:#fa709a"/>
+                                                            <stop offset="100%" style="stop-color:#fee140"/>
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <rect x="30" y="12" width="4" height="30" fill="url(#injGrad)"/>
+                                                    <rect x="28" y="42" width="8" height="12" rx="4" fill="url(#injGrad)"/>
+                                                    <rect x="29" y="8" width="6" height="6" rx="3" fill="#FF5722"/>
+                                                    <circle cx="32" cy="48" r="2" fill="white" opacity="0.4"/>
+                                                    <rect x="31" y="20" width="2" height="15" fill="white" opacity="0.3"/>
+                                                </svg>
+                                                <span>Injection</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Medication Name -->
+                                <div class="form-group mb-4">
+                                    <label for="medicationName" class="form-label-modern">
+                                        <i class="bi bi-capsule me-2"></i>Medication Name
+                                    </label>
+                                    <div class="input-group-modern">
+                                        <input type="text" id="medicationName" name="medicationName" 
+                                               class="form-control modern-input" 
+                                               placeholder="Enter medication name (e.g., Aspirin, Metformin)" 
+                                               required>
+                                        <div id="medSuggestions" class="autocomplete-dropdown"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Dosage -->
+                                <div class="form-group mb-4">
+                                    <label for="dosage" class="form-label-modern">
+                                        <i class="bi bi-calculator me-2"></i>Dosage Amount
+                                    </label>
+                                    <input type="text" id="dosage" name="dosage" 
+                                           class="form-control modern-input" 
+                                           placeholder="e.g., 1 tablet, 5ml, 10mg" 
+                                           required>
+                                </div>
+
+                                <!-- Timing -->
+                                <div class="form-group mb-4">
+                                    <label class="form-label-modern mb-3">
+                                        <i class="bi bi-clock me-2"></i>When to Take
+                                    </label>
+                                    <div class="btn-group-modern" role="group">
+                                        <input type="radio" class="btn-check" name="frequency" id="anytime" value="Anytime" required>
+                                        <label class="btn btn-modern-choice" for="anytime">
+                                            <i class="bi bi-clock me-2"></i>Anytime
+                                        </label>
+
+                                        <input type="radio" class="btn-check" name="frequency" id="beforeMeals" value="Before meals">
+                                        <label class="btn btn-modern-choice" for="beforeMeals">
+                                            <i class="bi bi-sunrise me-2"></i>Before Meals
+                                        </label>
+
+                                        <input type="radio" class="btn-check" name="frequency" id="afterMeals" value="After meals">
+                                        <label class="btn btn-modern-choice" for="afterMeals">
+                                            <i class="bi bi-sunset me-2"></i>After Meals
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Date Range -->
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <label for="startDate" class="form-label-modern">
+                                            <i class="bi bi-calendar-plus me-2"></i>Start Date
+                                        </label>
+                                        <input type="date" id="startDate" name="startDate" 
+                                               class="form-control modern-input" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="endDate" class="form-label-modern">
+                                            <i class="bi bi-calendar-check me-2"></i>End Date
+                                        </label>
+                                        <input type="date" id="endDate" name="endDate" 
+                                               class="form-control modern-input" required>
+                                    </div>
+                                </div>
+
+                                <!-- Hidden Fields -->
+                                <input type="hidden" name="userId" value="1">
+
+                                <!-- Submit Button -->
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-modern-primary btn-lg px-5">
+                                        <i class="bi bi-arrow-right me-2"></i>Continue to Schedule
+                                    </button>
+                                    <div id="formFeedback" class="mt-3"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card">
+                <div class="modal-body text-center p-5">
+                    <div class="success-icon mb-4">
+                        <i class="bi bi-check-circle-fill text-gradient"></i>
+                    </div>
+                    <h4 class="text-gradient mb-3">Medication Added Successfully!</h4>
+                    <p class="text-muted mb-4">Your medication information has been saved. Let's set up your dosing schedule.</p>
+                    <button type="button" class="btn btn-modern-primary" id="goToSchedule">
+                        <i class="bi bi-calendar-plus me-2"></i>Set Schedule
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Chat -->
+    <div id="support-container" class="support-widget">
+        <button id="support-button" class="support-toggle">
+            <i class="bi bi-question-circle-fill"></i>
+        </button>
+        
+        <div id="support-box" class="support-box d-none">
+            <div class="support-header">
+                <h6><i class="bi bi-headset me-2"></i>Need Help?</h6>
+                <button class="btn-close" id="close-support"></button>
+            </div>
+            <div class="support-body">
+                <p>Having trouble adding your medication? Our support team is here to help!</p>
+                <div class="d-grid gap-2">
+                    <a href="tel:1-800-HELP-SRC" class="btn btn-modern-outline btn-sm">
+                        <i class="bi bi-telephone me-2"></i>Call Support
+                    </a>
+                    <button class="btn btn-modern-primary btn-sm" id="chat-support">
+                        <i class="bi bi-chat-dots me-2"></i>Live Chat
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="js/add-medication.js"></script>
+    <script src="js/index.js"></script>
+
+    <style>
+        /* Additional Modern Styles for Add Medication Page */
+        .hero-section-compact {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section-compact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .progress-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .step-number.active {
+            background: white;
+            color: var(--primary-color);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .progress-line {
+            width: 60px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            margin: 0 1rem;
+        }
+
+        .icon-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .icon-option {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .icon-wrapper {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .icon-option input:checked + .icon-wrapper {
+            border-color: var(--primary-color);
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .medication-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 0.5rem;
+        }
+
+        .icon-wrapper span {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-label-modern {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group-modern {
+            position: relative;
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .btn-group-modern {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .btn-modern-choice {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #dee2e6;
+            color: var(--text-dark);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-modern-choice:hover {
+            border-color: var(--primary-color);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-check:checked + .btn-modern-choice {
+            background: var(--primary-gradient);
+            border-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .success-icon i {
+            font-size: 4rem;
+        }
+
+        .support-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1050;
+        }
+
+        .support-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .support-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .support-box {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 300px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .support-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 1rem;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .support-body {
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .icon-selection-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .btn-group-modern {
+                flex-direction: column;
+            }
+            
+            .support-box {
+                width: 280px;
+                right: -10px;
+            }
+        }
+    </style>
+</body>
+</html>
                 <label for="dosage" class="form-label visually-hidden">Dosage</label>
                 <input type="text" id="dosage" name="dosage" class="form-control input-outline" placeholder="Single Dose, e.g. 1 tablet" required>
             </section>

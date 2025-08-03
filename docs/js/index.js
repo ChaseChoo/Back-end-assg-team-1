@@ -372,31 +372,6 @@ const modernStyles = `
 const styleSheet = document.createElement('style');
 styleSheet.textContent = modernStyles;
 document.head.appendChild(styleSheet);
-        const taken = !!med.markAsTakenFlags?.[i]; // true if dose already taken
-        const doseKey = doseTime.toTimeString().substring(0, 5);
-        const key = `${med.medicationName}-${doseKey}`;
-
-        // Show reminder only if everything matches
-        if (
-          doseTime.getTime() === now.getTime() &&
-          enabled &&
-          !taken &&
-          !notifiedThisMinute.has(key)
-        ) {
-          showReminderNotification(med.medicationName, doseKey);
-          notifiedThisMinute.add(key);
-
-          // Allow future alert after 70s (next minute)
-          setTimeout(() => notifiedThisMinute.delete(key), 70000);
-        }
-      });
-    });
-
-  } 
-  catch (err) {
-    console.error("Reminder check failed:", err.message);
-  }
-}
 
 // Triggering notification for a medication
 function showReminderNotification(medName, time) {
