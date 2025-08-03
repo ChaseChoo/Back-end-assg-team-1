@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -447,7 +447,7 @@
                     <p class="text-light mb-0">&copy; 2025 SilverConnect. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <p class="text-light mb-0">Designed with ?? for Seniors</p>
+                    <p class="text-light mb-0">Designed with 中文 for Seniors</p>
                 </div>
             </div>
         </div>
@@ -470,7 +470,7 @@
         }
         
         function switchToChinese() {
-            document.getElementById('currentLanguageText').textContent = '??';
+            document.getElementById('currentLanguageText').textContent = '中文';
             document.getElementById('englishCheck').classList.add('invisible');
             document.getElementById('chineseCheck').classList.remove('invisible');
             localStorage.setItem('preferredLanguage', 'zh');
@@ -492,17 +492,20 @@
             const savedLanguage = localStorage.getItem('preferredLanguage');
             if (savedLanguage === 'zh') {
                 setTimeout(() => {
-                    document.getElementById('currentLanguageText').textContent = '??';
-                    document.getElementById('englishCheck').classList.add('invisible');
-                    document.getElementById('chineseCheck').classList.remove('invisible');
-                    if (window.translator) {
-                        window.translator.translatePage('zh');
-                    }
+                    switchToChinese();
                 }, 100);
+            } else {
+                // Ensure we're in English mode
+                localStorage.setItem('preferredLanguage', 'en');
+                document.getElementById('currentLanguageText').textContent = 'English';
+                document.getElementById('englishCheck').classList.remove('invisible');
+                document.getElementById('chineseCheck').classList.add('invisible');
             }
         });
     </script>
+    </script>
 </body>
 </html>
+
 
 

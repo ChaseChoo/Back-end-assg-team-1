@@ -121,6 +121,28 @@ class SimpleTranslator {
                 'Pricing': '价格',
                 'Contact Us': '联系我们',
 
+                // Login page specific content
+                'Sign In - SilverConnect': '登录 - 银连健康',
+                'Welcome to SilverConnect': '欢迎使用银连健康',
+                'Your trusted healthcare companion for managing medications, appointments, and family health.': '您值得信赖的医疗保健伙伴，用于管理药物、预约和家庭健康。',
+                'Welcome Back': '欢迎回来',
+                'Sign in to your SilverConnect account': '登录您的银连健康账户',
+                'Enter your email': '输入您的电子邮箱',
+                'Enter your password': '输入您的密码',
+                'Remember me': '记住我',
+                'Forgot password?': '忘记密码？',
+                'Sign In': '登录',
+                'or': '或',
+                "Don't have an account?": '还没有账户？',
+                'Create account': '创建账户',
+
+                // Login page features
+                'SilverConnect Healthcare Platform': '银连健康医疗平台',
+
+                // Footer links
+                'Family Hub': '家庭中心',
+                'Nutrition': '营养',
+
                 // Login/Registration
                 'Join SilverConnect': '加入银连健康',
                 'Create Account': '创建账户',
@@ -290,13 +312,67 @@ class SimpleTranslator {
             this.ultraAggressiveTranslation(translations);
         }, 100);
 
-        // Update language indicator
+        // Update language indicator and ensure language switching still works
         this.updateLanguageIndicator(language);
         
         // Store preference
         localStorage.setItem('preferredLanguage', language);
         
+        // Re-bind language switcher events after translation
+        setTimeout(() => this.rebindLanguageSwitcher(), 50);
         console.log('Translation complete');
+    }
+
+    rebindLanguageSwitcher() {
+        // Always rebind the language switcher dropdown events and global functions
+        const englishItem = document.querySelector('a[onclick*="switchToEnglish"]');
+        const chineseItem = document.querySelector('a[onclick*="switchToChinese"]');
+
+        // Remove any previous event listeners by replacing the element
+        if (englishItem) {
+            const newEnglish = englishItem.cloneNode(true);
+            newEnglish.onclick = (e) => {
+                e.preventDefault();
+                window.switchToEnglish();
+            };
+            englishItem.parentNode.replaceChild(newEnglish, englishItem);
+        }
+        if (chineseItem) {
+            const newChinese = chineseItem.cloneNode(true);
+            newChinese.onclick = (e) => {
+                e.preventDefault();
+                window.switchToChinese();
+            };
+            chineseItem.parentNode.replaceChild(newChinese, chineseItem);
+        }
+
+        // Always define the global functions
+        window.switchToEnglish = () => {
+            const currentLangText = document.getElementById('currentLanguageText');
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (currentLangText) currentLangText.textContent = 'English';
+            if (englishCheck) englishCheck.classList.remove('invisible');
+            if (chineseCheck) chineseCheck.classList.add('invisible');
+            localStorage.setItem('preferredLanguage', 'en');
+            this.currentLanguage = 'en';
+            setTimeout(() => {
+                location.reload();
+            }, 100);
+        };
+        window.switchToChinese = () => {
+            const currentLangText = document.getElementById('currentLanguageText');
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (currentLangText) currentLangText.textContent = '中文';
+            if (englishCheck) englishCheck.classList.add('invisible');
+            if (chineseCheck) chineseCheck.classList.remove('invisible');
+            localStorage.setItem('preferredLanguage', 'zh');
+            this.currentLanguage = 'zh';
+            setTimeout(() => {
+                this.translatePage('zh');
+            }, 50);
+        };
     }
 
     ultraAggressiveTranslation(translations) {
@@ -701,6 +777,9 @@ class SimpleTranslator {
             } else {
                 userLanguage = savedLanguage || 'en';
             }
+
+            // Initialize language switcher functions
+            this.rebindLanguageSwitcher();
 
             if (userLanguage === 'zh') {
                 setTimeout(() => this.translatePage('zh'), 100);
