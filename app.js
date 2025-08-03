@@ -17,12 +17,6 @@ const {
     validateMarkAsTaken,
 } = require("./middlewares/medicationValidation");
 
-const mealLogController = require("./controllers/mealLogController");
-const {
-    validateMealLog,
-    validateMealLogId,
-} = require("./middlewares/mealLogValidation");
-
 const userController = require("./controllers/userController");
 const {
     authenticateToken, // JWT Bearer Token
@@ -39,6 +33,21 @@ const {
 } = require("./middlewares/appointmentValidation");
 
 const doctorController = require('./controllers/doctorController');
+const familyController = require('./controllers/familyController');
+const inventoryController = require('./controllers/inventoryController');
+
+// Import models for table creation
+const FamilyModel = require('./models/familyModel');
+const MedicationInventoryModel = require('./models/medicationInventoryModel');
+const { addLanguagePreferenceColumn } = require('./utils/languageSetup');
+
+// Import inventory validation middleware
+const {
+    validateInventoryItem,
+    validateInventoryId,
+    validateQuantity,
+    validateNotificationId
+} = require('./middlewares/inventoryValidation');
 
 // Create Express app
 const app = express();
@@ -48,9 +57,22 @@ const port = process.env.PORT || 3000;
 app.use(express.json()); // Parses JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
 
+// Add request logging middleware
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    console.log("Request body:", req.body);
+    next();
+});
+
 // Serving static files from /docs folder
 // When a request comes from a .html file, Express will look for it in the "docs" folder
 app.use(express.static(path.join(__dirname, "docs")));
+
+// Test route
+app.get("/api/test", (req, res) => {
+    console.log("TEST ROUTE HIT!");
+    res.json({ message: "Test route working!" });
+});
 
 // Routes for Medications
 app.get("/api/medication-records", authenticateToken, medicationController.getAllScheduledMedications); // medication.html list of medication records
@@ -65,17 +87,12 @@ app.get("/api/medication-suggestions", medicationController.getMedicationSuggest
 // External API OPENFDA for the chatbot to retrieve side effects based on medication names
 app.get("/api/openfda-adverse-events", medicationController.getOpenFdaAdverseEvents);
 
-// Routes for Meal Logs
-app.get("/api/mealLog", mealLogController.getAllMealLogs);
-app.get("/api/mealLog/:id", validateMealLogId, mealLogController.getMealLogById);
-app.post("/api/mealLog", validateMealLog, mealLogController.createMealLog);
-app.put("/api/mealLog/:id", validateMealLogId, mealLogController.updateMealLog);
-app.delete("/api/mealLog/:id", validateMealLogId, mealLogController.deleteMealLog);
-
 // Routes for Users
 app.post("/api/users/register", validateUserRegistration, userController.registerUser); // Create new user account
 app.post("/api/users/login", validateUserLogin, userController.loginUser); // Login to existing user account
+app.get("/api/users/profile", authenticateToken, userController.getUserProfile); // Get user profile information
 app.put("/api/users/update", authenticateToken, validateUserUpdate, userController.updateUserInfo); // Profile update for user account
+app.put("/api/users/language", authenticateToken, userController.updateUserLanguage); // Update user language preference
 app.delete("/api/users/delete", authenticateToken, userController.deleteUserAccount); // Permanently deleting user account
 
 // Routes for Appointments
@@ -87,10 +104,60 @@ app.delete("/api/appointments/:id", authenticateToken, validateAppointmentId, ap
 // Route for Doctors 
 app.get('/api/doctors', doctorController.getDoctors);
 
+// Routes for Family Management
+app.get('/api/family', authenticateToken, familyController.getFamilyMembers);
+app.post('/api/family', authenticateToken, familyController.addFamilyMember);
+app.get('/api/family/stats', authenticateToken, familyController.getFamilyStats);
+app.get('/api/family/:id', authenticateToken, familyController.getFamilyMemberById);
+app.put('/api/family/:id', authenticateToken, familyController.updateFamilyMember);
+app.delete('/api/family/:id', authenticateToken, familyController.deleteFamilyMember);
+
+// Routes for Medication Inventory
+app.get('/api/inventory', authenticateToken, inventoryController.getUserInventory);
+app.get('/api/inventory/family', authenticateToken, inventoryController.getFamilyInventory);
+app.get('/api/inventory/stats', authenticateToken, inventoryController.getInventoryStats);
+app.get('/api/inventory/notifications', authenticateToken, inventoryController.getNotifications);
+app.post('/api/inventory', authenticateToken, validateInventoryItem, inventoryController.addInventoryItem);
+app.put('/api/inventory/:id', authenticateToken, validateInventoryId, validateInventoryItem, inventoryController.updateInventoryItem);
+app.put('/api/inventory/:id/take', authenticateToken, validateInventoryId, validateQuantity, inventoryController.takeMedication);
+app.put('/api/inventory/:id/restock', authenticateToken, validateInventoryId, validateQuantity, inventoryController.restockMedication);
+app.put('/api/inventory/notifications/:id/read', authenticateToken, validateNotificationId, inventoryController.markNotificationAsRead);
+app.delete('/api/inventory/:id', authenticateToken, validateInventoryId, inventoryController.deleteInventoryItem);
+
+// Routes for the integrated meal system (your existing meal system with authentication)
+const mealController = require("./controllers/mealController");
+const {
+  validateMealLog: validateMeal,
+  validateMealLogId: validateMealId
+} = require("./middlewares/mealLogValidation");
+
+// Meal Plan routes (with authentication)
+app.get("/api/meals", authenticateToken, mealController.getAllMeals);
+app.get("/api/meals/:id", authenticateToken, validateMealId, mealController.getMealById);
+app.post("/api/meals", authenticateToken, validateMeal, mealController.createMeal);
+app.put("/api/meals/:id", authenticateToken, validateMealId, validateMeal, mealController.updateMeal); 
+app.delete("/api/meals/:id", authenticateToken, validateMealId, mealController.deleteMeal);
+
+// Food database routes (with authentication - no validation for now)
+app.post("/api/foods", authenticateToken, mealController.createNewFood);
+app.get("/api/foods/search", authenticateToken, mealController.searchFoods);
+app.get("/api/foods", authenticateToken, mealController.getAllFoods);
+app.get("/api/foods/:foodID", authenticateToken, mealController.getFoodById);
+app.delete("/api/foods/:foodID", authenticateToken, mealController.deleteFood);
 
 // Start server
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log(`Server running at http://localhost:${port}`);
+    
+    // Initialize database tables
+    try {
+        await FamilyModel.createTable();
+        await MedicationInventoryModel.createTable();
+        await addLanguagePreferenceColumn();
+        console.log('Database tables initialized successfully');
+    } catch (error) {
+        console.error('Error initializing database tables:', error);
+    }
 });
 
 // Graceful shutdown

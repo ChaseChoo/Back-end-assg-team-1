@@ -19,14 +19,18 @@ const userSchema = Joi.object({
 });
 
 function validateUserRegistration (req, res, next) {
+    console.log("=== VALIDATION MIDDLEWARE REACHED ===");
+    console.log("Request body:", req.body);
     const { error } = userSchema.validate(req.body, { abortEarly: false });
 
     if (error) {
+        console.log("Validation error:", error.details);
         const messages = error.details.map((detail) => detail.message);
         return res.status(400).json({ error: messages.join(", ") });
     }
     
-  next();
+    console.log("Validation passed, proceeding to controller");
+    next();
 }
 
 function validateUserUpdate(req, res, next) {

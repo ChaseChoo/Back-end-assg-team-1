@@ -1,0 +1,722 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Inventory - SilverConnect</title>
+    <!-- Normalize.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <!-- Bootstrap 5.3.7 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Bootstrap Icons 1.11.3 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Simple Translation System -->
+    <script src="js/simple-translator.js"></script>
+    <script src="js/simple-language-switcher.js"></script>
+
+    <style>
+        /* Senior-friendly styles */
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 2rem;
+        }
+        
+        .inventory-card {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .inventory-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .low-stock {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+        }
+        
+        .out-of-stock {
+            border-color: #6c757d;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            opacity: 0.8;
+        }
+        
+        .stock-badge {
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        
+        .low-stock-badge {
+            background: #dc3545;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        .out-of-stock-badge {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .normal-stock-badge {
+            background: #28a745;
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .medication-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stock-info {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .action-button {
+            font-size: 1.1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            margin: 0.25rem;
+            min-width: 120px;
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .stats-item {
+            margin-bottom: 1rem;
+        }
+        
+        .stats-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stats-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .tab-content {
+            margin-top: 2rem;
+        }
+        
+        .nav-tabs .nav-link {
+            font-size: 1.2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 10px 10px 0 0;
+            margin-right: 0.5rem;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: #2c5aa0;
+            color: white;
+            border-color: #2c5aa0;
+        }
+        
+        .notification-item {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-control-lg {
+            font-size: 1.1rem;
+            padding: 0.75rem 1rem;
+        }
+        
+        .family-inventory-card {
+            border-left: 4px solid #17a2b8;
+            background: linear-gradient(135deg, #e8f7ff 0%, #ffffff 100%);
+        }
+        
+        .owner-info {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/MerderkaLife.png" alt="MerderkaLife Logo" class="logo me-2">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="meal-logging.html">Meal Logging</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="medication.html">Medication Tracker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="family-management.html">Family & Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="healthcare-appointments.html">Manage Appointment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold active" href="medication-inventory.html">Medicine Inventory</a>
+                    </li>
+                    <!-- Account Area dynamically populated based on login status -->                    <!-- Language Switcher -->
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-globe me-1"></i>
+                                <span id="currentLanguageText">English</span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                                <li><a class="dropdown-item" href="#" onclick="switchToEnglish()">
+                                    <i class="bi bi-check me-2" id="englishCheck"></i>English
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="switchToChinese()">
+                                    <i class="bi bi-check invisible me-2" id="chineseCheck"></i>ä¸­æ–‡ (Chinese)
+                                </a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item d-flex align-items-center" id="navbarAuthArea"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <!-- Page Header -->
+        <div class="text-center mb-4">
+            <h1 class="page-title">
+                <i class="bi bi-clipboard2-check me-3"></i>
+                <span>Medication Inventory</span>
+            </h1>
+            <p class="lead text-muted">Track your medication stock and stay informed about low supplies</p>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="text-center py-5">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-muted">Loading your medication inventory...</p>
+        </div>
+
+        <!-- Authentication Required Message -->
+        <div id="authRequiredMessage" class="alert alert-warning text-center d-none">
+            <h4><i class="bi bi-shield-lock me-2"></i><span>Sign In Required</span></h4>
+            <p class="mb-3">Please sign in to access your medication inventory.</p>
+            <a href="user-login.html" class="btn btn-primary btn-lg">
+                <i class="bi bi-box-arrow-in-right me-2"></i><span>Sign In</span>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="d-none">
+            <!-- Statistics Overview -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="stats-card">
+                        <div class="row text-center">
+                            <div class="col-6 col-md-3">
+                                <div class="stats-item">
+                                    <span class="stats-number" id="totalMedications">0</span>
+                                    <span class="stats-label">Total Medications</span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="stats-item">
+                                    <span class="stats-number" id="lowStockCount">0</span>
+                                    <span class="stats-label">Low Stock</span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="stats-item">
+                                    <span class="stats-number" id="outOfStockCount">0</span>
+                                    <span class="stats-label">Out of Stock</span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="stats-item">
+                                    <span class="stats-number" id="totalStock">0</span>
+                                    <span class="stats-label">Total Stock</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary btn-lg action-button me-3" data-bs-toggle="modal" data-bs-target="#addInventoryModal">
+                        <i class="bi bi-plus-circle me-2"></i>Add Medication
+                    </button>
+                    <button class="btn btn-success btn-lg action-button" id="refreshInventory">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Refresh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <ul class="nav nav-tabs" id="inventoryTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="my-inventory-tab" data-bs-toggle="tab" data-bs-target="#my-inventory" type="button" role="tab">
+                        <i class="bi bi-person-check me-2"></i>My Inventory
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="family-inventory-tab" data-bs-toggle="tab" data-bs-target="#family-inventory" type="button" role="tab">
+                        <i class="bi bi-people me-2"></i>Family Inventory
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications" type="button" role="tab">
+                        <i class="bi bi-bell me-2"></i>Notifications
+                        <span class="badge bg-danger ms-1 d-none" id="notificationBadge">0</span>
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="inventoryTabContent">
+                <!-- My Inventory Tab -->
+                <div class="tab-pane fade show active" id="my-inventory" role="tabpanel">
+                    <div id="inventoryList">
+                        <!-- Inventory items will be populated here -->
+                    </div>
+                    
+                    <div id="emptyInventoryState" class="empty-state d-none">
+                        <i class="bi bi-clipboard-x"></i>
+                        <h3>No Medications in Inventory</h3>
+                        <p>Start by adding your first medication to track its stock levels.</p>
+                        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addInventoryModal">
+                            <i class="bi bi-plus-circle me-2"></i>Add Your First Medication
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Family Inventory Tab -->
+                <div class="tab-pane fade" id="family-inventory" role="tabpanel">
+                    <div id="familyInventoryList">
+                        <!-- Family inventory items will be populated here -->
+                    </div>
+                    
+                    <div id="emptyFamilyInventoryState" class="empty-state d-none">
+                        <i class="bi bi-people-fill"></i>
+                        <h3>No Family Inventory Available</h3>
+                        <p>Connect with family members to view their medication inventory.</p>
+                        <a href="family-management.html" class="btn btn-info btn-lg">
+                            <i class="bi bi-people me-2"></i>Manage Family Members
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Notifications Tab -->
+                <div class="tab-pane fade" id="notifications" role="tabpanel">
+                    <div id="notificationsList">
+                        <!-- Notifications will be populated here -->
+                    </div>
+                    
+                    <div id="emptyNotificationsState" class="empty-state d-none">
+                        <i class="bi bi-bell-slash"></i>
+                        <h3>No Notifications</h3>
+                        <p>You'll receive notifications here when medication stock is running low.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Inventory Modal -->
+    <div class="modal fade" id="addInventoryModal" tabindex="-1" aria-labelledby="addInventoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="addInventoryModalLabel">
+                        <i class="bi bi-plus-circle me-2"></i>Add Medication to Inventory
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addInventoryForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="medicationName" class="form-label">Medication Name *</label>
+                                <input type="text" class="form-control form-control-lg" id="medicationName" required>
+                                <div class="form-text">Enter the name of the medication</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="currentStock" class="form-label">Current Stock *</label>
+                                <input type="number" class="form-control form-control-lg" id="currentStock" min="0" required>
+                                <div class="form-text">How many do you currently have?</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="lowStockThreshold" class="form-label">Low Stock Alert At</label>
+                                <input type="number" class="form-control form-control-lg" id="lowStockThreshold" value="5" min="1">
+                                <div class="form-text">Alert when stock reaches this number</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="unit" class="form-label">Unit</label>
+                                <select class="form-select form-control-lg" id="unit">
+                                    <option value="pills">Pills</option>
+                                    <option value="tablets">Tablets</option>
+                                    <option value="capsules">Capsules</option>
+                                    <option value="ml">Milliliters (ml)</option>
+                                    <option value="doses">Doses</option>
+                                    <option value="bottles">Bottles</option>
+                                    <option value="packs">Packs</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Notes (Optional)</label>
+                            <textarea class="form-control form-control-lg" id="notes" rows="3" maxlength="500"></textarea>
+                            <div class="form-text">Any additional information about this medication</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-lg" id="saveInventoryItem">
+                        <i class="bi bi-check-circle me-2"></i>Add to Inventory
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Inventory Modal -->
+    <div class="modal fade" id="editInventoryModal" tabindex="-1" aria-labelledby="editInventoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title" id="editInventoryModalLabel">
+                        <i class="bi bi-pencil-square me-2"></i>Edit Medication Inventory
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editInventoryForm">
+                        <input type="hidden" id="editInventoryId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editMedicationName" class="form-label">Medication Name *</label>
+                                <input type="text" class="form-control form-control-lg" id="editMedicationName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="editCurrentStock" class="form-label">Current Stock *</label>
+                                <input type="number" class="form-control form-control-lg" id="editCurrentStock" min="0" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editLowStockThreshold" class="form-label">Low Stock Alert At</label>
+                                <input type="number" class="form-control form-control-lg" id="editLowStockThreshold" min="1">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="editUnit" class="form-label">Unit</label>
+                                <select class="form-select form-control-lg" id="editUnit">
+                                    <option value="pills">Pills</option>
+                                    <option value="tablets">Tablets</option>
+                                    <option value="capsules">Capsules</option>
+                                    <option value="ml">Milliliters (ml)</option>
+                                    <option value="doses">Doses</option>
+                                    <option value="bottles">Bottles</option>
+                                    <option value="packs">Packs</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editNotes" class="form-label">Notes (Optional)</label>
+                            <textarea class="form-control form-control-lg" id="editNotes" rows="3" maxlength="500"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning btn-lg" id="updateInventoryItem">
+                        <i class="bi bi-check-circle me-2"></i>Update Inventory
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Take Medication Modal -->
+    <div class="modal fade" id="takeMedicationModal" tabindex="-1" aria-labelledby="takeMedicationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="takeMedicationModalLabel">
+                        <i class="bi bi-check-circle me-2"></i>Take Medication
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <input type="hidden" id="takeMedicationId">
+                    <i class="bi bi-capsule text-success" style="font-size: 3rem;"></i>
+                    <h4 class="my-3" id="takeMedicationName">Medication Name</h4>
+                    <p class="text-muted mb-4">How many did you take?</p>
+                    
+                    <div class="row justify-content-center">
+                        <div class="col-6">
+                            <label for="quantityTaken" class="form-label">Quantity Taken</label>
+                            <input type="number" class="form-control form-control-lg text-center" id="quantityTaken" value="1" min="1">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <small class="text-muted">Current stock: <span id="currentStockDisplay">0</span></small>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success btn-lg" id="confirmTakeMedication">
+                        <i class="bi bi-check-circle me-2"></i>Confirm Taken
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Restock Modal -->
+    <div class="modal fade" id="restockModal" tabindex="-1" aria-labelledby="restockModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="restockModalLabel">
+                        <i class="bi bi-plus-circle me-2"></i>Restock Medication
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <input type="hidden" id="restockMedicationId">
+                    <i class="bi bi-box text-info" style="font-size: 3rem;"></i>
+                    <h4 class="my-3" id="restockMedicationName">Medication Name</h4>
+                    <p class="text-muted mb-4">How many are you adding?</p>
+                    
+                    <div class="row justify-content-center">
+                        <div class="col-6">
+                            <label for="quantityAdded" class="form-label">Quantity to Add</label>
+                            <input type="number" class="form-control form-control-lg text-center" id="quantityAdded" value="1" min="1">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <small class="text-muted">Current stock: <span id="restockCurrentStockDisplay">0</span></small>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-info btn-lg" id="confirmRestock">
+                        <i class="bi bi-plus-circle me-2"></i>Add Stock
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-white mt-5">
+        <div class="container pt-5 pb-3">
+            <div class="row text-start">
+                <section class="col-12 col-sm-6 col-md-3 mb-4">
+                    <h2 class="h6 fw-bold text-uppercase">MerderkaLife</h2>
+                    <address>
+                        535 Clementi Road,<br>
+                        Singapore 599489
+                    </address>
+                    <p class="mb-0">Mon-Fri: 10am-8pm,<br>Sat-Sun: 11am-6pm</p>
+                </section>
+
+                <section class="col-12 col-sm-6 col-md-3 mb-4">
+                    <h2 class="h6 fw-bold text-uppercase">About</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html" class="text-white text-decoration-none">About Us</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Health Blogs</a></li>
+                        <li><a href="healthcare-appointments.html" class="text-white text-decoration-none">Manage Appointments</a></li>
+                    </ul>
+                </section>
+
+                <section class="col-12 col-sm-6 col-md-3 mb-4">
+                    <h2 class="h6 fw-bold text-uppercase">Contact</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="contact.html" class="text-white text-decoration-none">Contact Us</a></li>
+                        <li><a href="mailto:support@merderkalife.com" class="text-white text-decoration-none">support@merderkalife.com</a></li>
+                        <li><a href="tel:+6564606999" class="text-white text-decoration-none">+65 6460 6999</a></li>
+                    </ul>
+                </section>
+
+                <section class="col-12 col-sm-6 col-md-3 mb-4">
+                    <h2 class="h6 fw-bold text-uppercase">Others</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="faq.html" class="text-white text-decoration-none">FAQ</a></li>
+                        <li><a href="credits.html" class="text-white text-decoration-none">Credits</a></li>
+                        <li><a href="privacy.html" class="text-white text-decoration-none">Privacy Policy</a></li>
+                    </ul>
+                </section>
+            </div>
+
+            <div class="text-center pt-3">
+                <small>Â© 2025 MerderkaLife. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Ask Us Support System -->
+    <div id="support-container" class="chat-container position-fixed start-0 bottom-0 p-3">
+        <!-- Support Toggle Button -->
+        <button id="support-button" class="btn btn-success rounded-circle shadow chat-toggle" aria-label="Get Help & Support">
+            <i class="bi bi-question-circle-fill fs-5"></i>
+        </button>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/medication-inventory.js"></script>
+    <script src="js/ask-us-support.js"></script>
+
+    <script>
+        // Initialize page authentication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication and initialize page
+            const token = sessionStorage.getItem('authToken');
+            if (!token) {
+                showAuthRequired();
+            } else {
+                initializePage();
+            }
+        });
+
+        function showAuthRequired() {
+            document.getElementById('loadingState').classList.add('d-none');
+            document.getElementById('authRequiredMessage').classList.remove('d-none');
+            document.getElementById('mainContent').classList.add('d-none');
+        }
+
+        function initializePage() {
+            document.getElementById('loadingState').classList.add('d-none');
+            document.getElementById('authRequiredMessage').classList.add('d-none');
+            document.getElementById('mainContent').classList.remove('d-none');
+            
+            // Initialize inventory functionality
+            if (typeof initializeInventory === 'function') {
+                initializeInventory();
+            }
+        }
+    </script>    
+    <!-- Language Switcher Functions -->
+    <script>
+        function switchToEnglish() {
+            document.getElementById('currentLanguageText').textContent = 'English';
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (englishCheck) englishCheck.classList.remove('invisible');
+            if (chineseCheck) chineseCheck.classList.add('invisible');
+            localStorage.setItem('preferredLanguage', 'en');
+            location.reload(); // Reset to English
+        }
+        
+        function switchToChinese() {
+            document.getElementById('currentLanguageText').textContent = 'ä¸­æ–‡';
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (englishCheck) englishCheck.classList.add('invisible');
+            if (chineseCheck) chineseCheck.classList.remove('invisible');
+            localStorage.setItem('preferredLanguage', 'zh');
+            
+            if (window.translator) {
+                window.translator.translatePage('zh');
+            } else {
+                // Fallback if translator not loaded
+                setTimeout(() => {
+                    if (window.translator) {
+                        window.translator.translatePage('zh');
+                    }
+                }, 500);
+            }
+        }
+        
+        // Check saved language preference on load
+        window.addEventListener('load', () => {
+            const savedLanguage = localStorage.getItem('preferredLanguage');
+            if (savedLanguage === 'zh') {
+                setTimeout(() => {
+                    const currentLangText = document.getElementById('currentLanguageText');
+                    const englishCheck = document.getElementById('englishCheck');
+                    const chineseCheck = document.getElementById('chineseCheck');
+                    
+                    if (currentLangText) currentLangText.textContent = 'ä¸­æ–‡';
+                    if (englishCheck) englishCheck.classList.add('invisible');
+                    if (chineseCheck) chineseCheck.classList.remove('invisible');
+                    
+                    if (window.translator) {
+                        window.translator.translatePage('zh');
+                    }
+                }, 100);
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+

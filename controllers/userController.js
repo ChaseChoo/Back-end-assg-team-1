@@ -32,6 +32,7 @@ async function registerUser(req, res) {
             message: "User registered successfully",
             username: newUser.username,
             email: newUser.email,
+            languagePreference: newUser.languagePreference || 'en',
             token
         });
     } catch (error) {
@@ -70,6 +71,7 @@ async function loginUser(req, res) {
             userId : user.userId,
             username: user.username,
             email: user.email,
+            languagePreference: user.languagePreference || 'en',
             token
         });
     } catch (error) {
@@ -116,9 +118,57 @@ async function deleteUserAccount(req, res) {
     }
 }
 
+// (PUT) Update user language preference
+async function updateUserLanguage(req, res) {
+    try {
+        const userId = req.user.userId; // extracted from JWT by authenticateToken
+        const { languagePreference } = req.body;
+
+        // Validate language preference
+        if (!languagePreference || !['en', 'zh'].includes(languagePreference)) {
+            return res.status(400).json({ message: "Invalid language preference. Must be 'en' or 'zh'" });
+        }
+
+        // Update user language in DB
+        await userModel.updateUserLanguage(userId, languagePreference);
+
+        res.json({
+            message: "Language preference updated successfully",
+            languagePreference
+        });
+    } catch (error) {
+        console.error("Update language error:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
+// (GET) Get user profile information
+async function getUserProfile(req, res) {
+    try {
+        const userId = req.user.userId; // extracted from JWT by authenticateToken
+
+        const user = await userModel.getUserById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.json({
+            userId: user.userId,
+            username: user.username,
+            email: user.email,
+            languagePreference: user.languagePreference || 'en'
+        });
+    } catch (error) {
+        console.error("Get user profile error:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
 module.exports = { 
     registerUser,
     loginUser,
     updateUserInfo,
+    updateUserLanguage,
+    getUserProfile,
     deleteUserAccount,
 };

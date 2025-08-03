@@ -11,13 +11,12 @@ const createAppointment = async (req, res) => {
   try {
 
     const userId = req.user.userId; // Extract userId from JWT
-    const { doctorId, appointmentTypeId, appointmentDate, appointmentTime, notes } = req.body;
+    const { doctorId, appointmentDate, appointmentTime, notes } = req.body;
 
     // Insert new appointment using model function
     const newAppointment = await appointmentModel.createAppointment({
       userId,
       doctorId,
-      appointmentTypeId,
       appointmentDate,
       appointmentTime,
       notes

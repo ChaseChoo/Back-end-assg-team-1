@@ -13,7 +13,12 @@
     "type": "git",
     "url": "git+https://github.com/ChaseChoo/BED-assignment-.git"
   },
-  "keywords": ["healthcare", "seniors", "medication", "family"],
+  "keywords": [
+    "healthcare",
+    "seniors",
+    "medication",
+    "family"
+  ],
   "author": "Team 1 - BED Assignment",
   "license": "ISC",
   "bugs": {
@@ -28,6 +33,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mssql": "^11.0.1",
+    "node-fetch": "^3.3.2",
     "normalize.css": "^8.0.1",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1"

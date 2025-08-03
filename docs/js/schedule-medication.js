@@ -3,7 +3,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   // Redirect unauthenticated users
-  const token = sessionStorage.getItem("token");
+  const token = sessionStorage.getItem('authToken');
   if (!token) {
     window.location.href = "user-login.html"; 
     return;
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
               method: "POST",
               headers: { 
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
               },
               body: JSON.stringify(payload) // Convert payload obj into a JSON string
             })

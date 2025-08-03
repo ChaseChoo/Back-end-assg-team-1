@@ -8,8 +8,8 @@ async function createMedication(data) {
         // Connect to database configuration file
         connection = await sql.connect(dbConfig);
 
-        const query = `INSERT INTO Medication (userId, medicationName, dosage, frequency, startDate, endDate, iconType)
-                       VALUES (@userId, @medicationName, @dosage, @frequency, @startDate, @endDate, @iconType);
+        const query = `INSERT INTO Medications (userId, medicationName, dosage, frequency, instructions, sideEffects)
+                       VALUES (@userId, @medicationName, @dosage, @frequency, @instructions, @sideEffects);
                        SELECT SCOPE_IDENTITY() AS medicationId`;
 
         const request = connection.request();
@@ -18,9 +18,8 @@ async function createMedication(data) {
         request.input("medicationName", sql.NVarChar(100), data.medicationName);
         request.input("dosage", sql.NVarChar(50), data.dosage);
         request.input("frequency", sql.NVarChar(20), data.frequency);
-        request.input("startDate", sql.Date, data.startDate);
-        request.input("endDate", sql.Date, data.endDate);
-        request.input("iconType", sql.NVarChar(20), data.iconType);
+        request.input("instructions", sql.NVarChar(500), data.instructions || null);
+        request.input("sideEffects", sql.NVarChar(500), data.sideEffects || null);
 
         // Execute SQL query and retrieve inserted medicationId
         const result = await request.query(query);
@@ -56,16 +55,14 @@ async function createSchedule({ userId, medicationId, doseTime, reminderEnabled 
         const [hour, minute] = doseTime.split(":").map(Number);
         const jsTime = new Date(Date.UTC(1970, 0, 1, hour, minute, 0)); 
 
-        // Safe SQL parameter binding
-        request.input("userId", sql.Int, userId);
+        // Safe SQL parameter binding (note: no userId in MedicationSchedules table)
         request.input("medicationId", sql.Int, medicationId);
         request.input("doseTime", sql.Time, jsTime);
-        request.input("reminderEnabled", sql.Bit, reminderEnabled);
 
         const result = await request.query(`
-            INSERT INTO MedicationSchedule (userId, medicationId, doseTime, reminderEnabled)
+            INSERT INTO MedicationSchedules (medicationId, doseTime)
             OUTPUT INSERTED.*
-            VALUES (@userId, @medicationId, @doseTime, @reminderEnabled)
+            VALUES (@medicationId, @doseTime)
         `);
 
         return result.recordset[0];
@@ -97,7 +94,7 @@ async function setMarkAsTaken(scheduleId, markAsTaken) {
         request.input("markAsTaken", sql.Bit, markAsTaken);
 
         const result = await request.query(`
-            UPDATE MedicationSchedule
+            UPDATE MedicationSchedules
             SET markAsTaken = @markAsTaken
             WHERE scheduleId = @scheduleId
         `);
@@ -118,11 +115,13 @@ async function deleteSchedule(scheduleId, userId) {
     try {
         connection = await sql.connect(dbConfig);
 
-        // Step 1: Get medicationId before deleting
+        // Step 1: Get medicationId before deleting (check ownership through Medications table)
         const medIdResult = await connection.request()
             .input("scheduleId", sql.Int, scheduleId)
             .input("userId", sql.Int, userId)
-            .query(`SELECT medicationId FROM MedicationSchedule WHERE scheduleId = @scheduleId AND userId = @userId`);
+            .query(`SELECT s.medicationId FROM MedicationSchedules s 
+                    INNER JOIN Medications m ON s.medicationId = m.medicationId 
+                    WHERE s.scheduleId = @scheduleId AND m.userId = @userId`);
 
         const medicationId = medIdResult.recordset[0]?.medicationId;
         if (!medicationId) return false;
@@ -130,21 +129,20 @@ async function deleteSchedule(scheduleId, userId) {
         // Step 2: Delete the schedule
         const delResult = await connection.request()
             .input("scheduleId", sql.Int, scheduleId)
-            .input("userId", sql.Int, userId)
-            .query(`DELETE FROM MedicationSchedule WHERE scheduleId = @scheduleId AND userId = @userId`);
+            .query(`DELETE FROM MedicationSchedules WHERE scheduleId = @scheduleId`);
 
         if (delResult.rowsAffected[0] === 0) return false;
 
         // Step 3: Check if medication has any remaining schedules
         const countResult = await connection.request()
             .input("medicationId", sql.Int, medicationId)
-            .query(`SELECT COUNT(*) AS count FROM MedicationSchedule WHERE medicationId = @medicationId`);
+            .query(`SELECT COUNT(*) AS count FROM MedicationSchedules WHERE medicationId = @medicationId`);
 
         if (countResult.recordset[0].count === 0) {
             await connection.request()
                 .input("medicationId", sql.Int, medicationId)
                 .input("userId", sql.Int, userId)
-                .query(`DELETE FROM Medication WHERE medicationId = @medicationId AND userId = @userId`);
+                .query(`DELETE FROM Medications WHERE medicationId = @medicationId AND userId = @userId`);
         }
 
         return true;
@@ -164,25 +162,23 @@ async function updateMedication(medicationId, data, userId) {
         connection = await sql.connect(dbConfig);
         const request = connection.request();
 
-        const medicationUpdateQuery  = `UPDATE Medication
+        const medicationUpdateQuery  = `UPDATE Medications
                        SET medicationName = @medicationName,
                            dosage = @dosage,
                            frequency = @frequency,
-                           startDate = @startDate,
-                           endDate = @endDate,
-                           iconType = @iconType
-                       WHERE medicationId = @medicationId AND userId = @userId;;`;
+                           instructions = @instructions,
+                           sideEffects = @sideEffects,
+                           updatedAt = GETDATE()
+                       WHERE medicationId = @medicationId AND userId = @userId;`;
         
         // Safe SQL parameter binding
         request.input("medicationId", sql.Int, medicationId);
-        // hardcoded to userId 1 in controller until Login with JWT is completed
         request.input("userId", sql.Int, userId); 
         request.input("medicationName", sql.NVarChar(100), data.medicationName);
         request.input("dosage", sql.NVarChar(50), data.dosage);
         request.input("frequency", sql.NVarChar(20), data.frequency);
-        request.input("startDate", sql.Date, data.startDate);
-        request.input("endDate", sql.Date, data.endDate);
-        request.input("iconType", sql.NVarChar(20), data.iconType);
+        request.input("instructions", sql.NVarChar(500), data.instructions || null);
+        request.input("sideEffects", sql.NVarChar(500), data.sideEffects || null);
 
         // Execute the update query request 
         const medicationResult = await request.query(medicationUpdateQuery);
@@ -203,7 +199,7 @@ async function updateMedication(medicationId, data, userId) {
         scheduleRequest.input("scheduleId", sql.Int, data.scheduleId);
         scheduleRequest.input("doseTime", sql.Time, jsTime);
 
-        const scheduleUpdateQuery = `UPDATE MedicationSchedule
+        const scheduleUpdateQuery = `UPDATE MedicationSchedules
                                      SET doseTime = @doseTime
                                      WHERE scheduleId = @scheduleId;`;
 
@@ -241,10 +237,10 @@ async function getAllScheduledMedicationsByUserId(userId) {
         request.input("userId", sql.Int, userId);
 
         const query = ` SELECT m.medicationId, m.userId, m.medicationName, m.dosage, m.frequency,
-                        m.startDate, m.endDate, m.iconType, m.createdAt,s.scheduleId, s.doseTime,
-                        s.markAsTaken, s.reminderEnabled
-                        FROM Medication m
-                        LEFT JOIN MedicationSchedule s ON m.medicationId = s.medicationId
+                        m.instructions, m.sideEffects, m.createdAt, m.updatedAt,
+                        s.scheduleId, s.doseTime, s.markAsTaken, s.lastTaken
+                        FROM Medications m
+                        LEFT JOIN MedicationSchedules s ON m.medicationId = s.medicationId
                         WHERE m.userId = @userId
                         ORDER BY s.doseTime ASC, m.createdAt DESC;`;
 
@@ -261,14 +257,14 @@ async function getAllScheduledMedicationsByUserId(userId) {
                     medicationName: row.medicationName,
                     dosage: row.dosage,
                     frequency: row.frequency,
-                    startDate: row.startDate,
-                    endDate: row.endDate,
-                    iconType: row.iconType,
+                    instructions: row.instructions,
+                    sideEffects: row.sideEffects,
                     createdAt: row.createdAt,
+                    updatedAt: row.updatedAt,
                     doseTimes: [],
                     scheduleIds: [],
                     markAsTakenFlags: [],
-                    reminderEnabledFlags: []
+                    lastTakenTimes: []
                 };
             }
             if (row.doseTime) {
@@ -286,7 +282,7 @@ async function getAllScheduledMedicationsByUserId(userId) {
                     medMap[id].doseTimes.push(iso);
                     medMap[id].scheduleIds.push(row.scheduleId);
                     medMap[id].markAsTakenFlags.push(row.markAsTaken);
-                    medMap[id].reminderEnabledFlags.push(row.reminderEnabled);
+                    medMap[id].lastTakenTimes.push(row.lastTaken);
                 } catch (err) {
                     console.warn("Invalid doseTime skipped:", row.doseTime, err.message);
                 }
@@ -310,6 +306,40 @@ async function getAllScheduledMedicationsByUserId(userId) {
     }   
 }
 
+// Get schedule information by scheduleId (for inventory integration)
+async function getScheduleById(scheduleId) {
+    let connection;
+    try {
+        connection = await sql.connect(dbConfig);
+        
+        const query = `
+            SELECT ms.scheduleId, ms.medicationId, ms.doseTime, ms.reminderEnabled, ms.markAsTaken,
+                   m.medicationName, m.userId
+            FROM MedicationSchedules ms
+            INNER JOIN Medications m ON ms.medicationId = m.medicationId
+            WHERE ms.scheduleId = @scheduleId
+        `;
+        
+        const request = connection.request();
+        request.input("scheduleId", sql.Int, scheduleId);
+        
+        const result = await request.query(query);
+        return result.recordset[0] || null;
+        
+    } catch (error) {
+        console.error("Error getting schedule by ID:", error);
+        throw error;
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error("Error closing connection:", err);
+            }
+        }
+    }
+}
+
 // module.exports is used to make database interaction functions available
 module.exports = { 
     createMedication,
@@ -318,4 +348,5 @@ module.exports = {
     setMarkAsTaken,
     updateMedication,
     getAllScheduledMedicationsByUserId,
+    getScheduleById,
 }

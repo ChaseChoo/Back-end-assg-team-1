@@ -15,7 +15,7 @@ let notifiedThisMinute = new Set(); // to avoid repeat alerts within a minute
  *  dose must not be already taken
  */
 async function checkMedicationReminders() {
-  const token = sessionStorage.getItem("token");
+  const token = sessionStorage.getItem('authToken');
   if (!token) return; // Do nothing if user not logged in
 
   try {
@@ -90,11 +90,17 @@ document.addEventListener("DOMContentLoaded", () => {
   checkMedicationReminders(); // run immediately on load
   setInterval(checkMedicationReminders, 20000); // then every 20s
 
-  // Dynamically populate auth buttons or username
+  // Initialize i18n first
+  setTimeout(() => {
+    updateNavbarAuth();
+  }, 100);
+});
+
+// Function to update navbar authentication area with i18n support
+function updateNavbarAuth() {
   const authArea = document.getElementById("navbarAuthArea");
   const savedUsername = sessionStorage.getItem("username");
 
-  // if logged in show the savedUsername from sessionstorage based off the login
   if (authArea) {
     if (savedUsername) {
       authArea.innerHTML = `
@@ -103,15 +109,19 @@ document.addEventListener("DOMContentLoaded", () => {
           <span id="navbarUsername">${savedUsername}</span>
         </a>
       `;
-    // if not logged in display the register and log in button to the user
     } else {
       authArea.innerHTML = `
-        <a href="user-login.html" class="btn btn-colour ms-3">Log In</a>
-        <a href="user-registration.html" class="btn btn-colour ms-3">Register</a>
+        <a href="user-login.html" class="btn btn-colour ms-3 login-btn" data-i18n="nav.login">Log In</a>
+        <a href="user-registration.html" class="btn btn-colour ms-3 register-btn" data-i18n="nav.register">Register</a>
       `;
+      
+      // Apply translations to new elements if i18n is available
+      if (window.i18n) {
+        window.i18n.applyTranslations();
+      }
     }
   }
-});
+}
 
 
 // Lottie Animation For Loading for ALL html pages

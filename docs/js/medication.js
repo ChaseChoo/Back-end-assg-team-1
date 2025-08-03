@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
             }
         });
 
@@ -106,21 +106,33 @@ function createTimeSection(time, meds) {
 
 // Dynamicially create each medication record card display
 function createCardHTML(med) {
+  // Add safety checks for required fields
+  if (!med || !med.medicationName) {
+    console.warn('Invalid medication data:', med);
+    return '<div class="alert alert-warning">Invalid medication data</div>';
+  }
+
   const takenLabel = med.markAsTaken
     ? `<p class="mb-0 mt-1 text-success fw-semibold">Medication Taken</p>`
     : "";
 
   const medData = encodeURIComponent(JSON.stringify(med)); // safely encode object
 
+  // Safely handle potentially undefined fields
+  const medicationName = med.medicationName || 'Unknown Medication';
+  const dosage = med.dosage || 'No dosage specified';
+  const frequency = med.frequency || 'No frequency specified';
+  const iconType = med.iconType || 'tablet'; // default icon
+
   return `
     <div class="card shadow-sm markable-card medication-card" data-med='${medData}'
          style="max-width: 600px; width: 100%; cursor: pointer;">
       <div class="card-body d-flex align-items-center">
-          <img src="assets/${med.iconType}.png" alt="${med.iconType}" width="40" height="40" class="me-3">
+          <img src="assets/${iconType}.png" alt="${iconType}" width="40" height="40" class="me-3">
           <div class="flex-grow-1 text-start">
-              <h6 class="fw-bold mb-1">${med.medicationName}</h6>
-              <p class="mb-0 small">${med.dosage}, ${med.frequency}</p>
-              <p class="mb-0 text-muted small">From ${med.startDate.split("T")[0]} to ${med.endDate.split("T")[0]}</p>
+              <h6 class="fw-bold mb-1">${medicationName}</h6>
+              <p class="mb-0 small">${dosage}, ${frequency}</p>
+              <p class="mb-0 text-muted small">From ${med.startDate ? med.startDate.split("T")[0] : 'N/A'} to ${med.endDate ? med.endDate.split("T")[0] : 'N/A'}</p>
               ${takenLabel}
           </div>
           <div class="d-flex flex-column gap-1">
@@ -197,7 +209,7 @@ document.getElementById("confirmTakenBtn").addEventListener("click", async funct
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
             },
             body: JSON.stringify({ markAsTaken: newValue })
         });
@@ -267,7 +279,7 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
             },
             body: JSON.stringify(payload)
         });
@@ -297,7 +309,7 @@ async function deleteMedication(id) {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
             }
         });
         const result = await res.json();

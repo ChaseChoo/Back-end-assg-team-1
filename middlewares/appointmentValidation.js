@@ -12,13 +12,6 @@ const appointmentSchema = Joi.object({
     "number.positive": "Doctor ID must be a positive number",
   }),
 
-  appointmentTypeId: Joi.number().integer().positive().required().messages({
-    "any.required": "Appointment type is required",
-    "number.base": "Appointment type must be a number",
-    "number.integer": "Appointment type must be an integer",
-    "number.positive": "Appointment type must be a positive number",
-  }),
-
   appointmentDate: Joi.date().required().messages({
     "any.required": "Appointment date is required",
     "date.base": "Appointment date must be a valid date",

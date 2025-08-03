@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Retrieve JWT token from sessionStorage
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem('authToken');
 
     if (!token) {
         alert("You must be logged in to access this page.");
@@ -11,10 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Prefill form with sessionStorage stored values 
     document.getElementById("username").value = sessionStorage.getItem("username") || "";
     document.getElementById("email").value = sessionStorage.getItem("email") || "";
+    
+    // Prefill language preference
+    const currentLanguage = sessionStorage.getItem("languagePreference") || 'en';
+    document.getElementById("languageSelect").value = currentLanguage;
 
     // DOM Refererences 
     const updateForm = document.getElementById("updateUserForm");
     const updateMsg = document.getElementById("updateMsg");
+    const languageForm = document.getElementById("languageForm");
+    const languageMsg = document.getElementById("languageMsg");
     const deleteBtn = document.getElementById("deleteAccountBtn");
     const deleteMsg = document.getElementById("deleteMsg");
     const logoutBtn = document.getElementById("logoutBtn"); 
@@ -67,6 +73,52 @@ document.addEventListener("DOMContentLoaded", () => {
             // unexpected or network errors
             updateMsg.className = "text-danger";
             updateMsg.textContent = "Something went wrong.";
+            console.error(err);
+        }
+    });
+
+    // Handle Language Preference Update
+    languageForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const selectedLanguage = document.getElementById("languageSelect").value;
+
+        try {
+            const res = await fetch("/api/users/language", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ languagePreference: selectedLanguage })
+            });
+
+            if (res.status === 401 || res.status === 403) {
+                alert("Session expired or unauthorized. Please log in again.");
+                sessionStorage.clear();
+                window.location.href = "user-login.html";
+                return;
+            }
+
+            const data = await res.json();
+
+            if (res.ok) {
+                // Update successful, save to sessionStorage and switch language
+                sessionStorage.setItem("languagePreference", selectedLanguage);
+                languageMsg.className = "text-success";
+                languageMsg.textContent = "Language preference updated successfully!";
+                
+                // Switch language using i18n
+                if (window.i18n) {
+                    await window.i18n.switchLanguage(selectedLanguage);
+                }
+            } else {
+                languageMsg.className = "text-danger";
+                languageMsg.textContent = data.message || "Language update failed.";
+            }
+        } catch (err) {
+            languageMsg.className = "text-danger";
+            languageMsg.textContent = "Something went wrong.";
             console.error(err);
         }
     });

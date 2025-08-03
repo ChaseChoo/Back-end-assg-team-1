@@ -1,0 +1,805 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family & Support Group - SilverConnect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+        .member-card {
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 15px;
+        }
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+        }
+        .access-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+        }
+        .add-member-card {
+            border: 2px dashed #28a745;
+            background: #f8fff9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .add-member-card:hover {
+            background: #e8f7ea;
+            border-color: #20c997;
+        }
+        .floating-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        .floating-btn:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #20c997, #28a745);
+            color: white;
+        }
+        .section-title {
+            position: relative;
+            padding-left: 1rem;
+        }
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 2rem;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border-radius: 2px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        .large-btn {
+            font-size: 1.25rem;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+        }
+        .step-form {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .relationship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .relationship-option {
+            border: 2px solid #e9ecef;
+            background: white;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .relationship-option:hover {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+        .relationship-option.selected {
+            border-color: #28a745;
+            background: #28a745;
+            color: white;
+        }
+        .access-level-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .access-option {
+            border: 2px solid #e9ecef;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .access-option:hover {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+        .access-option.selected {
+            border-color: #28a745;
+            background: #28a745;
+            color: white;
+        }
+    </style>
+
+    <!-- i18n Support -->
+
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/MerderkaLife.png" alt="SilverConnect" height="40" class="me-2">
+                <span class="fw-bold text-primary">SilverConnect</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="bi bi-house me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="medication.html">
+                            <i class="bi bi-capsule me-1"></i>Medications
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="meal-logging.html">
+                            <i class="bi bi-journal-medical me-1"></i>Meal Log
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="healthcare-appointments.html">
+                            <i class="bi bi-calendar-check me-1"></i>Appointments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="family-management.html">
+                            <i class="bi bi-people me-1"></i>Family & Support
+                        </a>
+                    </li>
+                </ul>
+                <div id="navbarAuthArea" class="ms-3">
+                    <!-- Auth buttons will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-5 fw-bold mb-3">
+                        <i class="bi bi-people-fill me-3"></i>
+                        Family & Support Group
+                    </h1>
+                    <p class="lead mb-4">
+                        Stay connected with your loved ones and caregivers. Add trusted family members who can help you manage your health and daily tasks.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-shield-check text-light me-2"></i>
+                            <span>Secure Access</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-heart text-light me-2"></i>
+                            <span>Stay Connected</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-telephone text-light me-2"></i>
+                            <span>Emergency Contacts</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="bi bi-people display-1 opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <!-- Quick Stats -->
+        <div class="row mb-5">
+            <div class="col-md-4 mb-3">
+                <div class="card text-center h-100 border-0 bg-light">
+                    <div class="card-body">
+                        <i class="bi bi-people-fill text-success display-6 mb-2"></i>
+                        <h5 class="card-title">Family Members</h5>
+                        <p class="text-muted small" id="familyCount">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center h-100 border-0 bg-light">
+                    <div class="card-body">
+                        <i class="bi bi-shield-check text-primary display-6 mb-2"></i>
+                        <h5 class="card-title">Caregivers</h5>
+                        <p class="text-muted small" id="caregiverCount">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center h-100 border-0 bg-light">
+                    <div class="card-body">
+                        <i class="bi bi-telephone-fill text-warning display-6 mb-2"></i>
+                        <h5 class="card-title">Emergency Contacts</h5>
+                        <p class="text-muted small" id="emergencyCount">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Family Members Section -->
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title mb-4">Your Support Network</h2>
+                
+                <!-- Family Members Grid -->
+                <div id="familyMembersContainer" class="row">
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Loading family members...</span>
+                        </div>
+                        <p class="mt-3 text-muted">Loading your support network...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Add Button -->
+    <button class="floating-btn" onclick="showAddMemberModal()" title="Add Family Member">
+        <i class="bi bi-plus"></i>
+    </button>
+
+    <!-- Add Family Member Modal -->
+    <div class="modal fade" id="addMemberModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-person-plus me-2"></i>Add Family Member or Caregiver
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Step 1: Basic Information -->
+                    <div id="step1" class="step-form">
+                        <h6 class="text-success mb-3">
+                            <i class="bi bi-1-circle me-2"></i>Basic Information
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold" style="font-size: 1.1rem;">First Name *</label>
+                                <input type="text" class="form-control form-control-lg" id="firstName" required 
+                                       placeholder="Enter first name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold" style="font-size: 1.1rem;">Last Name *</label>
+                                <input type="text" class="form-control form-control-lg" id="lastName" required 
+                                       placeholder="Enter last name">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-success large-btn" onclick="nextStep(2)">
+                                Next <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Relationship -->
+                    <div id="step2" class="step-form d-none">
+                        <h6 class="text-success mb-3">
+                            <i class="bi bi-2-circle me-2"></i>What is their relationship to you?
+                        </h6>
+                        <div class="relationship-grid">
+                            <div class="relationship-option" data-value="Son">
+                                <i class="bi bi-person display-6 mb-2"></i>
+                                <div class="fw-semibold">Son</div>
+                            </div>
+                            <div class="relationship-option" data-value="Daughter">
+                                <i class="bi bi-person display-6 mb-2"></i>
+                                <div class="fw-semibold">Daughter</div>
+                            </div>
+                            <div class="relationship-option" data-value="Spouse">
+                                <i class="bi bi-heart display-6 mb-2"></i>
+                                <div class="fw-semibold">Spouse</div>
+                            </div>
+                            <div class="relationship-option" data-value="Sibling">
+                                <i class="bi bi-people display-6 mb-2"></i>
+                                <div class="fw-semibold">Brother/Sister</div>
+                            </div>
+                            <div class="relationship-option" data-value="Caregiver">
+                                <i class="bi bi-shield-check display-6 mb-2"></i>
+                                <div class="fw-semibold">Caregiver</div>
+                            </div>
+                            <div class="relationship-option" data-value="Other">
+                                <i class="bi bi-person-plus display-6 mb-2"></i>
+                                <div class="fw-semibold">Other</div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <button type="button" class="btn btn-outline-secondary large-btn" onclick="previousStep(1)">
+                                <i class="bi bi-arrow-left me-1"></i> Back
+                            </button>
+                            <button type="button" class="btn btn-success large-btn" id="relationshipNext" onclick="nextStep(3)" disabled>
+                                Next <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Contact Information -->
+                    <div id="step3" class="step-form d-none">
+                        <h6 class="text-success mb-3">
+                            <i class="bi bi-3-circle me-2"></i>Contact Information
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold" style="font-size: 1.1rem;">Phone Number *</label>
+                                <input type="tel" class="form-control form-control-lg" id="phoneNumber" required 
+                                       placeholder="(555) 123-4567">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold" style="font-size: 1.1rem;">Email Address</label>
+                                <input type="email" class="form-control form-control-lg" id="emailAddress" 
+                                       placeholder="email@example.com">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-check-lg">
+                                <input class="form-check-input" type="checkbox" id="emergencyContact">
+                                <label class="form-check-label fw-semibold" for="emergencyContact" style="font-size: 1.1rem;">
+                                    <i class="bi bi-exclamation-triangle text-warning me-2"></i>
+                                    This person is an emergency contact
+                                </label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-outline-secondary large-btn" onclick="previousStep(2)">
+                                <i class="bi bi-arrow-left me-1"></i> Back
+                            </button>
+                            <button type="button" class="btn btn-success large-btn" onclick="nextStep(4)">
+                                Next <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Access Level -->
+                    <div id="step4" class="step-form d-none">
+                        <h6 class="text-success mb-3">
+                            <i class="bi bi-4-circle me-2"></i>What can they help you with?
+                        </h6>
+                        <div class="access-level-grid">
+                            <div class="access-option" data-value="View">
+                                <i class="bi bi-eye display-6 mb-3"></i>
+                                <h6 class="fw-semibold">View Only</h6>
+                                <p class="small mb-0">They can see your information but cannot make changes</p>
+                            </div>
+                            <div class="access-option" data-value="Manage">
+                                <i class="bi bi-gear display-6 mb-3"></i>
+                                <h6 class="fw-semibold">Help & Manage</h6>
+                                <p class="small mb-0">They can help schedule appointments and manage your account</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <button type="button" class="btn btn-outline-secondary large-btn" onclick="previousStep(3)">
+                                <i class="bi bi-arrow-left me-1"></i> Back
+                            </button>
+                            <button type="button" class="btn btn-success large-btn" id="accessNext" onclick="showSummary()" disabled>
+                                Review <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Summary -->
+                    <div id="step5" class="step-form d-none">
+                        <h6 class="text-success mb-3">
+                            <i class="bi bi-check-circle me-2"></i>Review and Confirm
+                        </h6>
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <div id="memberSummary">
+                                    <!-- Summary will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <button type="button" class="btn btn-outline-secondary large-btn" onclick="previousStep(4)">
+                                <i class="bi bi-arrow-left me-1"></i> Back
+                            </button>
+                            <button type="button" class="btn btn-success large-btn" onclick="addFamilyMember()">
+                                <i class="bi bi-check2 me-1"></i> Add to Family
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Member Modal -->
+    <div class="modal fade" id="editMemberModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-pencil-square me-2"></i>Edit Family Member
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <input type="hidden" id="editMemberId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">First Name</label>
+                                <input type="text" class="form-control form-control-lg" id="editFirstName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Last Name</label>
+                                <input type="text" class="form-control form-control-lg" id="editLastName" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Phone Number</label>
+                                <input type="tel" class="form-control form-control-lg" id="editPhoneNumber" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Email Address</label>
+                                <input type="email" class="form-control form-control-lg" id="editEmailAddress">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Relationship</label>
+                                <select class="form-select form-select-lg" id="editRelationship" required>
+                                    <option value="Son">Son</option>
+                                    <option value="Daughter">Daughter</option>
+                                    <option value="Spouse">Spouse</option>
+                                    <option value="Sibling">Brother/Sister</option>
+                                    <option value="Caregiver">Caregiver</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Access Level</label>
+                                <select class="form-select form-select-lg" id="editAccessLevel" required>
+                                    <option value="View">View Only</option>
+                                    <option value="Manage">Help & Manage</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-check-lg">
+                                <input class="form-check-input" type="checkbox" id="editEmergencyContact">
+                                <label class="form-check-label fw-semibold" for="editEmergencyContact">
+                                    <i class="bi bi-exclamation-triangle text-warning me-2"></i>
+                                    This person is an emergency contact
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary large-btn" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary large-btn" onclick="updateFamilyMember()">
+                        <i class="bi bi-check2 me-1"></i>Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Remove Confirmation Modal -->
+    <div class="modal fade" id="removeModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Remove Family Member
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-3">Are you sure you want to remove this family member from your support group?</p>
+                    <div class="bg-light p-3 rounded" id="removeMemberDetails">
+                        <!-- Member details will be inserted here -->
+                    </div>
+                    <div class="alert alert-warning mt-3">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Note:</strong> They will no longer have access to your account and won't receive notifications.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary large-btn" data-bs-dismiss="modal">Keep Member</button>
+                    <button type="button" class="btn btn-danger large-btn" onclick="confirmRemove()">
+                        <i class="bi bi-trash me-1"></i>Yes, Remove Member
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ask Us Support System -->
+    <div id="askUsSupport">
+        <button class="btn btn-primary btn-lg rounded-pill shadow position-fixed" 
+                style="bottom: 100px; right: 30px; z-index: 1050;" 
+                onclick="showSupportOptions()">
+            <i class="bi bi-question-circle me-2"></i>Ask Us
+        </button>
+    </div>
+
+    <!-- Support Options Modal -->
+    <div class="modal fade" id="supportOptionsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-headset me-2"></i>How can we help you?
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <button class="btn btn-success btn-lg w-100 p-4" onclick="showHotlineInfo()">
+                                <i class="bi bi-telephone-fill display-6 d-block mb-2"></i>
+                                <h5 class="mb-2">Call Our Help Hotline</h5>
+                                <p class="mb-0">Speak directly with our support team</p>
+                            </button>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-outline-primary btn-lg w-100 p-4" onclick="showSupportForm()">
+                                <i class="bi bi-chat-text-fill display-6 d-block mb-2"></i>
+                                <h5 class="mb-2">Submit a Question</h5>
+                                <p class="mb-0">Send us your question and we'll respond soon</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hotline Info Modal -->
+    <div class="modal fade" id="hotlineModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-telephone-fill me-2"></i>Help Hotline
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-4">
+                        <i class="bi bi-telephone-fill text-success" style="font-size: 4rem;"></i>
+                    </div>
+                    <h3 class="text-success mb-3">Call us anytime!</h3>
+                    <h2 class="text-primary fw-bold mb-4">1-800-SILVER-HELP</h2>
+                    <h4 class="text-primary fw-bold mb-4">(1-800-745-8374)</h4>
+                    <div class="alert alert-info">
+                        <h6 class="fw-bold mb-2">Our Hours:</h6>
+                        <p class="mb-1"><strong>Monday - Friday:</strong> 8:00 AM - 8:00 PM</p>
+                        <p class="mb-1"><strong>Saturday:</strong> 9:00 AM - 5:00 PM</p>
+                        <p class="mb-0"><strong>Sunday:</strong> 10:00 AM - 4:00 PM</p>
+                    </div>
+                    <p class="text-muted">Our friendly support team is here to help with family management questions, account issues, and technical support.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="tel:1-800-745-8374" class="btn btn-success btn-lg">
+                        <i class="bi bi-telephone-fill me-2"></i>Call Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Form Modal -->
+    <div class="modal fade" id="supportFormModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-chat-text-fill me-2"></i>Submit Your Question
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="supportForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Your Name</label>
+                                <input type="text" class="form-control form-control-lg" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Phone Number</label>
+                                <input type="tel" class="form-control form-control-lg" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">What do you need help with?</label>
+                            <select class="form-select form-select-lg" required>
+                                <option value="">Choose a topic...</option>
+                                <option value="adding-family">Adding Family Members</option>
+                                <option value="managing-access">Managing Family Access</option>
+                                <option value="removing-members">Removing Family Members</option>
+                                <option value="emergency-contacts">Emergency Contacts</option>
+                                <option value="privacy-settings">Privacy Settings</option>
+                                <option value="account-issues">Account Issues</option>
+                                <option value="technical-support">Technical Support</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">How urgent is this?</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="priority" id="low" value="low">
+                                <label class="btn btn-outline-success btn-lg" for="low">Not Urgent</label>
+                                
+                                <input type="radio" class="btn-check" name="priority" id="medium" value="medium">
+                                <label class="btn btn-outline-warning btn-lg" for="medium">Somewhat Urgent</label>
+                                
+                                <input type="radio" class="btn-check" name="priority" id="high" value="high">
+                                <label class="btn btn-outline-danger btn-lg" for="high">Very Urgent</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tell us more about your question</label>
+                            <textarea class="form-control form-control-lg" rows="4" 
+                                placeholder="Please describe your question or issue in detail. The more information you provide, the better we can help you." 
+                                required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">How would you like us to respond?</label>
+                            <div class="form-check form-check-lg">
+                                <input class="form-check-input" type="checkbox" id="phoneResponse" checked>
+                                <label class="form-check-label" for="phoneResponse">Call me back</label>
+                            </div>
+                            <div class="form-check form-check-lg">
+                                <input class="form-check-input" type="checkbox" id="emailResponse">
+                                <label class="form-check-label" for="emailResponse">Send me an email</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="submitSupportForm()">
+                        <i class="bi bi-send me-2"></i>Submit Question
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>SilverConnect Healthcare</h6>
+                    <p class="small text-muted">Your trusted companion for health management</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="small text-muted mb-0">Â© 2025 SilverConnect. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/family-management.js"></script>
+    <script src="js/ask-us-support.js"></script>    
+    <!-- Language Switcher Functions -->
+    <script>
+        function switchToEnglish() {
+            document.getElementById('currentLanguageText').textContent = 'English';
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (englishCheck) englishCheck.classList.remove('invisible');
+            if (chineseCheck) chineseCheck.classList.add('invisible');
+            localStorage.setItem('preferredLanguage', 'en');
+            location.reload(); // Reset to English
+        }
+        
+        function switchToChinese() {
+            document.getElementById('currentLanguageText').textContent = 'ä¸­æ–‡';
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (englishCheck) englishCheck.classList.add('invisible');
+            if (chineseCheck) chineseCheck.classList.remove('invisible');
+            localStorage.setItem('preferredLanguage', 'zh');
+            
+            if (window.translator) {
+                window.translator.translatePage('zh');
+            } else {
+                // Fallback if translator not loaded
+                setTimeout(() => {
+                    if (window.translator) {
+                        window.translator.translatePage('zh');
+                    }
+                }, 500);
+            }
+        }
+        
+        // Check saved language preference on load
+        window.addEventListener('load', () => {
+            const savedLanguage = localStorage.getItem('preferredLanguage');
+            if (savedLanguage === 'zh') {
+                setTimeout(() => {
+                    const currentLangText = document.getElementById('currentLanguageText');
+                    const englishCheck = document.getElementById('englishCheck');
+                    const chineseCheck = document.getElementById('chineseCheck');
+                    
+                    if (currentLangText) currentLangText.textContent = 'ä¸­æ–‡';
+                    if (englishCheck) englishCheck.classList.add('invisible');
+                    if (chineseCheck) chineseCheck.classList.remove('invisible');
+                    
+                    if (window.translator) {
+                        window.translator.translatePage('zh');
+                    }
+                }, 100);
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+

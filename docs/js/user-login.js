@@ -28,10 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         // On successful login save token and username in sessionStorage
-        sessionStorage.setItem("token", result.token);
+        sessionStorage.setItem("authToken", result.token);
         sessionStorage.setItem("userId", result.userId)
         sessionStorage.setItem("username", result.username);
         sessionStorage.setItem("email", result.email);
+        sessionStorage.setItem("languagePreference", result.languagePreference || 'en');
 
         // Show success message and redirect after 2 seconds
         alertBox.className = "alert alert-success";

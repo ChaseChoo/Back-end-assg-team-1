@@ -1,4 +1,5 @@
 const medicationModel = require("../models/medicationModel");
+const MedicationInventoryModel = require("../models/medicationInventoryModel");
 const axios = require("axios"); // used for external API
 
 // (POST) Create new medication
@@ -39,12 +40,28 @@ async function createSchedule(req, res) {
 async function updateMarkAsTaken(req, res) {
     const scheduleId = parseInt(req.params.scheduleId);
     const { markAsTaken } = req.body;
+    const userId = req.user.userId;
 
     try {
         const result = await medicationModel.setMarkAsTaken(scheduleId, markAsTaken);
 
         if (!result) {
             return res.status(404).json({ error: "Schedule not found" });
+        }
+
+        // If medication is marked as taken, update inventory
+        if (markAsTaken) {
+            try {
+                // Get the medication info from the schedule
+                const scheduleInfo = await medicationModel.getScheduleById(scheduleId);
+                if (scheduleInfo && scheduleInfo.medicationId) {
+                    // Update inventory stock (decrease by 1 when taken)
+                    await MedicationInventoryModel.updateStockAfterTaken(scheduleInfo.medicationId, userId, 1);
+                }
+            } catch (inventoryError) {
+                console.error("Error updating inventory after medication taken:", inventoryError);
+                // Don't fail the main operation if inventory update fails
+            }
         }
 
         res.json({

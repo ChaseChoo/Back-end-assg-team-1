@@ -56,15 +56,14 @@ async function getAppointmentsByUser(userId) {
     connection = await sql.connect(dbConfig);
     const request = connection.request();
     request.input("userId", sql.Int, userId);
-    // Join with Doctor, Clinic, and AppointmentTypes tables for more info
+    
+    // Updated query to work with actual database structure (only Appointments and Doctors tables)
     const result = await request.query(`
-      SELECT a.appointmentId, a.appointmentDate, a.appointmentTime, a.notes,
-             d.doctorId, d.fullName AS doctorName, c.clinicName, c.clinicId,
-             t.typeName AS type
+      SELECT a.appointmentId, a.appointmentDate, a.appointmentTime, a.notes, a.status,
+             a.createdAt, a.updatedAt,
+             d.doctorId, d.doctorName, d.specialization, d.contactNumber, d.clinicName, d.location
       FROM Appointments a
       JOIN Doctors d ON a.doctorId = d.doctorId
-      JOIN Clinics c ON d.clinicId = c.clinicId
-      JOIN AppointmentTypes t ON a.appointmentTypeId = t.appointmentTypeId
       WHERE a.userId = @userId
       ORDER BY a.appointmentDate DESC, a.appointmentTime DESC
     `);
@@ -89,7 +88,7 @@ async function getAppointmentsByUser(userId) {
  * 1. Allows user to make an appointment with a doctor
  * 2. Duplicate time check, secure parameter binding, optional notes handling
  */
-async function createAppointment({ userId, doctorId, appointmentTypeId, appointmentDate, appointmentTime, notes }) {
+async function createAppointment({ userId, doctorId, appointmentDate, appointmentTime, notes }) {
   let connection;
   try {
     // Check for duplicate booking before inserting
@@ -108,14 +107,13 @@ async function createAppointment({ userId, doctorId, appointmentTypeId, appointm
 
     request.input("userId", sql.Int, userId);
     request.input("doctorId", sql.Int, doctorId);
-    request.input("appointmentTypeId", sql.Int, appointmentTypeId); // <-- use value from frontend
     request.input("appointmentDate", sql.Date, appointmentDate);
     request.input("appointmentTime", sql.Time, timeAsDate);
     request.input("notes", sql.VarChar(500), notes?.trim() || null);
 
     await request.query(`
-      INSERT INTO Appointments (userId, doctorId, appointmentTypeId, appointmentDate, appointmentTime, notes)
-      VALUES (@userId, @doctorId, @appointmentTypeId, @appointmentDate, @appointmentTime, @notes)
+      INSERT INTO Appointments (userId, doctorId, appointmentDate, appointmentTime, notes, status)
+      VALUES (@userId, @doctorId, @appointmentDate, @appointmentTime, @notes, 'Scheduled')
     `);
 
     return { success: true, message: "Appointment booked successfully" };
@@ -205,13 +203,11 @@ async function updateAppointment(id, { appointmentDate, appointmentTime, notes }
     updatedRequest.input("appointmentId", sql.Int, id);
     const updatedResult = await updatedRequest.query(`
         SELECT 
-        a.appointmentId, a.userId, a.doctorId, a.appointmentTypeId, 
-        a.appointmentDate, a.appointmentTime, a.notes,
-        d.fullName AS doctorName,               
-        t.typeName AS type                      
+        a.appointmentId, a.userId, a.doctorId,
+        a.appointmentDate, a.appointmentTime, a.notes, a.status,
+        d.doctorName, d.specialization               
       FROM Appointments a
       JOIN Doctors d ON a.doctorId = d.doctorId
-      JOIN AppointmentTypes t ON a.appointmentTypeId = t.appointmentTypeId
       WHERE a.appointmentId = @appointmentId
     `);
     console.log(">>> Updated Appointment Result:", updatedResult.recordset);  // <-- Add This

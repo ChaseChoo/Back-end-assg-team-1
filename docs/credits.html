@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +12,10 @@
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
     <!-- css/style.css CSS linking-->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Simple Translation System -->
+    <script src="js/simple-translator.js"></script>
+    <script src="js/simple-language-switcher.js"></script>
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -20,6 +24,9 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-5P55V59G');</script>
     <!-- End Google Tag Manager -->
+
+    <!-- i18n Support -->
+
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
@@ -60,7 +67,7 @@
                         <a class="nav-link fw-semibold" href="medication.html">Medication Tracker</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="#">Medical Records</a>
+                        <a class="nav-link fw-semibold" href="family-management.html">Family & Support</a>
                     </li>
                 </ul>
                 <a href="#" class="btn btn-colour ms-3">Manage Appointment</a>
@@ -213,7 +220,7 @@
             </div>
 
             <div class="text-center pt-3">
-                <small>© 2025 MerderkaLife. All rights reserved.</small>
+                <small>Â© 2025 MerderkaLife. All rights reserved.</small>
             </div>
         </div>
     </footer>
@@ -223,6 +230,63 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
     <!-- External APIs and connecting to JS files -->
-    <script src="js/index.js"></script>
+    <script src="js/index.js"></script>    
+    <!-- Language Switcher Functions -->
+    <script>
+        function switchToEnglish() {
+            document.getElementById('currentLanguageText').textContent = 'English';
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (englishCheck) englishCheck.classList.remove('invisible');
+            if (chineseCheck) chineseCheck.classList.add('invisible');
+            localStorage.setItem('preferredLanguage', 'en');
+            location.reload(); // Reset to English
+        }
+        
+        function switchToChinese() {
+            document.getElementById('currentLanguageText').textContent = 'ä¸­æ–‡';
+            const englishCheck = document.getElementById('englishCheck');
+            const chineseCheck = document.getElementById('chineseCheck');
+            if (englishCheck) englishCheck.classList.add('invisible');
+            if (chineseCheck) chineseCheck.classList.remove('invisible');
+            localStorage.setItem('preferredLanguage', 'zh');
+            
+            if (window.translator) {
+                window.translator.translatePage('zh');
+            } else {
+                // Fallback if translator not loaded
+                setTimeout(() => {
+                    if (window.translator) {
+                        window.translator.translatePage('zh');
+                    }
+                }, 500);
+            }
+        }
+        
+        // Check saved language preference on load
+        window.addEventListener('load', () => {
+            const savedLanguage = localStorage.getItem('preferredLanguage');
+            if (savedLanguage === 'zh') {
+                setTimeout(() => {
+                    const currentLangText = document.getElementById('currentLanguageText');
+                    const englishCheck = document.getElementById('englishCheck');
+                    const chineseCheck = document.getElementById('chineseCheck');
+                    
+                    if (currentLangText) currentLangText.textContent = 'ä¸­æ–‡';
+                    if (englishCheck) englishCheck.classList.add('invisible');
+                    if (chineseCheck) chineseCheck.classList.remove('invisible');
+                    
+                    if (window.translator) {
+                        window.translator.translatePage('zh');
+                    }
+                }, 100);
+            }
+        });
+    </script>
+
 </body>
 </html>
+
+
+
+

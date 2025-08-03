@@ -4,7 +4,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   // Redirect unauthenticated users to login if no token found
-  const token = sessionStorage.getItem("token");
+  const token = sessionStorage.getItem('authToken');
   if (!token) {
     window.location.href = "user-login.html"; 
     return;
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "POST",
             headers: { 
               "Content-Type": "application/json",
-              Authorization: `Bearer ${sessionStorage.getItem("token")}`
+              Authorization: `Bearer ${sessionStorage.getItem('authToken')}`
           },
           body: JSON.stringify(data), // Convert form data to JSON strings
         });

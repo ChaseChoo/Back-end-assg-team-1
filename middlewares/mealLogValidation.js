@@ -1,32 +1,25 @@
 const Joi = require("joi"); // Import Joi for validation
 
-// Validation schema for meal logs (used for POST/PUT)
+// Validation schema for meal logs (used for POST/PUT) - Updated to match your MealPlan table
 const mealLogSchema = Joi.object({
-  userId: Joi.number().integer().positive().required().messages({
-    "number.base": "User ID must be a number",
-    "number.integer": "User ID must be an integer",
-    "number.positive": "User ID must be a positive number",
-    "any.required": "User ID is required",
+  foodName: Joi.string().min(1).max(50).required().messages({
+    "string.base": "Food name must be a string",
+    "string.empty": "Food name cannot be empty",
+    "string.min": "Food name must be at least 1 character long",
+    "string.max": "Food name cannot exceed 50 characters",
+    "any.required": "Food name is required",
   }),
-  foodName: Joi.string().max(100).required().messages({
-      "string.base": "Food name must be a string",
-      "string.empty": "Food name cannot be empty",
-      "string.max": "Food name cannot exceed 100 characters",
-      "any.required": "Food name is required",
-    }),
-  calories: Joi.number().integer().min(0).required().messages({
-    "number.base": "Calories must be a number",
-    "number.integer": "Calories must be an integer",
-    "number.min": "Calories cannot be negative",
-    "any.required": "Calories are required",
+  calories: Joi.string().min(1).max(10).required().messages({
+    "string.base": "Calories must be a string",
+    "string.empty": "Calories cannot be empty",
+    "string.min": "Calories must be at least 1 character long",
+    "string.max": "Calories cannot exceed 10 characters",
+    "any.required": "Calories is required",
   }),
-  water: Joi.number().integer().min(0).required().messages({
-    "number.base": "Water intake must be a number",
-    "number.integer": "Water intake must be an integer",
-    "number.min": "Water intake cannot be negative",
-    "any.required": "Water intake is required",
-  }),
-  // Add validation for other fields if necessary (e.g., year, genre)
+  mealPlanDateTime: Joi.date().required().messages({
+    "date.base": "Meal plan date/time must be a valid date",
+    "any.required": "Meal plan date/time is required",
+  })
 });
 
 // Middleware to validate Meal Log body for POST/PUT

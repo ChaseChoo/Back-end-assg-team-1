@@ -24,8 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         // Save the token to sessionStorage
-        sessionStorage.setItem("token", result.token);
+        sessionStorage.setItem("authToken", result.token);
         sessionStorage.setItem("username", result.username); // saved dynamic username UI display
+        sessionStorage.setItem("languagePreference", result.languagePreference || 'en');
 
         // Show success message
         alertBox.className = "alert alert-success";
