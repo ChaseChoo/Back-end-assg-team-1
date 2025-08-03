@@ -1311,4 +1311,375 @@ input[type="radio"]:checked + .icon-select-modern {
 .btn.btn-next{
   color: #667eea !important;
 }
-/* Optional: Adjust placeholder and calendar icon colors for consistenc*
+
+/* ===============================================
+   MODERN AUTHENTICATION PAGES STYLING
+   =============================================== */
+
+/* Auth Container */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Left Side - Illustration */
+.auth-illustration-side {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-illustration-container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem;
+  max-width: 600px;
+}
+
+.auth-illustration {
+  max-width: 100%;
+  height: auto;
+  max-height: 400px;
+  margin-bottom: 2rem;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-illustration-overlay {
+  color: white;
+}
+
+.auth-illustration-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.auth-illustration-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.auth-features {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.auth-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
+}
+
+.auth-feature:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.auth-feature i {
+  font-size: 1.2rem;
+}
+
+/* Right Side - Form */
+.auth-form-side {
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+}
+
+.auth-form-container {
+  max-width: 450px;
+  width: 100%;
+}
+
+.auth-form-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.auth-form-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.auth-form-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* Form Styling */
+.auth-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.input-group-modern {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #667eea;
+  z-index: 3;
+  font-size: 1.1rem;
+}
+
+.form-control-modern {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: var(--border-radius);
+  padding: 1rem 1rem 1rem 3rem;
+  font-size: 1rem;
+  transition: var(--transition-smooth);
+  width: 100%;
+}
+
+.form-control-modern:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 3;
+  transition: var(--transition-smooth);
+}
+
+.password-toggle:hover {
+  color: #667eea;
+}
+
+/* Checkbox Styling */
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox-container input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 4px;
+  position: relative;
+  transition: var(--transition-smooth);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkmark {
+  background: #667eea;
+  border-color: #667eea;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkmark:after {
+  display: block;
+}
+
+.checkbox-text {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Form Options */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.forgot-password {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.forgot-password:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* Auth Button */
+.btn-auth-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 1rem 2rem;
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.btn-auth-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-auth-primary:active {
+  transform: translateY(0);
+}
+
+/* Auth Divider */
+.auth-divider {
+  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.auth-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e9ecef;
+}
+
+.auth-divider span {
+  background: white;
+  padding: 0 1rem;
+  color: var(--text-secondary);
+  position: relative;
+  z-index: 1;
+}
+
+/* Auth Footer */
+.auth-footer {
+  text-align: center;
+}
+
+.auth-footer p {
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.auth-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.auth-link:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* Alert Styling */
+.alert-modern {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+}
+
+.alert-modern.alert-success {
+  background: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .auth-illustration-side {
+    display: none;
+  }
+  
+  .auth-form-side {
+    padding: 2rem 1rem;
+  }
+  
+  .auth-form-title {
+    font-size: 1.8rem;
+  }
+  
+  .auth-illustration-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .auth-form-container {
+    padding: 0 1rem;
+  }
+  
+  .auth-features {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .auth-feature {
+    justify-content: center;
+  }
+}
+
+/* Optional: Adjust placeholder and calendar icon colors for consistency */

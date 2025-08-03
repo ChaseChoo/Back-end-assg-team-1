@@ -239,10 +239,8 @@ function initializeLanguageSwitcher() {
 
 // Modern Medication Reminders (Enhanced)
 function initializeMedicationReminders() {
-    // Request notification permission with modern UI
-    if ("Notification" in window && Notification.permission !== "granted") {
-        showNotificationPermissionRequest();
-    }
+    // Notification permission request disabled
+    console.log('Medication reminders initialized (notifications disabled)');
     
     // Start checking reminders every 30 seconds
     setInterval(checkMedicationReminders, 30000);
@@ -321,7 +319,13 @@ async function checkMedicationReminders() {
                     now.getTime() === doseTime.getTime() && 
                     !notifiedThisMinute.has(key)) {
                     
-                    sendModernNotification(med.medicationName, doseTime);
+                    // Use the new notification manager instead of the old function
+                    if (window.notificationManager) {
+                        window.notificationManager.sendMedicationReminder(med.medicationName, doseTime);
+                    } else {
+                        // Fallback to old method
+                        sendModernNotification(med.medicationName, doseTime);
+                    }
                     notifiedThisMinute.add(key);
                 }
             });

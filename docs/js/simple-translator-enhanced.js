@@ -46,81 +46,6 @@ class SimpleTranslator {
                 'Customer Satisfaction': '客户满意度',
                 'Available Support': '可用支持',
 
-                // More homepage content
-                'Comprehensive Healthcare Management': '全面医疗保健管理',
-                'Everything you need to manage your health in one beautiful, easy-to-use platform': '在一个美观易用的平台上管理您健康所需的一切',
-                'Smart Medication Tracker': '智能药物追踪器',
-                'AI-powered medication management with intelligent reminders, drug interaction alerts, and adherence tracking.': '人工智能驱动的药物管理，具有智能提醒、药物相互作用警报和依从性追踪。',
-                'Advanced AI': '高级AI',
-                'Intelligent Inventory': '智能库存',
-                'Real-time medication stock monitoring with automated reorder alerts and family sharing capabilities.': '实时药物库存监控，具有自动重新订购警报和家庭共享功能。',
-                'Real-time': '实时',
-                'Family Connect Hub': '家庭连接中心',
-                'Secure family network for care coordination, emergency contacts, and real-time health updates.': '安全的家庭网络，用于护理协调、紧急联系人和实时健康更新。',
-                'Secure': '安全',
-                'SilverConnect': '银连健康',
-
-                // Additional common content
-                'Learn More': '了解更多',
-                'Get Started': '开始使用',
-                'Sign Up': '注册',
-                'Sign In': '登录',
-                'Log Out': '退出',
-                'Dashboard': '仪表板',
-                'Home': '首页',
-                'About': '关于',
-                'Contact': '联系',
-                'Privacy': '隐私',
-                'Terms': '条款',
-                'Help': '帮助',
-                'FAQ': '常见问题',
-                'Documentation': '文档',
-
-                // Feature descriptions that might be missed
-                'Modern': '现代化',
-                'Advanced': '高级',
-                'Intelligent': '智能',
-                'Automated': '自动化',
-                'Connected': '互联',
-                'Comprehensive': '全面',
-                'Beautiful': '美观',
-                'Easy-to-use': '易于使用',
-                'Platform': '平台',
-                'Management': '管理',
-                'Tracking': '追踪',
-                'Monitoring': '监控',
-                'Coordination': '协调',
-                'Network': '网络',
-                'Updates': '更新',
-                'Alerts': '警报',
-                'Reminders': '提醒',
-                'Capabilities': '功能',
-                'Sharing': '共享',
-
-                // More feature content from index page
-                'Nutrition Intelligence': '营养智能',
-                'Smart meal tracking with nutritional analysis, dietary recommendations, and health goal monitoring.': '智能膳食追踪，具有营养分析、饮食建议和健康目标监控。',
-                'Smart Analytics': '智能分析',
-                'Appointment Orchestrator': '预约协调器',
-                'Seamless appointment scheduling with provider matching, reminder systems, and telehealth integration.': '无缝预约安排，具有提供商匹配、提醒系统和远程医疗集成。',
-                'Telehealth Ready': '远程医疗就绪',
-                'Health Insights': '健康洞察',
-                'Comprehensive health analytics with trend analysis, predictive insights, and personalized recommendations.': '全面的健康分析，具有趋势分析、预测洞察和个性化建议。',
-                'Coming Soon': '即将推出',
-
-                // Common UI text
-                'Get Started Today': '立即开始',
-                'Learn More': '了解更多',
-                'Try Now': '立即试用',
-                'Download': '下载',
-                'Install': '安装',
-                'Features': '功能',
-                'Benefits': '优势',
-                'How it Works': '工作原理',
-                'Testimonials': '用户评价',
-                'Pricing': '价格',
-                'Contact Us': '联系我们',
-
                 // Login/Registration
                 'Join SilverConnect': '加入银连健康',
                 'Create Account': '创建账户',
@@ -270,136 +195,35 @@ class SimpleTranslator {
         this.currentLanguage = language;
         const translations = this.translations[language];
 
-        // Run multiple translation passes for maximum coverage
-        console.log('Starting comprehensive translation...');
-        
-        // Pass 1: Translate all text content
+        // Translate all text content
         this.translateAllText(translations);
         
-        // Pass 2: Translate placeholders
+        // Translate placeholders
         this.translatePlaceholders(translations);
         
-        // Pass 3: Translate titles and alt text
+        // Translate titles and alt text
         this.translateTitlesAndAlt(translations);
         
-        // Pass 4: Translate dynamic content
+        // Translate dynamic content
         this.translateDynamicContent(translations);
-
-        // Pass 5: Ultra-aggressive final pass to catch anything missed
-        setTimeout(() => {
-            this.ultraAggressiveTranslation(translations);
-        }, 100);
 
         // Update language indicator
         this.updateLanguageIndicator(language);
-        
-        // Store preference
-        localStorage.setItem('preferredLanguage', language);
-        
-        console.log('Translation complete');
-    }
-
-    ultraAggressiveTranslation(translations) {
-        console.log('Running ultra-aggressive translation pass...');
-        
-        // Find ANY element that contains English text
-        const allElements = document.querySelectorAll('*');
-        let translatedCount = 0;
-        
-        allElements.forEach(element => {
-            // Skip script, style, and already processed elements
-            if (['SCRIPT', 'STYLE', 'META', 'LINK'].includes(element.tagName)) return;
-            
-            // Get direct text content (not from children)
-            const ownText = this.getOwnTextContent(element);
-            
-            if (ownText && ownText.length > 0) {
-                // Check if it's English text (contains Latin characters but no Chinese)
-                if (/[a-zA-Z]/.test(ownText) && !/[\u4e00-\u9fff]/.test(ownText)) {
-                    
-                    // Try exact match first
-                    if (translations[ownText.trim()]) {
-                        this.replaceOwnTextContent(element, ownText, translations[ownText.trim()]);
-                        translatedCount++;
-                    } else {
-                        // Try word-by-word replacement for common terms
-                        let translatedText = ownText;
-                        let hasTranslation = false;
-                        
-                        // Common word replacements
-                        const wordMap = {
-                            'Login': '登录',
-                            'Register': '注册',
-                            'Settings': '设置',
-                            'Profile': '个人资料',
-                            'Logout': '退出登录',
-                            'Welcome': '欢迎',
-                            'Health': '健康',
-                            'Medical': '医疗',
-                            'Medication': '药物',
-                            'Family': '家庭',
-                            'Support': '支持',
-                            'Appointment': '预约',
-                            'Inventory': '库存',
-                            'English': 'English',
-                            'Chinese': '中文',
-                            'SilverConnect': '银连健康'
-                        };
-                        
-                        for (const [eng, chi] of Object.entries(wordMap)) {
-                            if (translatedText.includes(eng)) {
-                                translatedText = translatedText.replace(new RegExp(eng, 'g'), chi);
-                                hasTranslation = true;
-                            }
-                        }
-                        
-                        if (hasTranslation) {
-                            this.replaceOwnTextContent(element, ownText, translatedText);
-                            translatedCount++;
-                        } else {
-                            // Log untranslated text for debugging
-                            if (ownText.trim().length > 2 && !/^\d+$/.test(ownText.trim())) {
-                                console.log(`Untranslated: "${ownText.trim()}"`);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        
-        console.log(`Ultra-aggressive pass translated ${translatedCount} additional elements`);
-    }
-
-    getOwnTextContent(element) {
-        // Get text that belongs directly to this element, not its children
-        const childNodes = Array.from(element.childNodes);
-        return childNodes
-            .filter(node => node.nodeType === Node.TEXT_NODE)
-            .map(node => node.textContent)
-            .join('');
-    }
-
-    replaceOwnTextContent(element, oldText, newText) {
-        // Replace text in the element's own text nodes
-        const childNodes = Array.from(element.childNodes);
-        childNodes.forEach(node => {
-            if (node.nodeType === Node.TEXT_NODE && node.textContent.includes(oldText)) {
-                node.textContent = node.textContent.replace(oldText, newText);
-            }
-        });
     }
 
     translateAllText(translations) {
-        // Method 1: Use TreeWalker to find all text nodes
+        // Get all text nodes in the document
         const walker = document.createTreeWalker(
             document.body,
             NodeFilter.SHOW_TEXT,
             {
                 acceptNode: function(node) {
+                    // Skip script and style elements
                     const parent = node.parentElement;
                     if (parent && (parent.tagName === 'SCRIPT' || parent.tagName === 'STYLE')) {
                         return NodeFilter.FILTER_REJECT;
                     }
+                    // Only process nodes with actual text content
                     return node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
                 }
             }
@@ -411,7 +235,7 @@ class SimpleTranslator {
             textNodes.push(node);
         }
 
-        // Translate each text node with exact matching
+        // Translate each text node
         textNodes.forEach(textNode => {
             const originalText = textNode.textContent.trim();
             if (originalText && translations[originalText]) {
@@ -419,168 +243,22 @@ class SimpleTranslator {
             }
         });
 
-        // Method 2: Aggressively translate all elements that contain only text
+        // Also translate common HTML elements by their text content
         const elementsToTranslate = [
             'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
             'p', 'span', 'div', 'button', 'a',
-            'label', 'th', 'td', 'li', 'option',
-            'strong', 'em', 'b', 'i', 'u'
+            'label', 'th', 'td', 'li', 'option'
         ];
 
         elementsToTranslate.forEach(tagName => {
             const elements = document.querySelectorAll(tagName);
             elements.forEach(element => {
-                // Only translate if element contains only text (no child elements) or has simple structure
-                if (this.shouldTranslateElement(element)) {
-                    const text = element.textContent.trim();
-                    if (text && translations[text]) {
-                        element.textContent = translations[text];
-                    }
-                }
-            });
-        });
-
-        // Method 3: Handle elements with mixed content (text + icons)
-        this.translateMixedContent(translations);
-
-        // Method 4: Use fallback partial matching for missed content
-        this.translateWithPartialMatching(translations);
-    }
-
-    shouldTranslateElement(element) {
-        // Don't translate if element has complex nested structure
-        const childElements = element.querySelectorAll('*');
-        
-        // Allow elements with only icon elements (bi, fa classes) or simple formatting
-        const allowedChildren = Array.from(childElements).every(child => {
-            return child.tagName === 'I' || 
-                   child.classList.contains('bi') || 
-                   child.classList.contains('fa') ||
-                   ['B', 'STRONG', 'EM', 'U', 'SPAN'].includes(child.tagName);
-        });
-
-        return childElements.length === 0 || (childElements.length <= 3 && allowedChildren);
-    }
-
-    translateMixedContent(translations) {
-        // Handle nav links and buttons that have icons + text
-        const navLinks = document.querySelectorAll('a.nav-link, .btn');
-        navLinks.forEach(link => {
-            // Get text content excluding icon text
-            const textContent = this.getTextContentExcludingIcons(link);
-            if (textContent && translations[textContent]) {
-                // Replace only the text part, keeping icons
-                this.replaceTextKeepingIcons(link, textContent, translations[textContent]);
-            }
-        });
-
-        // Handle elements with badges/spans
-        const cardsWithBadges = document.querySelectorAll('.modern-feature-card');
-        cardsWithBadges.forEach(card => {
-            const textElements = card.querySelectorAll('h5, p');
-            textElements.forEach(el => {
-                const text = el.textContent.trim();
-                if (text && translations[text]) {
-                    el.textContent = translations[text];
-                }
-            });
-            
-            // Translate badges separately
-            const badges = card.querySelectorAll('[class*="badge"]');
-            badges.forEach(badge => {
-                const badgeText = badge.textContent.trim();
-                if (badgeText && translations[badgeText]) {
-                    badge.textContent = translations[badgeText];
-                }
-            });
-        });
-    }
-
-    getTextContentExcludingIcons(element) {
-        // Clone the element to avoid modifying original
-        const clone = element.cloneNode(true);
-        // Remove icon elements
-        clone.querySelectorAll('i[class*="bi-"], i[class*="fa-"]').forEach(icon => icon.remove());
-        return clone.textContent.trim();
-    }
-
-    replaceTextKeepingIcons(element, oldText, newText) {
-        // Find text nodes that contain the old text
-        const walker = document.createTreeWalker(
-            element,
-            NodeFilter.SHOW_TEXT,
-            null,
-            false
-        );
-
-        const textNodes = [];
-        let node;
-        while (node = walker.nextNode()) {
-            if (node.textContent.includes(oldText)) {
-                textNodes.push(node);
-            }
-        }
-
-        textNodes.forEach(textNode => {
-            textNode.textContent = textNode.textContent.replace(oldText, newText);
-        });
-    }
-
-    translateWithPartialMatching(translations) {
-        // Last resort: find any remaining English text and try partial matching
-        const allElements = document.querySelectorAll('*');
-        
-        allElements.forEach(element => {
-            // Only check leaf elements (those without child elements or with only text)
-            if (element.children.length === 0 || this.shouldTranslateElement(element)) {
                 const text = element.textContent.trim();
-                
-                // Skip very short text or numbers
-                if (text.length < 3 || /^\d+$/.test(text)) return;
-                
-                // Skip if already translated (contains Chinese characters)
-                if (/[\u4e00-\u9fff]/.test(text)) return;
-                
-                // Try to find translation
-                if (translations[text]) {
+                if (text && translations[text] && !element.querySelector('*')) {
                     element.textContent = translations[text];
-                } else {
-                    // Try partial matching for common words
-                    this.attemptPartialTranslation(element, text, translations);
                 }
-            }
+            });
         });
-    }
-
-    attemptPartialTranslation(element, text, translations) {
-        // Common partial translations for words that might be missed
-        const partialTranslations = {
-            'English': 'English',
-            'Chinese': '中文',
-            'SilverConnect': '银连健康',
-            'Login': '登录',
-            'Register': '注册',
-            'Settings': '设置',
-            'Profile': '个人资料',
-            'Logout': '退出登录',
-            'Welcome': '欢迎',
-            'Health': '健康',
-            'Medical': '医疗',
-            'Medication': '药物',
-            'Family': '家庭',
-            'Support': '支持',
-            'Appointment': '预约',
-            'Inventory': '库存'
-        };
-
-        // Check if text contains any of these words
-        for (const [english, chinese] of Object.entries(partialTranslations)) {
-            if (text.includes(english) && !translations[text]) {
-                // Don't auto-translate complex sentences, just log for debugging
-                console.log(`Untranslated text found: "${text}"`);
-                break;
-            }
-        }
     }
 
     translatePlaceholders(translations) {

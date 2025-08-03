@@ -239,10 +239,8 @@ function initializeLanguageSwitcher() {
 
 // Modern Medication Reminders (Enhanced)
 function initializeMedicationReminders() {
-    // Request notification permission with modern UI
-    if ("Notification" in window && Notification.permission !== "granted") {
-        showNotificationPermissionRequest();
-    }
+    // Notification permission request disabled
+    console.log('Medication reminders initialized (notifications disabled)');
     
     // Start checking reminders every 30 seconds
     setInterval(checkMedicationReminders, 30000);

@@ -194,6 +194,23 @@ async function loadNotifications() {
             currentNotifications = data.data;
             displayNotifications(currentNotifications);
             updateNotificationBadge(data.data.filter(n => !n.isRead).length);
+            
+            // Send browser notifications for unread low stock alerts
+            if (window.notificationManager) {
+                data.data.forEach(notification => {
+                    if (!notification.isRead && 
+                        notification.notificationType === 'low_stock' &&
+                        notification.message.includes('running low')) {
+                        
+                        // Extract medication name and stock count from message
+                        const match = notification.message.match(/^(.+?) is running low\. Only (\d+) remaining\./);
+                        if (match) {
+                            const [, medicationName, remainingCount] = match;
+                            window.notificationManager.sendLowStockAlert(medicationName, parseInt(remainingCount));
+                        }
+                    }
+                });
+            }
         } else {
             console.error('Failed to load notifications:', data.message);
         }
