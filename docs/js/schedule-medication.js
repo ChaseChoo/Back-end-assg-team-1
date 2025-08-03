@@ -21,10 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
   
   console.log('Final medicationId:', finalMedicationId); // Debug log
   
-  // If no medicationId found, redirect back to add medication page
+  // If no medicationId found, redirect back to medication list page
   if (!finalMedicationId) {
-    alert("No medication selected. Redirecting to add medication page.");
-    window.location.href = "add-medication.html";
+    alert("No medication selected. Please select a medication from the list and try again.");
+    window.location.href = "medication.html";
     return;
   }
   
@@ -32,12 +32,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const medicationName = sessionStorage.getItem("latestMedicationName");
   const iconType = sessionStorage.getItem("latestIconType");
 
+  console.log('Medication data from sessionStorage:', { 
+    medicationId: finalMedicationId,
+    medicationName, 
+    iconType 
+  }); // Debug log
+
+  // Check if we have the necessary medication data - be more flexible with iconType
+  if (!medicationName) {
+    console.error('Missing medication name in sessionStorage');
+    alert("Medication name is missing. Please try selecting the medication again.");
+    window.location.href = "medication.html";
+    return;
+  }
+
+  // Use default icon if not provided
+  const finalIconType = iconType || 'tablet';
+  console.log('Using iconType:', finalIconType);
+
   // Populate UI with medication information
   // Dynamically display medication name from (add-medication.html page)
-  document.getElementById("medicationNameDisplay").textContent = medicationName;
-  // Dynamically display medication icon from (add-medication.html page)
-  document.getElementById("medicationIcon").src = `assets/${iconType}.png`;
-  document.getElementById("medicationIcon").alt = iconType;
+  const nameDisplay = document.getElementById("medicationNameDisplay");
+  const iconDisplay = document.getElementById("medicationIcon");
+  
+  if (nameDisplay) {
+    nameDisplay.textContent = medicationName;
+  }
+  
+  if (iconDisplay) {
+    iconDisplay.src = `assets/${finalIconType}.png`;
+    iconDisplay.alt = finalIconType;
+  }
 
   // Handle form submission
   const scheduleForm = document.getElementById("scheduleForm");

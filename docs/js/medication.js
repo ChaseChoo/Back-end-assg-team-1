@@ -4,6 +4,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("medication-list");
     const loader = document.getElementById("loader-overlay");
 
+    // Check if required elements exist
+    if (!container) {
+        console.error("medication-list element not found");
+        return;
+    }
+    
+    if (!loader) {
+        console.warn("loader-overlay element not found, continuing without loader");
+    }
+
      // Display username greeting if available in sessionStorage
     const username = sessionStorage.getItem("username");
     if (username) {
@@ -50,42 +60,85 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         const medications = await response.json();
+        
+        // Debug: Log the raw medication data
+        console.log('Raw medications from API:', medications);
+        console.log('Number of medications:', medications.length);
+        
+        if (medications.length > 0) {
+            console.log('Sample medication object:', medications[0]);
+            console.log('Available fields in first medication:', Object.keys(medications[0]));
+        }
 
         // Group all medications by each individual doseTime
         const grouped = {};
+        const unscheduledMedications = [];
 
         medications.forEach(med => {
-            (med.doseTimes || []).forEach((doseISO, idx) => {
-                try {
-                const hhmm = doseISO.substring(11, 16); // safely extract "HH:mm"
+            if (!med.doseTimes || med.doseTimes.length === 0) {
+                // Medication has no scheduled times yet
+                unscheduledMedications.push(med);
+            } else {
+                // Medication has scheduled times
+                (med.doseTimes || []).forEach((doseISO, idx) => {
+                    try {
+                    const hhmm = doseISO.substring(11, 16); // safely extract "HH:mm"
 
-                if (!grouped[hhmm]) grouped[hhmm] = [];
+                    if (!grouped[hhmm]) grouped[hhmm] = [];
 
-                grouped[hhmm].push({
-                    ...med,
-                    doseTime: hhmm,
-                    scheduleId: med.scheduleIds?.[idx],      // assign scheduleId per dose
-                    markAsTaken: med.markAsTakenFlags?.[idx] // assign taken status per dose
+                    grouped[hhmm].push({
+                        ...med,
+                        doseTime: hhmm,
+                        scheduleId: med.scheduleIds?.[idx],      // assign scheduleId per dose
+                        markAsTaken: med.markAsTakenFlags?.[idx] // assign taken status per dose
+                    });
+                    } catch (e) {
+                    console.warn("Invalid doseTime skipped:", doseISO);
+                    }
                 });
-                } catch (e) {
-                console.warn("Invalid doseTime skipped:", doseISO);
-                }
-            });
+            }
         });
 
-        // Render grouped cards per dose time
-        container.innerHTML = Object.keys(grouped).length
+        // Create content for unscheduled medications
+        let unscheduledSection = "";
+        if (unscheduledMedications.length > 0) {
+            unscheduledSection = createUnscheduledSection(unscheduledMedications);
+        }
+
+        // Render grouped cards per dose time + unscheduled medications
+        const scheduledContent = Object.keys(grouped).length
             ? Object.entries(grouped)
                 .sort(([a], [b]) => a.localeCompare(b)) // sort time keys
                 .map(([time, meds]) => createTimeSection(time, meds)).join("")
-            : `<p class="text-center">No medications found.</p>`;
+            : "";
+
+        container.innerHTML = (scheduledContent + unscheduledSection) || 
+            `<p class="text-center">No medications found.</p>`;
 
     } 
     catch (error) {
         console.error("Failed to load medications:", error);
-        container.innerHTML = `<p class="text-danger text-center">Error loading data.</p>`;
+        
+        // Check if it's an authentication error
+        if (error.message.includes('401') || error.message.includes('403')) {
+            alert("Session expired. Please log in again.");
+            window.location.href = "user-login.html";
+            return;
+        }
+        
+        container.innerHTML = `
+            <div class="text-center">
+                <p class="text-danger">Error loading medications.</p>
+                <p class="text-muted">Please check if you're logged in and the server is running.</p>
+                <button class="btn btn-primary" onclick="location.reload()">Retry</button>
+                <a href="user-login.html" class="btn btn-outline-primary">Login</a>
+                <a href="debug.html" class="btn btn-outline-info">Debug Info</a>
+            </div>
+        `;
     } finally {
-        loader.style.display = "none";
+        if (loader) {
+            loader.style.display = "none";
+        }
     }
 });
 
@@ -104,13 +157,38 @@ function createTimeSection(time, meds) {
     `;
 }
 
+// Create a section for unscheduled medications
+function createUnscheduledSection(medications) {
+    return `
+       <div class="mb-5 d-flex flex-column align-items-center">
+            <div class="text-start" style="width: 100%; max-width: 640px;">
+                <h5 class="fw-bold mb-3">📋 Unscheduled Medications</h5>
+                <p class="text-muted mb-3">These medications need to be scheduled. Click "Schedule" to set dose times.</p>
+                <div class="d-flex flex-column gap-3">
+                    ${medications.map(med => createCardHTML({...med, doseTime: null})).join("")}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 // Dynamicially create each medication record card display
 function createCardHTML(med) {
   // Add safety checks for required fields
   if (!med || !med.medicationName) {
     console.warn('Invalid medication data:', med);
+    console.warn('Available fields:', med ? Object.keys(med) : 'med is null/undefined');
     return '<div class="alert alert-warning">Invalid medication data</div>';
   }
+
+  // Debug: Log medication data structure
+  console.log('Creating card for medication:', {
+    medicationId: med.medicationId,
+    medicationName: med.medicationName,
+    iconType: med.iconType,
+    dosage: med.dosage,
+    frequency: med.frequency
+  });
 
   const takenLabel = med.markAsTaken
     ? `<p class="mb-0 mt-1 text-success fw-semibold">Medication Taken</p>`
@@ -136,6 +214,9 @@ function createCardHTML(med) {
               ${takenLabel}
           </div>
           <div class="d-flex flex-column gap-1">
+              <button class="btn btn-sm btn-outline-success schedule-btn" title="Schedule Time">
+                  <i class="bi bi-clock"></i>
+              </button>
               <button class="btn btn-sm btn-outline-primary edit-btn">
                   <i class="bi bi-pencil"></i>
               </button>
@@ -154,7 +235,31 @@ document.getElementById("medication-list").addEventListener("click", function (e
 
     const med = JSON.parse(decodeURIComponent(card.dataset.med));
 
-    if (e.target.closest(".edit-btn")) {
+    if (e.target.closest(".schedule-btn")) {
+        // Navigate to schedule page with medicationId
+        const medicationId = med.medicationId;
+        console.log('Schedule button clicked, medication data:', med); // Debug log
+        
+        if (medicationId) {
+            // Store medication data in sessionStorage for the schedule page
+            sessionStorage.setItem("latestMedicationId", medicationId);
+            sessionStorage.setItem("latestMedicationName", med.medicationName || 'Unknown Medication');
+            sessionStorage.setItem("latestIconType", med.iconType || 'tablet');
+            
+            // Additional debug logging
+            console.log('Stored in sessionStorage:', {
+                medicationId: sessionStorage.getItem("latestMedicationId"),
+                medicationName: sessionStorage.getItem("latestMedicationName"),
+                iconType: sessionStorage.getItem("latestIconType")
+            });
+            
+            // Navigate to schedule page
+            window.location.href = `schedule-medication.html?medicationId=${medicationId}`;
+        } else {
+            alert("Cannot schedule: Medication ID not found.");
+            console.error('Missing medicationId in medication data:', med);
+        }
+    } else if (e.target.closest(".edit-btn")) {
         openEditModal(med);
     } else if (e.target.closest(".delete-btn")) {
         openDeleteModal(med.scheduleId); // delete by scheduleId for each doseTime
