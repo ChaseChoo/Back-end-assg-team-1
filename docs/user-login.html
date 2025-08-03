@@ -269,7 +269,7 @@
                     <p class="text-light mb-0">&copy; 2025 SilverConnect. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <p class="text-light mb-0">Designed with 中文 for Seniors</p>
+                    <p class="text-light mb-0">Designed with ❤️ for Seniors</p>
                 </div>
             </div>
         </div>
@@ -282,7 +282,6 @@
     <!-- External APIs and connecting to JS files -->
     <script src="js/index.js"></script>
     <script src="js/auth-modern.js"></script>
-    <script src="js/notification-system.js"></script>
     <script src="js/user-login.js"></script>    
     <!-- Language Switcher Functions -->
     <script>
@@ -293,7 +292,9 @@
             if (englishCheck) englishCheck.classList.remove('invisible');
             if (chineseCheck) chineseCheck.classList.add('invisible');
             localStorage.setItem('preferredLanguage', 'en');
-            location.reload(); // Reset to English
+            
+            // Reload page to restore original English text
+            location.reload();
         }
         
         function switchToChinese() {
@@ -321,25 +322,24 @@
             const savedLanguage = localStorage.getItem('preferredLanguage');
             if (savedLanguage === 'zh') {
                 setTimeout(() => {
-                    const currentLangText = document.getElementById('currentLanguageText');
-                    const englishCheck = document.getElementById('englishCheck');
-                    const chineseCheck = document.getElementById('chineseCheck');
-                    
-                    if (currentLangText) currentLangText.textContent = '中文';
-                    if (englishCheck) englishCheck.classList.add('invisible');
-                    if (chineseCheck) chineseCheck.classList.remove('invisible');
-                    
-                    if (window.translator) {
-                        window.translator.translatePage('zh');
-                    }
+                    switchToChinese();
                 }, 100);
+            } else {
+                // Ensure we're in English mode
+                localStorage.setItem('preferredLanguage', 'en');
+                const currentLangText = document.getElementById('currentLanguageText');
+                const englishCheck = document.getElementById('englishCheck');
+                const chineseCheck = document.getElementById('chineseCheck');
+                
+                if (currentLangText) currentLangText.textContent = 'English';
+                if (englishCheck) englishCheck.classList.remove('invisible');
+                if (chineseCheck) chineseCheck.classList.add('invisible');
             }
         });
     </script>
 
 </body>
 </html>
-
 
 
 
