@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule Medication - MerderkaLife</title>
+    <title>Schedule Medication - MerderkaLife - SilverConnect</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Normalize.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <!-- Bootstrap 5.3.7 CSS -->
@@ -49,10 +54,13 @@
     </div>
 
     <!-- Sticky Navigation Bar -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container animate-fade-up">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="assets/MerderkaLife.png" alt="MerderkaLife Logo" class="logo me-2">
+                <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+                <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -72,7 +80,7 @@
                         <a class="nav-link fw-semibold" href="family-management.html">Family & Support</a>
                     </li>
                 </ul>
-                <a href="#" class="btn btn-colour ms-3">Manage Appointment</a>
+                <a href="#" class="btn btn-modern-primary ms-3">Manage Appointment</a>
             </div>
         </div>
     </nav>
@@ -83,7 +91,7 @@
 
         <!-- Back to Medication Tracker -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <a href="add-medication.html" class="btn btn-colour d-flex align-items-center">
+            <a href="add-medication.html" class="btn btn-modern-primary d-flex align-items-center">
                 <i class="bi bi-arrow-left me-2"></i> Back To Medication
             </a>
             <span class="text-muted small fw-semibold">2 of 2</span>
@@ -98,7 +106,7 @@
         <form id="scheduleForm" class="form-centered row justify-content-center g-4">
             <!-- Dose Time Inputs -->
             <section class="col-12">
-                <label class="form-label">Select Times</label>
+                <label class="form-label form-label-modern">Select Times</label>
                 <div id="doseTimeContainer">
                     <div class="row align-items-center mb-2">
                         <div class="col-11">
@@ -109,12 +117,12 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-secondary mt-2" id="addDoseTimeBtn">+ Add Another Time</button>
+                <button type="button" class="btn btn-modern-secondary mt-2" id="addDoseTimeBtn">+ Add Another Time</button>
             </section>
 
             <!-- Reminder Toggle -->
             <section class="col-12">
-                <label class="form-label" for="reminderToggle">Enable Reminder</label>
+                <label class="form-label form-label-modern" for="reminderToggle">Enable Reminder</label>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="reminderToggle" />
                     <label class="form-check-label" for="reminderToggle">Yes, remind me</label>
@@ -253,6 +261,7 @@
 
 </body>
 </html>
+
 
 
 

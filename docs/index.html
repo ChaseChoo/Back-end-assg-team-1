@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SilverConnect - Healthcare Management for Seniors</title>
+    <title>SilverConnect - Modern Healthcare for Seniors</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">                <div class="col-lg-6">
+                    <div class="glass-card p-4">
+                        <img src="assets/modern-tech-showcase.svg" alt="Modern Technology Stack" style="width: 100%; height: auto; max-height: 350px;">
+                    </div>
+                </div>el="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <!-- Normalize.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <!-- Bootstrap 5.3.7 CSS -->
@@ -12,7 +21,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Lottie Animation Player Script -->
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
-    <!-- css/style.css CSS linking-->
+    <!-- Custom Modern CSS -->
     <link rel="stylesheet" href="css/style.css">
     
     <!-- Simple Translation System -->
@@ -33,51 +42,61 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <!-- Lottie Animation Loading -->
+    <!-- Modern Loading Animation -->
     <div id="loader-overlay" class="loader-overlay">
-        <dotlottie-player
-            src="https://lottie.host/d03f2255-5a0e-4ba0-a43d-79895e8620e0/urZVzLRRGL.lottie"
-            background="transparent"
-            speed="1"
-            style="width: 300px; height: 300px"
-            loop
-            autoplay>
-        </dotlottie-player>
+        <img src="assets/modern-loading.svg" alt="Loading..." style="width: 200px; height: 200px;">
+        <div class="mt-3 text-center">
+            <h4 class="text-gradient">SilverConnect</h4>
+            <p class="text-muted">Loading your healthcare dashboard...</p>
+        </div>
     </div>
 
-    <!-- Sticky Navigation Bar -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+    <!-- Modern Glassmorphism Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="assets/MerderkaLife.png" alt="MerderkaLife Logo" class="logo me-2">
+                <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+                <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <i class="bi bi-list fs-3"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="meal-logging.html">Meal Logging</a>
+                        <a class="nav-link" href="meal-logging.html">
+                            <i class="bi bi-journal-medical me-1"></i>Meal Logging
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="medication.html">Medication Tracker</a>
+                        <a class="nav-link" href="medication.html">
+                            <i class="bi bi-capsule me-1"></i>Medication Tracker
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="medication-inventory.html">Medicine Inventory</a>
+                        <a class="nav-link" href="medication-inventory.html">
+                            <i class="bi bi-archive me-1"></i>Medicine Inventory
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="family-management.html">Family & Support</a>
+                        <a class="nav-link" href="family-management.html">
+                            <i class="bi bi-people me-1"></i>Family & Support
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="healthcare-appointments.html">Manage Appointment</a>
+                        <a class="nav-link" href="healthcare-appointments.html">
+                            <i class="bi bi-calendar-check me-1"></i>Appointments
+                        </a>
                     </li>
-                    <!-- Language Switcher -->
+                    <!-- Modern Language Switcher -->
                     <li class="nav-item">
                         <div class="dropdown">
-                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-modern-outline btn-sm dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-globe me-1"></i>
                                 <span id="currentLanguageText">English</span>
                             </button>
@@ -91,276 +110,387 @@
                             </ul>
                         </div>
                     </li>
-                    <!-- Account Are dynamically populated based on is logged login-->
-                    <li class="nav-item d-flex align-items-center" id="navbarAuthArea"></li>
+                    <!-- Account Area -->
+                    <li class="nav-item" id="navbarAuthArea"></li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!-- End of Sticky Navigation Bar -->
 
-    <main>
-        <!-- Hero Section Image-->
-        <section class="hero-section-wrapper">
-            <img src="assets/HeroSectionImage.png" alt="MerdekaLife Hero" class="hero-section-img">
-        </section>
-        <!-- End of Hero Section Image-->
-        
-        <!-- Core features static cards design -->
-        <section class="container py-5">
-            <div class="row g-4">
-                <div class="col-12 col-md-6 col-lg-3">
-                    <a href="medication.html" class="feature-card feature-card-blue d-block">
-                        <h5>Track Your Medication</h5>
-                        <p>Manage your prescriptions, view dosage info, and get reminders daily.</p>
-                    </a>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <a href="medication-inventory.html" class="feature-card feature-card-light d-block">
-                        <h5>Medicine Inventory</h5>
-                        <p>Track your medication stock, get low inventory alerts, and share with family.</p>
-                    </a>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <a href="family-management.html" class="feature-card feature-card-blue d-block">
-                        <h5>Family & Support Group</h5>
-                        <p>Connect with trusted family members and caregivers who can help you manage your health.</p>
-                    </a>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <a href="meal-logging.html" class="feature-card feature-card-light d-block">
-                        <h5>Meal Logging</h5>
-                        <p>Track your meals, nutrition, and dietary habits to maintain a healthy lifestyle.</p>
-                    </a>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <a href="healthcare-appointments.html" class="feature-card feature-card-blue d-block">
-                        <h5>Your Appointments</h5>
-                        <p>Schedule and manage upcoming visits with doctors or specialists.</p>
-                    </a>
-                </div>
-            </div>
-        </section>
-        <!-- End of Core features static cards design-->
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer text-white mt-5">
-        <div class="container pt-5 pb-3">
-            <div class="row text-start">
-                <section class="col-12 col-sm-6 col-md-3 mb-4">
-                    <h2 class="h6 fw-bold text-uppercase">MerderkaLife</h2>
-                <address>
-                    535 Clementi Road,<br>
-                    Singapore 599489
-                </address>
-                    <p class="mb-0">Mon-Fri: 10am-8pm,<br>Sat-Sun: 11am-6pm</p>
-                </section>
-
-                <section class="col-12 col-sm-6 col-md-3 mb-4">
-                    <h2 class="h6 fw-bold text-uppercase">About</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="about.html" class="text-white text-decoration-none">About Us</a></li>
-                            <li><a href="#" class="text-white text-decoration-none">Health Blogs</a></li>
-                            <li><a href="healthcare-appointments.html" class="text-white text-decoration-none">Manage Appointments</a></li>
-                        </ul>
-                </section>
-
-                <section class="col-12 col-sm-6 col-md-3 mb-4">
-                    <h2 class="h6 fw-bold text-uppercase">Contact</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="contact.html" class="text-white text-decoration-none">Contact Us</a></li>
-                            <li><a href="mailto:support@merderkalife.com" class="text-white text-decoration-none">support@merderkalife.com</a></li>
-                            <li><a href="tel:+6564606999" class="text-white text-decoration-none">+65 6460 6999</a></li>
-                        </ul>
-                </section>
-
-                <section class="col-12 col-sm-6 col-md-3 mb-4">
-                    <h2 class="h6 fw-bold text-uppercase">Others</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="faq.html" class="text-white text-decoration-none">FAQ</a></li>
-                            <li><a href="credits.html" class="text-white text-decoration-none">Credits</a></li>
-                            <li><a href="privacy.html" class="text-white text-decoration-none">Privacy Policy</a></li>
-                        </ul>
-                </section>
-            </div>
-
-            <div class="text-center pt-3">
-                <small>Â© 2025 MerderkaLife. All rights reserved.</small>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
-    
-    <!-- Ask Us Support System -->
-    <aside id="support-container" class="chat-container position-fixed start-0 bottom-0 p-3">
-        <!-- Support Toggle Button -->
-        <button id="support-button" class="btn btn-success rounded-circle shadow chat-toggle" aria-label="Get Help & Support">
-            <i class="bi bi-question-circle-fill fs-5"></i>
-        </button>
-
-        <!-- Support Window -->
-        <section id="support-box" class="card d-none chat-box" style="width: 350px;">
-            <!-- Support Options (Main Menu) -->
-            <div id="support-options">
-                <header class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0"><i class="bi bi-headset me-2"></i>How Can We Help?</h6>
-                    <button class="btn-close btn-close-white" id="close-support" aria-label="Close Support"></button>
-                </header>
-                <div class="card-body text-center">
-                    <p class="text-muted small mb-4">Choose how you'd like to get assistance:</p>
-                    
-                    <!-- Help Hotline Option -->
-                    <div class="d-grid gap-2 mb-3">
-                        <button id="hotline-btn" class="btn btn-outline-primary">
-                            <i class="bi bi-telephone-fill me-2"></i>
-                            <strong>Call Help Hotline</strong>
-                            <small class="d-block text-muted">Speak with a real person</small>
-                        </button>
-                    </div>
-                    
-                    <!-- Ask Us Form Option -->
-                    <div class="d-grid gap-2">
-                        <button id="form-btn" class="btn btn-outline-success">
-                            <i class="bi bi-chat-square-text me-2"></i>
-                            <strong>Submit Ask Us Form</strong>
-                            <small class="d-block text-muted">Describe your issue in detail</small>
-                        </button>
-                    </div>
-                    
-                    <div class="mt-3">
-                        <small class="text-muted">
-                            <i class="bi bi-clock me-1"></i>Support Hours: Mon-Fri 8AM-6PM
-                        </small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hotline Information -->
-            <div id="hotline-info" class="d-none">
-                <header class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0"><i class="bi bi-telephone me-2"></i>Help Hotline</h6>
-                    <button class="btn-close btn-close-white" id="close-support" aria-label="Close Support"></button>
-                </header>
-                <div class="card-body">
-                    <div class="text-center mb-3">
-                        <i class="bi bi-telephone-fill text-primary" style="font-size: 2.5rem;"></i>
-                        <h5 class="mt-2 mb-1">Call Us Now</h5>
-                        <h4 class="text-primary fw-bold">1-800-HELP-SRC</h4>
-                        <p class="text-muted small">(1-800-435-7772)</p>
-                    </div>
-                    
-                    <div class="bg-light p-3 rounded mb-3">
-                        <h6 class="mb-2"><i class="bi bi-clock me-2"></i>Support Hours</h6>
-                        <ul class="list-unstyled small mb-0">
-                            <li><strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM</li>
-                            <li><strong>Saturday:</strong> 9:00 AM - 2:00 PM</li>
-                            <li><strong>Sunday:</strong> Closed</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="alert alert-info">
-                        <small>
-                            <i class="bi bi-info-circle me-1"></i>
-                            <strong>Our specialists can help with:</strong><br>
-                            â€¢ Navigation and technical issues<br>
-                            â€¢ Account and general questions<br>
-                            â€¢ Platform guidance and support
-                        </small>
-                    </div>
-                    
-                    <button id="back-to-options" class="btn btn-outline-secondary w-100">
-                        <i class="bi bi-arrow-left me-2"></i>Back to Options
-                    </button>
-                </div>
-            </div>
-
-            <!-- Ask Us Form -->
-            <div id="ask-us-form" class="d-none">
-                <header class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0"><i class="bi bi-chat-square-text me-2"></i>Ask Us Form</h6>
-                    <button class="btn-close btn-close-white" id="close-support" aria-label="Close Support"></button>
-                </header>
-                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                    <form id="support-form">
-                        <div class="mb-3">
-                            <label for="user-name" class="form-label small">Your Name</label>
-                            <input type="text" id="user-name" class="form-control form-control-sm" required>
+    <!-- Modern Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6 hero-content">
+                    <div class="animate-fade-up">
+                        <h1 class="hero-title">
+                            Your Health,
+                            <span class="text-gradient">Simplified</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Empowering seniors with intelligent healthcare management. Track medications, schedule appointments, and stay connected with your care team.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3 mb-4">
+                            <button class="btn btn-modern-primary">
+                                <span><i class="bi bi-arrow-right me-2"></i>Get Started</span>
+                            </button>
+                            <button class="btn btn-modern-outline">
+                                <i class="bi bi-play-circle me-2"></i>Watch Demo
+                            </button>
                         </div>
                         
-                        <div class="mb-3">
-                            <label for="user-email" class="form-label small">Email Address</label>
-                            <input type="email" id="user-email" class="form-control form-control-sm" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="help-category" class="form-label small">What do you need help with?</label>
-                            <select id="help-category" class="form-select form-select-sm" required>
-                                <option value="">Choose a category...</option>
-                                <option value="Technical Issue">Technical Issue</option>
-                                <option value="Navigation Help">Navigation Help</option>
-                                <option value="Getting Started">Getting Started</option>
-                                <option value="Account Issues">Account Issues</option>
-                                <option value="General Inquiry">General Inquiry</option>
-                                <option value="Feature Request">Feature Request</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="priority-level" class="form-label small">Priority Level</label>
-                            <select id="priority-level" class="form-select form-select-sm" required>
-                                <option value="Normal">Normal (24-48 hours)</option>
-                                <option value="Urgent">Urgent (Within 2 hours)</option>
-                                <option value="Low">Low Priority (2-3 business days)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="help-subject" class="form-label small">Subject</label>
-                            <input type="text" id="help-subject" class="form-control form-control-sm" 
-                                   placeholder="Brief description of your issue" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="help-message" class="form-label small">Tell us more about your issue</label>
-                            <textarea id="help-message" class="form-control form-control-sm" rows="4" 
-                                      placeholder="Please describe your issue in detail. The more information you provide, the better we can help you." required></textarea>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label small">Preferred Contact Method</label>
-                            <div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="contact-method" id="contact-email" value="email" checked>
-                                    <label class="form-check-label small" for="contact-email">Email</label>
+                        <!-- Modern Stats -->
+                        <div class="row mt-5">
+                            <div class="col-4">
+                                <div class="stats-card">
+                                    <div class="stats-number animate-pulse">24/7</div>
+                                    <div class="stats-label">Support</div>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="contact-method" id="contact-phone" value="phone">
-                                    <label class="form-check-label small" for="contact-phone">Phone</label>
+                            </div>
+                            <div class="col-4">
+                                <div class="stats-card">
+                                    <div class="stats-number animate-pulse">10K+</div>
+                                    <div class="stats-label">Users</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stats-card">
+                                    <div class="stats-number animate-pulse">99%</div>
+                                    <div class="stats-label">Uptime</div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-success btn-sm">
-                                <i class="bi bi-send me-2"></i>Submit Request
-                            </button>
-                            <button type="button" id="back-to-options" class="btn btn-outline-secondary btn-sm">
-                                <i class="bi bi-arrow-left me-2"></i>Back to Options
-                            </button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 hero-image">
+                    <div class="animate-slide-right">
+                        <div class="glass-card p-4">
+                            <img src="assets/modern-hero-illustration.svg" alt="SilverConnect Healthcare Dashboard" style="width: 100%; height: auto; max-height: 400px;">
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </section>
-    </aside>
+        </div>
+    </section>
+
+    <!-- Modern Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="text-gradient mb-3">Comprehensive Healthcare Management</h2>
+                <p class="lead text-muted">Everything you need to manage your health in one beautiful, easy-to-use platform</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <a href="medication.html" class="modern-feature-card text-decoration-none">
+                        <div class="modern-feature-icon">
+                            <i class="bi bi-capsule"></i>
+                        </div>
+                        <h5 class="text-gradient mb-3">Smart Medication Tracker</h5>
+                        <p class="text-muted">AI-powered medication management with intelligent reminders, drug interaction alerts, and adherence tracking.</p>
+                        <div class="mt-auto">
+                            <span class="badge-modern-primary">Advanced AI</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <a href="medication-inventory.html" class="modern-feature-card text-decoration-none">
+                        <div class="modern-feature-icon">
+                            <i class="bi bi-archive-fill"></i>
+                        </div>
+                        <h5 class="text-gradient mb-3">Intelligent Inventory</h5>
+                        <p class="text-muted">Real-time medication stock monitoring with automated reorder alerts and family sharing capabilities.</p>
+                        <div class="mt-auto">
+                            <span class="badge-modern-secondary">Real-time</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <a href="family-management.html" class="modern-feature-card text-decoration-none">
+                        <div class="modern-feature-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <h5 class="text-gradient mb-3">Family Connect Hub</h5>
+                        <p class="text-muted">Secure family network for care coordination, emergency contacts, and real-time health updates.</p>
+                        <div class="mt-auto">
+                            <span class="badge-modern-primary">Secure</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <a href="meal-logging.html" class="modern-feature-card text-decoration-none">
+                        <div class="modern-feature-icon">
+                            <i class="bi bi-journal-medical"></i>
+                        </div>
+                        <h5 class="text-gradient mb-3">Nutrition Intelligence</h5>
+                        <p class="text-muted">Smart meal tracking with nutritional analysis, dietary recommendations, and health goal monitoring.</p>
+                        <div class="mt-auto">
+                            <span class="badge-modern-secondary">Smart Analytics</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <a href="healthcare-appointments.html" class="modern-feature-card text-decoration-none">
+                        <div class="modern-feature-icon">
+                            <i class="bi bi-calendar-heart"></i>
+                        </div>
+                        <h5 class="text-gradient mb-3">Appointment Orchestrator</h5>
+                        <p class="text-muted">Seamless appointment scheduling with provider matching, reminder systems, and telehealth integration.</p>
+                        <div class="mt-auto">
+                            <span class="badge-modern-primary">Telehealth Ready</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="modern-feature-card">
+                        <div class="modern-feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h5 class="text-gradient mb-3">Health Insights</h5>
+                        <p class="text-muted">Comprehensive health analytics with trend analysis, predictive insights, and personalized recommendations.</p>
+                        <div class="mt-auto">
+                            <span class="badge-modern-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Technology Showcase -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="text-gradient mb-4">Built with Modern Technology</h2>
+                    <p class="lead mb-4">Experience the future of healthcare management with our cutting-edge platform designed specifically for seniors.</p>
+                    
+                    <div class="row g-4">
+                        <div class="col-sm-6">
+                            <div class="glass-card p-3 text-center">
+                                <i class="bi bi-lightning-charge text-warning fs-1"></i>
+                                <h6 class="mt-2">Lightning Fast</h6>
+                                <small class="text-muted">Optimized performance</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="glass-card p-3 text-center">
+                                <i class="bi bi-shield-lock text-success fs-1"></i>
+                                <h6 class="mt-2">Bank-Level Security</h6>
+                                <small class="text-muted">Your data is protected</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="glass-card p-3 text-center">
+                                <i class="bi bi-phone text-primary fs-1"></i>
+                                <h6 class="mt-2">Mobile Responsive</h6>
+                                <small class="text-muted">Works on all devices</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="glass-card p-3 text-center">
+                                <i class="bi bi-cloud-check text-info fs-1"></i>
+                                <h6 class="mt-2">Cloud Sync</h6>
+                                <small class="text-muted">Access anywhere</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="glass-card p-4">
+                        <dotlottie-player
+                            src="https://lottie.host/7a9b8c8d-1e2f-4a5b-8c7d-9e0f1a2b3c4d/TechShowcase.lottie"
+                            background="transparent"
+                            speed="1"
+                            style="width: 100%; height: 350px"
+                            loop
+                            autoplay>
+                        </dotlottie-player>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Testimonials Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="text-gradient mb-3">Trusted by Thousands</h2>
+                <p class="lead text-muted">See what our users have to say about SilverConnect</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="mb-3">"SilverConnect has transformed how I manage my medications. The reminders are a lifesaver!"</p>
+                        <div class="d-flex align-items-center">
+                            <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Sarah Chen</h6>
+                                <small class="text-muted">Age 68, Singapore</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="mb-3">"The family sharing feature gives us peace of mind. We can help dad manage his health better."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Michael Tan</h6>
+                                <small class="text-muted">Family Caregiver</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="mb-3">"Simple, intuitive, and powerful. Exactly what seniors need for healthcare management."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Dr. Lisa Wong</h6>
+                                <small class="text-muted">Geriatrician</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Footer -->
+    <footer class="footer">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                            <i class="bi bi-heart-pulse"></i>
+                        </div>
+                        <h5 class="text-light mb-0">SilverConnect</h5>
+                    </div>
+                    <p class="text-light mb-4">Empowering seniors with intelligent healthcare management solutions for a healthier, more connected life.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-modern-outline btn-sm">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-light mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="medication.html" class="text-light text-decoration-none">Medication Tracker</a></li>
+                        <li class="mb-2"><a href="healthcare-appointments.html" class="text-light text-decoration-none">Appointments</a></li>
+                        <li class="mb-2"><a href="family-management.html" class="text-light text-decoration-none">Family Hub</a></li>
+                        <li class="mb-2"><a href="meal-logging.html" class="text-light text-decoration-none">Nutrition</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-light mb-3">Support</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Help Center</a></li>
+                        <li class="mb-2"><a href="credits.html" class="text-light text-decoration-none">Credits</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4">
+                    <h6 class="text-light mb-3">Contact Information</h6>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-geo-alt text-light me-3"></i>
+                        <div>
+                            <p class="text-light mb-0">535 Clementi Road</p>
+                            <p class="text-light mb-0">Singapore 599489</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-telephone text-light me-3"></i>
+                        <a href="tel:+6564606999" class="text-light text-decoration-none">+65 6460 6999</a>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-envelope text-light me-3"></i>
+                        <a href="mailto:support@silverconnect.sg" class="text-light text-decoration-none">support@silverconnect.sg</a>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-clock text-light me-3"></i>
+                        <div>
+                            <p class="text-light mb-0">Mon-Fri: 9am-6pm</p>
+                            <p class="text-light mb-0">Sat-Sun: 10am-4pm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="border-light my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-light mb-0">&copy; 2025 SilverConnect. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-light mb-0">Designed with ❤️ for Seniors</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modern JavaScript -->
+    <script src="js/index-modern.js"></script>
     
     <!-- Bootstrap 5.3.7 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
-    <!-- External APIs and connecting to JS files -->
-    <script src="js/index.js"></script>
-    <script src="js/ask-us-support.js"></script>
     
     <!-- Language Switcher Functions -->
     <script>

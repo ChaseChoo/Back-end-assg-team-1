@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register User - SilverConnect</title>
+    <title>Register User - SilverConnect - SilverConnect</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Normalize.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <!-- Bootstrap 5.3.7 CSS -->
@@ -36,23 +41,19 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <!-- Lottie Animation Loading -->
+    <!-- Loading Animation -->
     <div id="loader-overlay" class="loader-overlay">
-        <dotlottie-player
-            src="https://lottie.host/d03f2255-5a0e-4ba0-a43d-79895e8620e0/urZVzLRRGL.lottie"
-            background="transparent"
-            speed="1"
-            style="width: 300px; height: 300px"
-            loop
-            autoplay>
-        </dotlottie-player>
+        <img src="assets/modern-loading.svg" alt="Loading..." style="width: 200px; height: 200px;">
     </div>
 
     <!-- Sticky Navigation Bar -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container animate-fade-up">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="assets/MerderkaLife.png" alt="MerderkaLife Logo" class="logo me-2">
+                <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+                <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -63,74 +64,114 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="#">Lifestyle Tracking</a>
+                        <a class="nav-link fw-semibold" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="medication.html">Medication Tracker</a>
+                        <a class="nav-link fw-semibold" href="medication.html">Medication</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="family-management.html">Family & Support</a>
+                        <a class="nav-link fw-semibold" href="book-appointment.html">Appointments</a>
                     </li>
                 </ul>
-                <a href="#" class="btn btn-colour ms-3">Manage Appointment</a>
+                <a href="user-login.html" class="btn-modern btn-outline-primary ms-3">Sign In</a>
             </div>
         </div>
     </nav>
     <!-- End of Sticky Navigation Bar -->
 
     <!--Main Section (Image and Form)-->
-    <!-- 
-        Username: Required and contain a maximum of 50 characters. 
-        Email: Required and follow a valid email format, and contain a maximum of 100 characters.
-        Password: Required and contain a minimum of 8 characters.
-    -->
-    <main class="container-fluid p-0">
-        <div class="row g-0 min-vh-100 flex-column flex-md-row">
-            <!-- Left: Image side -->
-            <div class="col-12 col-md-6 bg-light">
-                <img src="assets/login-register.png" alt="Healthcare illustration" class="img-fluid w-100 h-100 object-fit-cover">
-            </div>
-
-            <!-- User Registration Form -->
-            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center bg-white">
-                <form id="registerForm" class="w-75 px-3 py-5">
-                    <h2 class="fw-bold mb-3">Register for SilverConnect</h2>
-
-                    <p class="text-muted small">
-                        By signing up, you agree to SilverConnect's
-                        <a href="terms.html">Terms of Service</a> and
-                        <a href="privacy.html">Privacy Policy</a>.
-                    </p>
-
-                    <div class="mb-3">
-                        <label for="username" class="form-label fw-semibold">Username</label>
-                        <input type="text" class="form-control" id="username" required maxlength="50">
+    <main class="auth-container">
+        <div class="container-fluid p-0">
+            <div class="row g-0 min-vh-100">
+                <!-- Left: Illustration side -->
+                <div class="col-lg-6 auth-illustration-side">
+                    <div class="auth-illustration-container">
+                        <img src="assets/auth-illustration.svg" alt="SilverConnect Healthcare Platform" class="auth-illustration">
+                        <div class="auth-illustration-overlay">
+                            <h2 class="auth-illustration-title">Join SilverConnect</h2>
+                            <p class="auth-illustration-subtitle">Start your journey to better health management with our comprehensive healthcare platform.</p>
+                            <div class="auth-features">
+                                <div class="auth-feature">
+                                    <i class="bi bi-shield-check"></i>
+                                    <span>Secure & Private</span>
+                                </div>
+                                <div class="auth-feature">
+                                    <i class="bi bi-heart-pulse"></i>
+                                    <span>Health Focused</span>
+                                </div>
+                                <div class="auth-feature">
+                                    <i class="bi bi-people"></i>
+                                    <span>Family Support</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="email" class="form-label fw-semibold">Email</label>
-                        <input type="email" class="form-control" id="email" required maxlength="100">
+                <!-- Right: Form side -->
+                <div class="col-lg-6 auth-form-side">
+                    <div class="auth-form-container">
+                        <div class="auth-form-header">
+                            <h1 class="auth-form-title">Create Account</h1>
+                            <p class="auth-form-subtitle">Join thousands managing their health with SilverConnect</p>
+                        </div>
+
+                        <form id="registerForm" class="auth-form">
+                            <div class="form-group">
+                                <label for="username" class="form-label">Username</label>
+                                <div class="input-group-modern">
+                                    <i class="bi bi-person input-icon"></i>
+                                    <input type="text" class="form-control-modern" id="username" placeholder="Choose a username" required maxlength="50">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address</label>
+                                <div class="input-group-modern">
+                                    <i class="bi bi-envelope input-icon"></i>
+                                    <input type="email" class="form-control-modern" id="email" placeholder="Enter your email" required maxlength="100">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group-modern">
+                                    <i class="bi bi-lock input-icon"></i>
+                                    <input type="password" class="form-control-modern" id="password" placeholder="Create a strong password" required minlength="8">
+                                    <button type="button" class="password-toggle" data-target="password">
+                                        <i class="bi bi-eye-slash"></i>
+                                    </button>
+                                </div>
+                                <div class="password-requirements">
+                                    <small class="text-muted">Password must be at least 8 characters long</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="agreeTerms" required>
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">I agree to the <a href="terms.html" class="auth-link">Terms of Service</a> and <a href="privacy.html" class="auth-link">Privacy Policy</a></span>
+                                </label>
+                            </div>
+
+                            <div id="alertBox" class="alert-modern d-none" role="alert"></div>
+
+                            <button type="submit" class="btn-auth-primary">
+                                <span class="btn-text">Create Account</span>
+                                <i class="bi bi-arrow-right btn-icon"></i>
+                            </button>
+
+                            <div class="auth-divider">
+                                <span>or</span>
+                            </div>
+
+                            <div class="auth-footer">
+                                <p>Already have an account? <a href="user-login.html" class="auth-link">Sign in here</a></p>
+                            </div>
+                        </form>
                     </div>
-                    
-                    <div class="mb-3">
-                    <label for="password" class="form-label fw-semibold">Password</label>
-                    <div class="input-group">
-                        <input type="password" class="form-control" id="password" required minlength="8">
-                        <span class="input-group-text bg-white">
-                        <i class="bi bi-eye-slash toggle-password" data-target="password" role="button" tabindex="0"></i>
-                        </span>
-                    </div>
-                    </div>
-
-                    <div id="alertBox" class="alert d-none" role="alert"></div>
-
-                    <button type="submit" class="btn btn-primary w-100">Register</button>
-
-                    <p class="text-center mt-3 small">
-                        <span>Already have an account?</span> 
-                        <a href="user-login.html">Log In</a>
-                    </p>
-                </form>
+                </div>
             </div>
         </div>
     </main>
@@ -188,6 +229,7 @@
 
     <!-- External APIs and connecting to JS files -->
     <script src="js/index.js"></script>
+    <script src="js/auth-modern.js"></script>
     <script src="js/user-registration.js"></script>    
     <!-- Language Switcher Functions -->
     <script>
@@ -244,6 +286,7 @@
 
 </body>
 </html>
+
 
 
 

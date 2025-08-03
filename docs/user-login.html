@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login - MerderkaLife</title>
+    <title>User Login - MerderkaLife - SilverConnect</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Normalize.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <!-- Bootstrap 5.3.7 CSS -->
@@ -33,23 +38,19 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <!-- Lottie Animation Loading -->
+    <!-- Loading Animation -->
     <div id="loader-overlay" class="loader-overlay">
-        <dotlottie-player
-            src="https://lottie.host/d03f2255-5a0e-4ba0-a43d-79895e8620e0/urZVzLRRGL.lottie"
-            background="transparent"
-            speed="1"
-            style="width: 300px; height: 300px"
-            loop
-            autoplay>
-        </dotlottie-player>
+        <img src="assets/modern-loading.svg" alt="Loading..." style="width: 200px; height: 200px;">
     </div>
 
     <!-- Sticky Navigation Bar -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container animate-fade-up">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="assets/MerderkaLife.png" alt="MerderkaLife Logo" class="logo me-2">
+                <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+                <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -60,59 +61,103 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="#">Lifestyle Tracking</a>
+                        <a class="nav-link fw-semibold" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="medication.html">Medication Tracker</a>
+                        <a class="nav-link fw-semibold" href="medication.html">Medication</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="family-management.html">Family & Support</a>
+                        <a class="nav-link fw-semibold" href="book-appointment.html">Appointments</a>
                     </li>
                 </ul>
-                <a href="#" class="btn btn-colour ms-3">Manage Appointment</a>
+                <a href="user-registration.html" class="btn-modern btn-outline-primary ms-3">Sign Up</a>
             </div>
         </div>
     </nav>
     <!-- End of Sticky Navigation Bar -->
 
-    <main class="container-fluid p-0">
-        <div class="row g-0 min-vh-100">
-            <!-- Left: Image side -->
-            <div class="col-md-6 bg-light d-none d-md-block">
-                <img src="assets/login-register.png" alt="Healthcare illustration" class="img-fluid h-100 w-100 object-fit-cover">
-            </div>
-
-            <!-- Right: Form side -->
-            <div class="col-md-6 d-flex align-items-center justify-content-center bg-white">
-                <form id="loginForm" class="w-75 px-3 py-5">
-                    <h2 class="fw-bold mb-3">Login to MerderkaLife</h2>
-
-                    <p class="text-muted small">Welcome back! Please enter your credentials to access your account.</p>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label fw-semibold">Email</label>
-                        <input type="email" class="form-control" id="email" required maxlength="100">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password" class="form-label fw-semibold">Password</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" id="password" required minlength="8">
-                            <span class="input-group-text bg-white">
-                                <i class="bi bi-eye-slash toggle-password" data-target="password" role="button" tabindex="0"></i>
-                            </span>
+    <main class="auth-container">
+        <div class="container-fluid p-0">
+            <div class="row g-0 min-vh-100">
+                <!-- Left: Illustration side -->
+                <div class="col-lg-6 auth-illustration-side">
+                    <div class="auth-illustration-container">
+                        <img src="assets/auth-illustration.svg" alt="SilverConnect Healthcare Platform" class="auth-illustration">
+                        <div class="auth-illustration-overlay">
+                            <h2 class="auth-illustration-title">Welcome to SilverConnect</h2>
+                            <p class="auth-illustration-subtitle">Your trusted healthcare companion for managing medications, appointments, and family health.</p>
+                            <div class="auth-features">
+                                <div class="auth-feature">
+                                    <i class="bi bi-shield-check"></i>
+                                    <span>Secure & Private</span>
+                                </div>
+                                <div class="auth-feature">
+                                    <i class="bi bi-heart-pulse"></i>
+                                    <span>Health Focused</span>
+                                </div>
+                                <div class="auth-feature">
+                                    <i class="bi bi-people"></i>
+                                    <span>Family Support</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div id="alertBox" class="alert d-none" role="alert"></div>
+                <!-- Right: Form side -->
+                <div class="col-lg-6 auth-form-side">
+                    <div class="auth-form-container">
+                        <div class="auth-form-header">
+                            <h1 class="auth-form-title">Welcome Back</h1>
+                            <p class="auth-form-subtitle">Sign in to your SilverConnect account</p>
+                        </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Log In</button>
+                        <form id="loginForm" class="auth-form">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address</label>
+                                <div class="input-group-modern">
+                                    <i class="bi bi-envelope input-icon"></i>
+                                    <input type="email" class="form-control-modern" id="email" placeholder="Enter your email" required maxlength="100">
+                                </div>
+                            </div>
 
-                    <p class="text-center mt-3 small">
-                        <span>Don't have an account?</span> 
-                        <a href="user-registration.html">Sign Up</a>
-                    </p>
-                </form>
+                            <div class="form-group">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group-modern">
+                                    <i class="bi bi-lock input-icon"></i>
+                                    <input type="password" class="form-control-modern" id="password" placeholder="Enter your password" required minlength="8">
+                                    <button type="button" class="password-toggle" data-target="password">
+                                        <i class="bi bi-eye-slash"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-options">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="rememberMe">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">Remember me</span>
+                                </label>
+                                <a href="#" class="forgot-password">Forgot password?</a>
+                            </div>
+
+                            <div id="alertBox" class="alert-modern d-none" role="alert"></div>
+
+                            <button type="submit" class="btn-auth-primary">
+                                <span class="btn-text">Sign In</span>
+                                <i class="bi bi-arrow-right btn-icon"></i>
+                            </button>
+
+                            <div class="auth-divider">
+                                <span>or</span>
+                            </div>
+
+                            <div class="auth-footer">
+                                <p>Don't have an account? <a href="user-registration.html" class="auth-link">Create account</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -170,6 +215,7 @@
 
     <!-- External APIs and connecting to JS files -->
     <script src="js/index.js"></script>
+    <script src="js/auth-modern.js"></script>
     <script src="js/user-login.js"></script>    
     <!-- Language Switcher Functions -->
     <script>
@@ -226,6 +272,7 @@
 
 </body>
 </html>
+
 
 
 

@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Settings - MerderkaLife</title>
+    <title>User Settings - MerderkaLife - SilverConnect</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Normalize.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <!-- Bootstrap 5.3.7 CSS -->
@@ -49,10 +54,13 @@
     </div>
 
     <!-- Sticky Navigation Bar -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container animate-fade-up">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="assets/MerderkaLife.png" alt="MerderkaLife Logo" class="logo me-2">
+                <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+                <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -109,18 +117,18 @@
                     <h5 class="card-title mb-3">Update Profile</h5> 
                     <form id="updateUserForm">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" required>
+                            <label for="username" class="form-label form-label-modern">Username</label>
+                            <input type="text" class="form-control form-control-modern" id="username" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email" required>
+                            <label for="email" class="form-label form-label-modern">Email address</label>
+                            <input type="email" class="form-control form-control-modern" id="email" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">New Password</label>
-                            <input type="password" class="form-control" id="password" required>
+                            <label for="password" class="form-label form-label-modern">New Password</label>
+                            <input type="password" class="form-control form-control-modern" id="password" required>
                         </div>
 
                         <div class="text-center">
@@ -138,7 +146,7 @@
                     <h5 class="card-title mb-3">Language Preference</h5> 
                     <form id="languageForm">
                         <div class="mb-3">
-                            <label for="languageSelect" class="form-label">Choose Language</label>
+                            <label for="languageSelect" class="form-label form-label-modern">Choose Language</label>
                             <select class="form-select" id="languageSelect">
                                 <option value="en">English</option>
                                 <option value="zh">ä¸­æ–‡ (Chinese)</option>
@@ -146,7 +154,7 @@
                         </div>
 
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Save Language</button>
+                            <button type="submit" class="btn btn-modern-primary">Save Language</button>
                         </div>
 
                         <div id="languageMsg" class="mt-3"></div>
@@ -297,6 +305,7 @@
 
 </body>
 </html>
+
 
 
 

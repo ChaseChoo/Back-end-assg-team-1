@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medication - MerderkaLife</title>
+    <title>Medication - MerderkaLife - SilverConnect</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Normalize.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <!-- Bootstrap 5.3.7 CSS -->
@@ -46,10 +51,13 @@
     </div>
 
     <!-- Sticky Navigation Bar -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container animate-fade-up">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="assets/MerderkaLife.png" alt="MerderkaLife Logo" class="logo me-2">
+                <div class="modern-feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+                <span class="fw-bold fs-4 text-gradient">SilverConnect</span>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -100,11 +108,46 @@
     <!-- End of Sticky Navigation Bar -->
 
     <main>
+        <!-- Hero Section with Modern Design -->
+        <section class="hero-section text-center py-5 mb-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="hero-title mb-4">Smart Medication Management</h1>
+                        <p class="hero-subtitle mb-4">Track, schedule, and manage your medications with our intelligent system. Never miss a dose again.</p>
+                        <div class="hero-buttons">
+                            <button class="btn-modern btn-primary me-3" onclick="showAddMedicationModal()">
+                                <i class="bi bi-plus-circle me-2"></i>Add Medication
+                            </button>
+                            <button class="btn-modern btn-outline-primary" onclick="scrollToMedications()">
+                                <i class="bi bi-list-ul me-2"></i>View All
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="hero-image-container">
+                            <img src="assets/medication-custom.svg" alt="Medication Management" class="img-fluid modern-illustration">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!--Username Greeting -->
-        <div class="container mt-4">
-            <div class="row">
-                <h2 class="fw-bold mb-0">Good day</h2>
-                <h2 id="usernameText" class="username-colour fw-bold">User!</h2>
+        <div class="container">
+            <div class="glass-card p-4 mb-4">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2 class="fw-bold mb-1 text-gradient">Good day,</h2>
+                        <h2 id="usernameText" class="username-colour fw-bold">User!</h2>
+                        <p class="text-muted mb-0">Manage your medications and stay on track with your health goals.</p>
+                    </div>
+                    <div class="col-auto">
+                        <div class="modern-feature-icon" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                            <i class="bi bi-capsule"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -128,7 +171,7 @@
                         
                         <!-- Help Hotline Option -->
                         <div class="d-grid gap-2 mb-3">
-                            <button id="hotline-btn" class="btn btn-outline-primary">
+                            <button id="hotline-btn" class="btn btn-modern-outline">
                                 <i class="bi bi-telephone-fill me-2"></i>
                                 <strong>Call Help Hotline</strong>
                                 <small class="d-block text-muted">Speak with a real person</small>
@@ -348,19 +391,19 @@
 
                     <!-- Start Date -->
                     <section class="mb-3">
-                        <label for="editStartDate" class="form-label">Start Date</label>
+                        <label for="editStartDate" class="form-label form-label-modern">Start Date</label>
                         <input type="date" id="editStartDate" class="form-control input-outline" required>
                     </section>
 
                     <!-- End Date -->
                     <section class="mb-3">
-                        <label for="editEndDate" class="form-label">End Date</label>
+                        <label for="editEndDate" class="form-label form-label-modern">End Date</label>
                         <input type="date" id="editEndDate" class="form-control input-outline" required>
                     </section>
 
                     <!-- Dose Time -->
                     <section class="mb-3">
-                        <label for="editDoseTime" class="form-label">Dose Time</label>
+                        <label for="editDoseTime" class="form-label form-label-modern">Dose Time</label>
                         <input type="time" id="editDoseTime" class="form-control input-outline" required>
                     </section>
                 </div>
@@ -428,7 +471,7 @@
         </div>
 
         <!-- Floating Add Medication Button -->
-        <a href="add-medication.html" class="btn btn-colour rounded-circle shadow-lg add-medication-btn">
+        <a href="add-medication.html" class="btn btn-modern-primary rounded-circle shadow-lg add-medication-btn">
             <i class="bi bi-plus-lg fs-4"></i>
         </a>
     </main>
@@ -495,6 +538,7 @@
 
 </body>
 </html>
+
 
 
 
